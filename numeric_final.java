@@ -1,3 +1,11 @@
+\\***************************************************************************\\
+\\ Ruthann Sudman															 \\
+\\ Final Project															 \\
+\\ CSC 431-510																 \\
+\\ March 17, 2012															 \\
+\\ BSD License																 \\
+\\ Original Python code composed by Massimo Di Pierro with BSD licensing	 \\
+\\***************************************************************************\\
 # Created by Massimo Di Pierro - BSD License
 
 class Matrix(object):
