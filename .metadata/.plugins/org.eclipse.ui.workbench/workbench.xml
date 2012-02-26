@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="25" version="2.0">
+<workbench progressCount="36" version="2.0">
 <workbenchAdvisor/>
-<window height="944" width="2144" x="83" y="81">
-<fastViewData fastViewLocation="1024"/>
+<window height="944" width="1206" x="39" y="121">
+<fastViewData fastViewLocation="1024">
+<orientation position="512" view="org.eclipse.pde.runtime.LogView"/>
+</fastViewData>
 <perspectiveBar>
 <itemSize x="160"/>
 </perspectiveBar>
@@ -30,13 +32,23 @@
 <folder appearance="1" expanded="2">
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
+<part id="1"/>
+<part id="2"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="numeric_final.java" partName="numeric_final.java" title="numeric_final.java" tooltip="/Users/rjsudman/Documents/DePaul Computer Science Masters/Winter 2011/CS 431/Pugzilla/numeric_final.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" uri="file:/Users/rjsudman/Documents/DePaul%20Computer%20Science%20Masters/Winter%202011/CS%20431/Pugzilla/numeric_final.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3167" selectionTopPixel="0"/>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RunMe.java" partName="RunMe.java" title="RunMe.java" tooltip="/Users/rjsudman/Documents/DePaul Computer Science Masters/Winter 2011/CS 431/Pugzilla/RunMe.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" uri="file:/Users/rjsudman/Documents/DePaul%20Computer%20Science%20Masters/Winter%202011/CS%20431/Pugzilla/RunMe.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="813" selectionOffset="0" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MyMatrix.java" partName="MyMatrix.java" title="MyMatrix.java" tooltip="/Users/rjsudman/Documents/DePaul Computer Science Masters/Winter 2011/CS 431/Pugzilla/MyMatrix.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" uri="file:/Users/rjsudman/Documents/DePaul%20Computer%20Science%20Masters/Winter%202011/CS%20431/Pugzilla/MyMatrix.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="216" selectionOffset="2141" selectionTopPixel="1350"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TestMatrix.java" partName="TestMatrix.java" title="TestMatrix.java" tooltip="/Users/rjsudman/Documents/DePaul Computer Science Masters/Winter 2011/CS 431/Pugzilla/TestMatrix.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" uri="file:/Users/rjsudman/Documents/DePaul%20Computer%20Science%20Masters/Winter%202011/CS%20431/Pugzilla/TestMatrix.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="6578" selectionOffset="0" selectionTopPixel="2980"/>
 </editor>
 </editors>
 <views>
@@ -77,7 +89,7 @@
 <view id="org.eclipse.jdt.ui.JavadocView" partName="Javadoc"/>
 </views>
 <perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
-<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
+<perspective editorAreaTrimState="1" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jdt.internal.ui.JavaPerspectiveFactory" id="org.eclipse.jdt.ui.JavaPerspective" label="Java"/>
 <alwaysOnActionSet id="org.eclipse.egit.ui.navigation"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
@@ -136,13 +148,30 @@
 <perspective_action id="org.eclipse.debug.ui.DebugPerspective"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
-<view id="org.eclipse.ui.views.ProblemView"/>
-<view id="org.eclipse.jdt.ui.JavadocView"/>
-<view id="org.eclipse.jdt.ui.SourceView"/>
-<view id="org.eclipse.ui.views.ContentOutline"/>
-<view id="org.eclipse.mylyn.tasks.ui.views.tasks"/>
-<view id="org.eclipse.egit.ui.RepositoriesView"/>
-<fastViewBars/>
+<fastViewBars>
+<fastViewBar fastViewLocation="1024" id="bottom" orientation="256" selectedTabId="org.eclipse.ui.views.ProblemView" style="1">
+<fastViews>
+<view id="org.eclipse.ui.views.ProblemView" ratio="0.3"/>
+<view id="org.eclipse.jdt.ui.JavadocView" ratio="0.3"/>
+<view id="org.eclipse.jdt.ui.SourceView" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+<fastViewBar fastViewLocation="131072" id="org.eclipse.ui.internal.ViewStack@7869f0bc" orientation="512" selectedTabId="org.eclipse.mylyn.tasks.ui.views.tasks" style="1">
+<fastViews>
+<view id="org.eclipse.mylyn.tasks.ui.views.tasks" ratio="0.2996795"/>
+</fastViews>
+</fastViewBar>
+<fastViewBar fastViewLocation="16384" id="org.eclipse.ui.internal.ViewStack@3b562036" orientation="512" selectedTabId="org.eclipse.egit.ui.RepositoriesView" style="1">
+<fastViews>
+<view id="org.eclipse.egit.ui.RepositoriesView" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+<fastViewBar fastViewLocation="131072" id="right" orientation="512" selectedTabId="org.eclipse.ui.views.ContentOutline" style="1">
+<fastViews>
+<view id="org.eclipse.ui.views.ContentOutline" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+</fastViewBars>
 <layout>
 <mainWindow>
 <info folder="true" part="left">
@@ -167,45 +196,35 @@
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.25" ratioLeft="254" ratioRight="762" relationship="2" relative="left"/>
 <info folder="true" part="bottom" ratio="0.74963397" ratioLeft="512" ratioRight="171" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.views.ProblemView" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
-<page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
-<page content="org.eclipse.jdt.ui.SourceView" label="Declaration"/>
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.ui.views.ProblemView" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.ui.JavadocView" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.ui.SourceView" label="LabelNotFound"/>
 <page content="org.eclipse.search.ui.views.SearchView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.console.ConsoleView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ProgressView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-<part id="2"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@7869f0bc" ratio="0.7493438" ratioLeft="571" ratioRight="191" relationship="2" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.mylyn.tasks.ui.views.tasks" appearance="2" expanded="2">
-<page content="org.eclipse.mylyn.tasks.ui.views.tasks" label="Task List"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.mylyn.tasks.ui.views.tasks" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="right" ratio="0.5" ratioLeft="256" ratioRight="256" relationship="4" relative="org.eclipse.ui.internal.ViewStack@7869f0bc">
-<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
 <page content="org.eclipse.ui.texteditor.TemplatesView" label="LabelNotFound"/>
 <page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@3b562036" ratio="0.5988287" ratioLeft="409" ratioRight="274" relationship="4" relative="left">
-<folder activePageID="org.eclipse.egit.ui.RepositoriesView" appearance="2" expanded="2">
-<page content="org.eclipse.egit.ui.RepositoriesView" label="Git Repositories"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.egit.ui.RepositoriesView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 </mainWindow>
@@ -215,10 +234,159 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" uri="file:/Users/rjsudman/Documents/DePaul%20Computer%20Science%20Masters/Winter%202011/CS%20431/Pugzilla/numeric_final.java"/>
+<editor factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" uri="file:/Users/rjsudman/Documents/DePaul%20Computer%20Science%20Masters/Winter%202011/CS%20431/Pugzilla/TestMatrix.java"/>
+<editor factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" uri="file:/Users/rjsudman/Documents/DePaul%20Computer%20Science%20Masters/Winter%202011/CS%20431/Pugzilla/RunMe.java"/>
+<editor factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" uri="file:/Users/rjsudman/Documents/DePaul%20Computer%20Science%20Masters/Winter%202011/CS%20431/Pugzilla/MyMatrix.java"/>
 </editors>
-<item active="true" historyLabel="numeric_final.java" index="0">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6123" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6126" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6143" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6146" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6151" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6237" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6403" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6237" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6271" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6395" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6395" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6330" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6333" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6367" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6370" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6387" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6390" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="5562" y="0"/>
+</item>
+<item historyLabel="RunMe.java" index="1">
+<position info="not_deleted" x="763" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="5562" y="0"/>
+</item>
+<item historyLabel="RunMe.java" index="1">
+<position info="not_deleted" x="763" y="0"/>
+</item>
+<item historyLabel="RunMe.java" index="1">
+<position info="not_deleted" x="791" y="0"/>
+</item>
+<item historyLabel="RunMe.java" index="1">
+<position info="not_deleted" x="543" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="5562" y="0"/>
+</item>
+<item historyLabel="MyMatrix.java" index="2">
+<position info="not_deleted" x="2141" y="216"/>
+</item>
+<item historyLabel="RunMe.java" index="1">
+<position info="not_deleted" x="738" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="5562" y="0"/>
+</item>
+<item historyLabel="MyMatrix.java" index="2">
+<position info="not_deleted" x="2141" y="216"/>
+</item>
+<item historyLabel="RunMe.java" index="1">
+<position info="not_deleted" x="729" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="5562" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="4731" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="5056" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="5056" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="5900" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="5887" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6067" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6070" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6091" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6094" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="5828" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="5832" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6233" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6058" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="5905" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6217" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6415" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="6724" y="0"/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position/>
+</item>
+<item historyLabel="TestMatrix.java" index="0">
+<position info="not_deleted" x="0" y="6578"/>
+</item>
+<item active="true" historyLabel="RunMe.java" index="1">
+<position info="not_deleted" x="729" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -226,6 +394,13 @@
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
+<trimArea IMemento.internal.id="16384">
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@3b562036"/>
+</trimArea>
+<trimArea IMemento.internal.id="131072">
+<trimItem IMemento.internal.id="right"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@7869f0bc"/>
+</trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
 <trimItem IMemento.internal.id="org.eclipse.mylyn.tasks.ui.trim.container"/>
@@ -234,11 +409,17 @@
 <trimItem IMemento.internal.id="org.eclise.ui.internal.FastViewBar"/>
 <trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
-<trimItem IMemento.internal.id="org.eclipse.ui.internal.intro.impl.presentations.IntroLaunchBar"/>
+<trimItem IMemento.internal.id="bottom"/>
 </trimArea>
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TestMatrix.java" tooltip="/Users/rjsudman/Documents/DePaul Computer Science Masters/Winter 2011/CS 431/Pugzilla/TestMatrix.java">
+<persistable uri="file:/Users/rjsudman/Documents/DePaul%20Computer%20Science%20Masters/Winter%202011/CS%20431/Pugzilla/TestMatrix.java"/>
+</file>
+<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MyMatrix.java" tooltip="/Users/rjsudman/Documents/DePaul Computer Science Masters/Winter 2011/CS 431/Pugzilla/MyMatrix.java">
+<persistable uri="file:/Users/rjsudman/Documents/DePaul%20Computer%20Science%20Masters/Winter%202011/CS%20431/Pugzilla/MyMatrix.java"/>
+</file>
 <file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="matrix.cpp" tooltip="/Users/rjsudman/Documents/DePaul Computer Science Masters/Winter 2011/CS 431/Pugzilla/matrix.cpp">
 <persistable uri="file:/Users/rjsudman/Documents/DePaul%20Computer%20Science%20Masters/Winter%202011/CS%20431/Pugzilla/matrix.cpp"/>
 </file>
