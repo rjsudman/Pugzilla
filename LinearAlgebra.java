@@ -9,10 +9,43 @@
  * LinearAlgebra is a library of linear algebra algorithms.
  */
 public class LinearAlgebra {
-	private static float ap = 0.000001f;
-	private static float rp = 0.0001f;
-	private static int ns = 40;
+	private static float ap = 0.000001f; // Default absolute precision
+	private static float rp = 0.0001f;	 // Default relative precision
+	private static int ns = 40;			 // Default number of steps
 	private static int p = 1;
+	
+	public boolean is_almost_symmetric(TestMatrix x) {
+		
+		// Variable declaration
+		float delta;	// Test for symmetric
+		int r;			// Row loop counting variable
+		int c;			// Column loop counting variable
+		
+		if( x.getColumns() != x.getRows()) return false;
+		for(r=0; r<x.getRows()-1; r++) {
+			for(c=0; c<x.getColumns()-1; c++) {
+				delta = Math.abs(x.getMe(r, c)-x.getMe(c,r));
+				if (delta > ap && delta>Math.max(Math.abs(x.getMe(r,c)), Math.abs(x.getMe(c,r)))*rp) return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean is_almost_zero(TestMatrix A) {
+		
+		// Variable declaration
+		float delta;	// Test for zero
+		int r;			// Row loop counting variable
+		int c;			// Column loop counting variable
+		
+		for(r=0; r<A.getRows(); r++) {
+			for(c=0; c<A.getColumns(); c++) {
+				delta = Math.abs(A.getMe(r, c)-A.getMe(c, r));
+				if(delta>ap && delta>Math.max(Math.abs(A.getMe(r, c)), Math.abs(A.getMe(c,r)))*rp) return false;
+			}
+		}
+		return true;
+	}
 	
 	public float norm(float A) {
 		return Math.abs(A);
@@ -46,7 +79,7 @@ public class LinearAlgebra {
 		return 0f;
 	}
 	
-	 //BROKEN
+    //BROKEN
 	public TestFunction condition_number(TestFunction f) {
 		return f;
 	}
@@ -67,4 +100,6 @@ public class LinearAlgebra {
 		System.out.println("exp does not converge. Returning zero matrix.");
 		return new TestMatrix(x.getRows(), x.getColumns());
 	}
+	
+	
 }
