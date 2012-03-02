@@ -1,14 +1,16 @@
-//***************************************************************************\\
-// TestMatrix.java															 \\
-// BSD License																 \\
-// Original Python code composed by Massimo Di Pierro with BSD licensing	 \\
-// # Created by Massimo Di Pierro - BSD License                              \\
-//***************************************************************************\\
+/*
+ * TestMatrix.java
+ * BSD License
+ * Original Python code created by Massimo Di Pierro - BSD license	
+ * Java implementation by Ruthann Sudman - BSD license
+ */		
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.lang.Math;
 
+/* 
+ * The TestMatrix class implements basic matrix math, including;
+ * addition, subtraction, multiplication and inverse.
+ */
 public class TestMatrix {
     
 	// Global Variables
@@ -105,7 +107,7 @@ public class TestMatrix {
 	public TestMatrix subMatrix(TestMatrix otherData) {
 		
 		//Variable Declaration
-		TestMatrix newData;		// Placeholder for the matrix addition
+		TestMatrix newData;		// Placeholder for the matrix subtraction
 		int r;					// Row loop counting variable
 		int c;					// Column loop counting variable
 		
@@ -128,7 +130,7 @@ public class TestMatrix {
 	public TestMatrix mulMatrix(float x) {
 		
 		//Variable Declaration
-		TestMatrix newData;		// Placeholder for the matrix addition
+		TestMatrix newData;		// Placeholder for the matrix multiplication
 		int r;					// Row loop counting variable
 		int c;					// Column loop counting variable	
 		int k; 					// Column loop counting variable
@@ -147,7 +149,7 @@ public class TestMatrix {
 	public TestMatrix mulMatrix(TestMatrix otherData) {
 		
 		//Variable Declaration
-		TestMatrix newData;		// Placeholder for the matrix addition
+		TestMatrix newData;		// Placeholder for the matrix multiplication
 		int r;					// Row loop counting variable
 		int c;					// Column loop counting variable	
 		int k; 					// Column loop counting variable
@@ -171,10 +173,28 @@ public class TestMatrix {
 		return newData;
 	}
 	
+	public TestMatrix divMatrix(float x) {
+		
+		//Variable Declaration
+		TestMatrix newData;		// Placeholder for the matrix division
+		int r;					// Row loop counting variable
+		int c; 					// Column loop counting variable
+		int k;					// Column loop counting variable
+		
+		newData = new TestMatrix(this.myRows, this.myCols);
+		for (r=0; r<this.myRows;r++) {
+			for (c=0; c<this.myCols;c++) {
+				for(k=0; k<this.myCols; k++) {
+					newData.updateAddMe(r,c, this.myData[r][k]/x);
+				}
+			}	
+		}
+		return newData;
+	}
+	
 	private void swapMe(int r1, int c1, int r2, int c2) {
 		
 		//Variable Declaration
-		TestMatrix newData;		// Placeholder for the matrix addition
 		float p;				// Float value placeholder
         
 		p = this.myData[r1][c1];
@@ -255,4 +275,26 @@ public class TestMatrix {
 		}
 		return newData;
 	}
+	
+	/*
+	 * Constructor a diagonal matrix
+	 *  Parameters
+	 *   - rows: the integer number of rows (also number of columns)
+	 *   - fill: the value to be used to fill the matrix
+	 *   - one: the value in the diagonal
+	 */
+	public TestMatrix identity() {
+		
+		// Variable Declaration
+		int i; 		   // Loop counting variable
+		TestMatrix M;  // Identity Matrix
+		
+		M = new TestMatrix(this.myRows,this.myRows);
+		for(i=0; i<this.myRows; i++) M.changeMe(i,i,1.0f);
+		return M;
+	}
 }
+
+
+
+
