@@ -249,65 +249,104 @@ public class LinearAlgebra {
 		}
         return myTest;
 	}
-    /*
-     def Markovitz(mu, A, r_free):
-     """Assess Markovitz risk/return.
-     Example:
-     >>> cov = Matrix.from_list([[0.04, 0.006,0.02],
-     ...                        [0.006,0.09, 0.06],
-     ...                        [0.02, 0.06, 0.16]])
-     >>> mu = Matrix.from_list([[0.10],[0.12],[0.15]])
-     >>> r_free = 0.05
-     >>> x, ret, risk = Markovitz(mu, cov, r_free)
-     >>> print x
-     [0.556634..., 0.275080..., 0.1682847...]
-     >>> print ret, risk
-     0.113915... 0.186747...
-     """
-     x = Matrix(A.rows, 1)
-     x = (1/A)*(mu - r_free)
-     x = x/sum(x[r,0] for r in range(x.rows))
-     portfolio = [x[r,0] for r in range(x.rows)]
-     portfolio_return = mu*x
-     portfolio_risk = sqrt(x*(A*x))
-     return portfolio, portfolio_return, portfolio_risk
-     
-     def fit_least_squares(points, f):
-     """
-     Computes c_j for best linear fit of y[i] \pm dy[i] = fitting_f(x[i])
-     where fitting_f(x[i]) is \sum_j c_j f[j](x[i])
-     
-     parameters:
-     - a list of fitting functions
-     - a list with points (x,y,dy)
-     
-     returns:
-     - column vector with fitting coefficients
-     - the chi2 for the fit
-     - the fitting function as a lambda x: ....
-     """
-     def eval_fitting_function(f,c,x):
-     if len(f)==1: return c*f[0](x)
-     else: return sum(func(x)*c[i,0] for i,func in enumerate(f))
-     A = Matrix(len(points),len(f))
-     b = Matrix(len(points))
-     for i in range(A.rows):
-     weight = 1.0/points[i][2] if len(points[i])>2 else 1.0
-     b[i,0] = weight*float(points[i][1])
-     for j in range(A.cols):
-     A[i,j] = weight*f[j](float(points[i][0]))
-     c = (1.0/(A.t*A))*(A.t*b)
-     chi = A*c-b
-     chi2 = norm(chi,2)**2
-     fitting_f = lambda x, c=c, f=f, q=eval_fitting_function: q(f,c,x)
-     return c.data, chi2, fitting_f
-     
-     def sqrt(x):
-     try:
-     return math.sqrt(x)
-     except ValueError:
-     return cmath.sqrt(x)
-     
+    
+	public TestMatrix Markovitz(float mu, TestMatrix A, float r_free) {
+		/*
+		 * 		def Markovitz(mu, A, r_free):
+		 * 		    """Assess Markovitz risk/return.
+		 * 		    Example:
+		 * 			>>> cov = Matrix.from_list([[0.04, 0.006,0.02],
+		 * 			...                        [0.006,0.09, 0.06],
+		 * 		    ...                        [0.02, 0.06, 0.16]])
+		 * 		    >>> mu = Matrix.from_list([[0.10],[0.12],[0.15]])
+		 * 			>>> r_free = 0.05
+		 * 		    >>> x, ret, risk = Markovitz(mu, cov, r_free)
+		 * 			>>> print x
+		 * 		    [0.556634..., 0.275080..., 0.1682847...]
+		 * 		    >>> print ret, risk
+		 * 		    0.113915... 0.186747...
+		 * 		    """
+		 * 		    x = Matrix(A.rows, 1)
+		 * 		    x = (1/A)*(mu - r_free)
+		 * 		    x = x/sum(x[r,0] for r in range(x.rows))
+		 * 		    portfolio = [x[r,0] for r in range(x.rows)]
+		 * 		    portfolio_return = mu*x
+		 * 		    portfolio_risk = sqrt(x*(A*x))
+		 * 		    return portfolio, portfolio_return, portfolio_risk
+		 */
+		
+		// Variable declaration
+		int r;
+		TestMatrix x;
+		float p;
+		TestMatrix portfolio;
+		TestMatrix portfolio_return;
+		TestMatrix portfolio_risk;
+		TestMatrix Mark;
+		
+		p = 0;
+		Mark= new TestMatrix(3,3);
+		x=new TestMatrix(A.getRows(),1);
+		x = A.invMatrix();
+		x= x.mulMatrix(mu-r_free);
+		for(r=0;r<x.getRows();r++) {
+			p += x.getMe(r, 0);
+		}
+		x.divMatrix(p);
+		portfolio = new TestMatrix(A.getRows(),1);
+		for(r=0; r<x.getRows();r++) {
+			portfolio.changeMe(r, 0, x.getMe(r, 0));
+		}
+		portfolio_return = x.copyMe();
+		portfolio_return=portfolio_return.mulMatrix(mu);
+		portfolio_risk=A.mulMatrix(x);
+		portfolio_risk=portfolio_risk.mulMatrix(x);
+		portfolio_risk = portfolio_risk.sqrtTM();
+		for(r=0;r<3;r++) {
+			Mark.changeMe(r,0,portfolio.getMe(r,0));
+			Mark.changeMe(r,1,portfolio_return.getMe(r, 0));
+			Mark.changeMe(r,2,portfolio_risk.getMe(r,0));
+		}
+		return Mark;
+	}
+	
+	public TestMatrix fit_least_squares(TestMatrix points, TestFunction f) {
+		/*
+		 *		def fit_least_squares(points, f):
+		 * 			"""
+		 * 		    Computes c_j for best linear fit of y[i] \pm dy[i] = fitting_f(x[i])
+		 * 		    where fitting_f(x[i]) is \sum_j c_j f[j](x[i])
+		 * 
+		 * 	    parameters:
+		 * 		    - a list of fitting functions
+		 * 		    - a list with points (x,y,dy)
+		 * 
+		 * 	    returns:
+		 * 		    - column vector with fitting coefficients
+		 * 		    - the chi2 for the fit
+		 * 		    - the fitting function as a lambda x: ....
+		 * 		    """
+		 *	    def eval_fitting_function(f,c,x):
+		 *	        if len(f)==1: return c*f[0](x)
+		 *	        else: return sum(func(x)*c[i,0] for i,func in enumerate(f))
+		 *		    A = Matrix(len(points),len(f))
+		 *		    b = Matrix(len(points))
+		 *	    for i in range(A.rows):
+		 *	        weight = 1.0/points[i][2] if len(points[i])>2 else 1.0
+		 *        	b[i,0] = weight*float(points[i][1])
+		 *          for j in range(A.cols):
+		 *              A[i,j] = weight*f[j](float(points[i][0]))
+		 *        	c = (1.0/(A.t*A))*(A.t*b)
+		 *          chi = A*c-b
+		 *          chi2 = norm(chi,2)**2
+		 *          fitting_f = lambda x, c=c, f=f, q=eval_fitting_function: q(f,c,x)
+		 *          return c.data, chi2, fitting_f
+		 */
+		
+		// Variable Declaration
+		return points;
+	}
+	/*
      def solve_fixed_point(f, x, ap=1e-6, rp=1e-4, ns=100):
      def g(x): return f(x)+x # f(x)=0 <=> g(x)=x
      Dg = D(g)
@@ -333,15 +372,7 @@ public class LinearAlgebra {
      else: (a,fa) = (x, fx)
      raise ArithmeticError, 'no convergence'
      
-     def solve_newton(f, x, ap=1e-6, rp=1e-4, ns=20):
-     x = float(x) # make sure it is not int
-     for k in xrange(ns):
-     (fx, Dfx) = (f(x), D(f)(x))
-     if norm(Dfx) < ap:
-     raise ArithmeticError, 'unstable solution'
-     (x_old, x) = (x, x-fx/Dfx)
-     if k>2 and norm(x-x_old)<max(ap,norm(x)*rp): return x
-     raise ArithmeticError, 'no convergence'
+     
      
      def solve_secant(f, x, ap=1e-6, rp=1e-4, ns=20):
      x = float(x) # make sure it is not int
@@ -388,16 +419,7 @@ public class LinearAlgebra {
      else: (a,Dfa) = (x, Dfx)
      raise ArithmeticError, 'no convergence'
      
-     def optimize_newton(f, x, ap=1e-6, rp=1e-4, ns=20):
-     x = float(x) # make sure it is not int
-     for k in xrange(ns):
-     (Dfx, DDfx) = (D(f)(x), DD(f)(x))
-     if Dfx==0: return x
-     if norm(DDfx) < ap:
-     raise ArithmeticError, 'unstable solution'
-     (x_old, x) = (x, x-Dfx/DDfx)
-     if norm(x-x_old)<max(ap,norm(x)*rp): return x
-     raise ArithmeticError, 'no convergence'
+     
      
      def optimize_secant(f, x, ap=1e-6, rp=1e-4, ns=100):
      x = float(x) # make sure it is not int

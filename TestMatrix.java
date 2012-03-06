@@ -293,6 +293,22 @@ public class TestMatrix {
 		for(i=0; i<this.myRows; i++) M.changeMe(i,i,1.0f);
 		return M;
 	}
+	
+	public TestMatrix sqrtTM() {
+		
+		// Variable Declaration
+		TestMatrix square; 	// The squared result matrix
+		int r;				// Row loop counting variable
+		int c;				// Column loop counting variable
+		
+		square = new TestMatrix(this.myRows, this.myCols);
+		for(r=0; r<this.myRows; r++) {
+			for(c=0; c<this.myCols; c++) {
+				square.changeMe(r,c, myData[r][c]*myData[r][c]);
+			}
+		}
+		return square;
+	}
 }
 
 

@@ -43,6 +43,14 @@ public class RunMe {
 		A.printMe();	// The original matrix
 		B.printMe();	// The inverse matrix
 		C.printMe();	// The identity matrix 
+		
+		/* Test 2:	Functions */
+		TestFunction Y = new TestFunction();
+		TestFunction2 Z = new TestFunction2();;
+		System.out.println("(x-2)*(x+8) solve Newton:" + Y.solve_newton(0.5));
+		System.out.println("(x-2)*(x+8) Newton optimized: " + Y.optimize_newton(0.5));
+		System.out.println("(x-1)*(x+3) solve Newton:" + Z.solve_newton(0.5));
+		System.out.println("(x-1)*(x+3) Newton optimized: " + Z.optimize_newton(0.5));	
 	}
 }
 
