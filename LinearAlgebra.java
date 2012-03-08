@@ -9,8 +9,8 @@
  * LinearAlgebra is a library of linear algebra algorithms.
  */
 public class LinearAlgebra {
-	private static float ap = 0.000001f; // Default absolute precision
-	private static float rp = 0.0001f;	 // Default relative precision
+	private static double ap = 0.000001f; // Default absolute precision
+	private static double rp = 0.0001f;	 // Default relative precision
 	private static int ns = 40;			 // Default number of steps
 	private static int p = 1;
 	
@@ -27,7 +27,7 @@ public class LinearAlgebra {
 		 */
 		
 		// Variable declaration
-		float delta;	// Test for symmetric
+		double delta;	// Test for symmetric
 		int r;			// Row loop counting variable
 		int c;			// Column loop counting variable
 		
@@ -53,7 +53,7 @@ public class LinearAlgebra {
 		 */
 		
 		// Variable declaration
-		float delta;	// Test for zero
+		double delta;	// Test for zero
 		int r;			// Row loop counting variable
 		int c;			// Column loop counting variable
 		
@@ -66,10 +66,10 @@ public class LinearAlgebra {
 		return true;
 	}
 	
-	public float norm(float A) {
+	public double norm(double A) {
 		return Math.abs(A);
 	}
-	public float norm(TestMatrix A) {
+	public double norm(TestMatrix A) {
 		/*
 		 *	def norm(A,p=1):
 		 * 		if isinstance(A,(list,tuple)):
@@ -91,7 +91,7 @@ public class LinearAlgebra {
 		// Variable declaration
 		int r;			// Row loop counting variable
 		int c;			// Column loop counting variable
-		float myNorm;	// The norm value
+		double myNorm;	// The norm value
 		
 		myNorm = 0f;
 		if(A.getRows()==1 || A.getColumns()==1){
@@ -100,7 +100,7 @@ public class LinearAlgebra {
 					myNorm+=norm(A.getMe(r,c));
 				}
 			}
-			return (float) Math.pow(myNorm,p);
+			return Math.pow(myNorm,p);
 		}
 		else if(p==1) {
 			for(r=0; r<A.getRows(); r++) {
@@ -108,30 +108,14 @@ public class LinearAlgebra {
 					myNorm+=norm(A.getMe(r,c));
 				}
 			}
-			return (float) myNorm;
+			return myNorm;
 		}
 		else {
 			System.out.println("Norm not implemented for your case. Returning a norm of zero.");
 		}
 		return 0f;
 	}
-	
-    //BROKEN
-	public float condition_number(TestFunction f) {
-		/* 
-		 * 	def condition_number(f,x=None,h=1e-6):
-		 * 		if callable(f) and not x is None:
-		 *      	return D(f,h)(x)*x/f(x)
-		 *  	elif isinstance(f,Matrix): # if is the Matrix Jƒzz
-		 *      	return norm(f)*norm(1/f)
-		 *  	else:
-		 *      	raise NotImplementedError
-		 */
-		
-		System.out.println("The condition number algorithm has not yet been implemented.");
-        return 0f;
-	}
-	
+    
 	public TestMatrix exp(TestMatrix x) {
 		/*
 		 * 	def exp(x,ap=1e-6,rp=1e-4,ns=40):
@@ -155,7 +139,7 @@ public class LinearAlgebra {
 		
 		t = s = x.identity();
 		for(k=1; k<ns; k++){
-			t = t.mulMatrix(x.divMatrix((float)k));
+			t = t.mulMatrix(x.divMatrix(k));
 			s = s.addMatrix(t);
 			if(norm(t)<Math.max(ap,norm(s)*rp)) return s;
 		}
@@ -191,7 +175,7 @@ public class LinearAlgebra {
 		int i;			// Row loop counting variable
 		int j;			// Row loop counting variable
 		int k; 			// Column loop counting variable
-		float p;
+		double p;
 		
 		if (! is_almost_symmetric(A)) {
 			System.out.println("Arithmetic Error! Matrix is not symmetric. Cholesky will not be performed.");
@@ -203,7 +187,7 @@ public class LinearAlgebra {
 				k = L.getColumns();
 			}
 			else {
-				p= (float) Math.sqrt(L.getMe(k, k));
+				p= Math.sqrt(L.getMe(k, k));
 				L.changeMe(k, k, p);
 				for(i=k+1; i<L.getRows(); i++) {
 					L.changeMe(i, k, L.getMe(i, k)/p);
@@ -250,7 +234,7 @@ public class LinearAlgebra {
         return myTest;
 	}
     
-	public TestMatrix Markovitz(float mu, TestMatrix A, float r_free) {
+	public TestMatrix Markovitz(double mu, TestMatrix A, double r_free) {
 		/*
 		 * 		def Markovitz(mu, A, r_free):
 		 * 		    """Assess Markovitz risk/return.
@@ -278,7 +262,7 @@ public class LinearAlgebra {
 		// Variable declaration
 		int r;
 		TestMatrix x;
-		float p;
+		double p;
 		TestMatrix portfolio;
 		TestMatrix portfolio_return;
 		TestMatrix portfolio_risk;
@@ -308,172 +292,5 @@ public class LinearAlgebra {
 			Mark.changeMe(r,2,portfolio_risk.getMe(r,0));
 		}
 		return Mark;
-	}
-	
-	public TestMatrix fit_least_squares(TestMatrix points, TestFunction f) {
-		/*
-		 *		def fit_least_squares(points, f):
-		 * 			"""
-		 * 		    Computes c_j for best linear fit of y[i] \pm dy[i] = fitting_f(x[i])
-		 * 		    where fitting_f(x[i]) is \sum_j c_j f[j](x[i])
-		 * 
-		 * 	    parameters:
-		 * 		    - a list of fitting functions
-		 * 		    - a list with points (x,y,dy)
-		 * 
-		 * 	    returns:
-		 * 		    - column vector with fitting coefficients
-		 * 		    - the chi2 for the fit
-		 * 		    - the fitting function as a lambda x: ....
-		 * 		    """
-		 *	    def eval_fitting_function(f,c,x):
-		 *	        if len(f)==1: return c*f[0](x)
-		 *	        else: return sum(func(x)*c[i,0] for i,func in enumerate(f))
-		 *		    A = Matrix(len(points),len(f))
-		 *		    b = Matrix(len(points))
-		 *	    for i in range(A.rows):
-		 *	        weight = 1.0/points[i][2] if len(points[i])>2 else 1.0
-		 *        	b[i,0] = weight*float(points[i][1])
-		 *          for j in range(A.cols):
-		 *              A[i,j] = weight*f[j](float(points[i][0]))
-		 *        	c = (1.0/(A.t*A))*(A.t*b)
-		 *          chi = A*c-b
-		 *          chi2 = norm(chi,2)**2
-		 *          fitting_f = lambda x, c=c, f=f, q=eval_fitting_function: q(f,c,x)
-		 *          return c.data, chi2, fitting_f
-		 */
-		
-		// Variable Declaration
-		return points;
-	}
-	/*
-     def solve_fixed_point(f, x, ap=1e-6, rp=1e-4, ns=100):
-     def g(x): return f(x)+x # f(x)=0 <=> g(x)=x
-     Dg = D(g)
-     for k in xrange(ns):
-     if abs(Dg(x)) >= 1:
-     raise ArithmeticError, 'error D(g)(x)>=1'
-     (x_old, x) = (x, g(x))
-     if k>2 and norm(x_old-x)<max(ap,norm(x)*rp):
-     return x
-     raise ArithmeticError, 'no convergence'
-     
-     def solve_bisection(f, a, b, ap=1e-6, rp=1e-4, ns=100):
-     fa, fb = f(a), f(b)
-     if fa == 0: return a
-     if fb == 0: return b
-     if fa*fb > 0:
-     raise ArithmeticError, 'f(a) and f(b) must have opposite sign'
-     for k in xrange(ns):
-     x = (a+b)/2
-     fx = f(x)
-     if fx==0 or norm(b-a)<max(ap,norm(x)*rp): return x
-     elif fx * fa < 0: (b,fb) = (x, fx)
-     else: (a,fa) = (x, fx)
-     raise ArithmeticError, 'no convergence'
-     
-     
-     
-     def solve_secant(f, x, ap=1e-6, rp=1e-4, ns=20):
-     x = float(x) # make sure it is not int
-     (fx, Dfx) = (f(x), D(f)(x))
-     for k in xrange(ns):
-     if norm(Dfx) < ap:
-     raise ArithmeticError, 'unstable solution'
-     (x_old, fx_old,x) = (x, fx, x-fx/Dfx)
-     if k>2 and norm(x-x_old)<max(ap,norm(x)*rp): return x
-     fx = f(x)
-     Dfx = (fx-fx_old)/(x-x_old)
-     raise ArithmeticError, 'no convergence'
-     
-     def solve_newton_stabilized(f, a, b, ap=1e-6, rp=1e-4, ns=20):
-     fa, fb = f(a), f(b)
-     if fa == 0: return a
-     if fb == 0: return b
-     if fa*fb > 0:
-     raise ArithmeticError, 'f(a) and f(b) must have opposite sign'
-     x = (a+b)/2
-     (fx, Dfx) = (f(x), D(f)(x))
-     for k in xrange(ns):
-     x_old, fx_old = x, fx
-     if norm(Dfx)>ap: x = x - fx/Dfx
-     if x==x_old or x<a or x>b: x = (a+b)/2
-     fx = f(x)
-     if fx==0 or norm(x-x_old)<max(ap,norm(x)*rp): return x
-     Dfx = (fx-fx_old)/(x-x_old)
-     if fx * fa < 0: (b,fb) = (x, fx)
-     else: (a,fa) = (x, fx)
-     raise ArithmeticError, 'no convergence'
-     
-     def optimize_bisection(f, a, b, ap=1e-6, rp=1e-4, ns=100):
-     Dfa, Dfb = D(f)(a), D(f)(b)
-     if Dfa == 0: return a
-     if Dfb == 0: return b
-     if Dfa*Dfb > 0:
-     raise ArithmeticError, 'D(f)(a) and D(f)(b) must have opposite sign'
-     for k in xrange(ns):
-     x = (a+b)/2
-     Dfx = D(f)(x)
-     if Dfx==0 or norm(b-a)<max(ap,norm(x)*rp): return x
-     elif Dfx * Dfa < 0: (b,Dfb) = (x, Dfx)
-     else: (a,Dfa) = (x, Dfx)
-     raise ArithmeticError, 'no convergence'
-     
-     
-     
-     def optimize_secant(f, x, ap=1e-6, rp=1e-4, ns=100):
-     x = float(x) # make sure it is not int
-     (fx, Dfx, DDfx) = (f(x), D(f)(x), DD(f)(x))
-     for k in xrange(ns):
-     if Dfx==0: return x
-     if norm(DDfx) < ap:
-     raise ArithmeticError, 'unstable solution'
-     (x_old, Dfx_old, x) = (x, Dfx, x-Dfx/DDfx)
-     if norm(x-x_old)<max(ap,norm(x)*rp): return x
-     fx = f(x)
-     Dfx = D(f)(x)
-     DDfx = (Dfx - Dfx_old)/(x-x_old)
-     raise ArithmeticError, 'no convergence'
-     
-     def optimize_newton_stabilized(f, a, b, ap=1e-6, rp=1e-4, ns=20):
-     Dfa, Dfb = D(f)(a), D(f)(b)
-     if Dfa == 0: return a
-     if Dfb == 0: return b
-     if Dfa*Dfb > 0:
-     raise ArithmeticError, 'D(f)(a) and D(f)(b) must have opposite sign'
-     x = (a+b)/2
-     (fx, Dfx, DDfx) = (f(x), D(f)(x), DD(f)(x))
-     for k in xrange(ns):
-     if Dfx==0: return x
-     x_old, fx_old, Dfx_old = x, fx, Dfx
-     if norm(DDfx)>ap: x = x - Dfx/DDfx
-     if x==x_old or x<a or x>b: x = (a+b)/2
-     if norm(x-x_old)<max(ap,norm(x)*rp): return x
-     fx = f(x)
-     Dfx = (fx-fx_old)/(x-x_old)
-     DDfx = (Dfx-Dfx_old)/(x-x_old)
-     if Dfx * Dfa < 0: (b,Dfb) = (x, Dfx)
-     else: (a,Dfa) = (x, Dfx)
-     raise ArithmeticError, 'no convergence'
-     
-     def optimize_golden_search(f, a, b, ap=1e-6, rp=1e-4, ns=100):
-     a,b=float(a),float(b)
-     tau = (sqrt(5.0)-1.0)/2.0
-     x1, x2 = a+(1.0-tau)*(b-a), a+tau*(b-a)
-     fa, f1, f2, fb = f(a), f(x1), f(x2), f(b)
-     for k in xrange(ns):
-     if f1 > f2:
-     a, fa, x1, f1 = x1, f1, x2, f2
-     x2 = a+tau*(b-a)
-     f2 = f(x2)
-     else:
-     b, fb, x2, f2 = x2, f2, x1, f1
-     x1 = a+(1.0-tau)*(b-a)
-     f1 = f(x1)
-     if k>2 and norm(b-a)<max(ap,norm(b)*rp): return b
-     raise ArithmeticError, 'no convergence'
-     
-	 */
-	
-	
+	}	
 }

@@ -16,7 +16,7 @@ public class TestMatrix {
 	// Global Variables
 	private int myRows;
 	private int myCols;
-	private float[][] myData;
+	private double [][] myData;
 	
 	// TestMatrix Constructor
 	public TestMatrix(int rows, int columns) {
@@ -27,7 +27,7 @@ public class TestMatrix {
 		
 		this.myRows = rows;
 		this.myCols= columns;
-		this.myData = new float[this.myRows][this.myCols];
+		this.myData = new double[this.myRows][this.myCols];
 		for (r=0; r<this.myRows; r++) {
 			for (c=0; c<this.myCols; c++) {
 				this.myData[r][c] = 0;
@@ -43,22 +43,22 @@ public class TestMatrix {
 		return this.myCols;
 	}
 	
-	public void changeMe(int row, int column, float myvalue) {
+	public void changeMe(int row, int column, double myvalue) {
         
 		this.myData[row][column] = myvalue;
 	}
 	
-	public void updateAddMe(int row, int column, float myvalue) {
+	public void updateAddMe(int row, int column, double myvalue) {
 		
 		this.myData[row][column] = this.myData[row][column] + myvalue;
 	}
     
-	public void updateSubMe(int row, int column, float myvalue) {
+	public void updateSubMe(int row, int column, double myvalue) {
 		
 		this.myData[row][column] = this.myData[row][column] - myvalue;
 	}
 	
-	public float getMe(int row, int column) {
+	public double getMe(int row, int column) {
 		return this.myData[row][column];
 	}
 	
@@ -127,7 +127,7 @@ public class TestMatrix {
 		return newData;
 	}	
 	
-	public TestMatrix mulMatrix(float x) {
+	public TestMatrix mulMatrix(double x) {
 		
 		//Variable Declaration
 		TestMatrix newData;		// Placeholder for the matrix multiplication
@@ -173,7 +173,7 @@ public class TestMatrix {
 		return newData;
 	}
 	
-	public TestMatrix divMatrix(float x) {
+	public TestMatrix divMatrix(double x) {
 		
 		//Variable Declaration
 		TestMatrix newData;		// Placeholder for the matrix division
@@ -195,7 +195,7 @@ public class TestMatrix {
 	private void swapMe(int r1, int c1, int r2, int c2) {
 		
 		//Variable Declaration
-		float p;				// Float value placeholder
+		double p;				// double value placeholder
         
 		p = this.myData[r1][c1];
 		this.myData[r1][c1] = this.myData[r2][c2];
@@ -225,8 +225,8 @@ public class TestMatrix {
 		int c;					// Column loop counting variable	
 		int i;					// Loop counting variable
 		int m;					// Placeholder column varialbe
-		float p;				// Float value placeholder
-		float q;				// Float value placeholder
+		double p;				// double value placeholder
+		double q;				// double value placeholder
 		
 		currentData = this.copyMe();
 		newData = new TestMatrix(this.myRows, this.myCols);	
