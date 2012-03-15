@@ -57,7 +57,7 @@ public abstract class TestFunctionAbstract {
 		return conditionMe2;
 	}
 	
-	// BROKEN
+	// BROKEN	
 	public TestMatrix fit_least_squares(double x, double y, double dy) {
 		/*
 		 *		def fit_least_squares(points, f):
@@ -77,8 +77,8 @@ public abstract class TestFunctionAbstract {
 		 *	    def eval_fitting_function(f,c,x):
 		 *	        if len(f)==1: return c*f[0](x)
 		 *	        else: return sum(func(x)*c[i,0] for i,func in enumerate(f))
-		 *		    A = Matrix(len(points),len(f))
-		 *		    b = Matrix(len(points))
+		 *		A = Matrix(len(points),len(f))
+		 *		b = Matrix(len(points))
 		 *	    for i in range(A.rows):
 		 *	        weight = 1.0/points[i][2] if len(points[i])>2 else 1.0
 		 *        	b[i,0] = weight*float(points[i][1])
@@ -121,7 +121,7 @@ public abstract class TestFunctionAbstract {
 		dg = Dg(x);
 		for(k=0; k<ns; k++) {
 			if(Math.abs(dg)>=1) {
-				System.out.println("Arithmatic error! Dg(x)>=1! Returning zero.");
+				System.out.println("Arithmatic Error! Dg(x)>=1 for **solve_fixed_point**. Returning zero.");
 				return 0;
 			}
 			x_old = x;
@@ -130,7 +130,7 @@ public abstract class TestFunctionAbstract {
 		if (k>2 && A.norm(x_old-x)<Math.max(ap,A.norm(x)*rp)) {
 			return x;
 		}
-		System.out.println("There is no convergence for solve_fixed_point. Returning zero.");
+		System.out.println("Arithmetic Error! **solve_fixed_point** does not converge. Returning zero.");
 		return 0;
 	}
 	
@@ -163,7 +163,7 @@ public abstract class TestFunctionAbstract {
 		if(fa==0) return a;
 		if(fb==0) return b;
 		if(fa*fb>0) {
-			System.out.println("Arithmetic error! f(a) and f(b) must have opposite signs! Returning zero.");
+			System.out.println("Arithmetic error! f(a) and f(b) must have opposite signs for **solve_bisection**. Returning zero.");
 			return 0;
 		}
 		for(k=0; k<ns; k++) {
@@ -179,7 +179,7 @@ public abstract class TestFunctionAbstract {
 				fa = fx;
 			}
 		}
-		System.out.println("Arithmetic error! No convergence for solve bisection! Returning zero.");
+		System.out.println("Arithmetic Error! **solve_bisection** does not converge. Returning zero.");
 		return 0;
 	}
     
@@ -207,61 +207,167 @@ public abstract class TestFunctionAbstract {
       		x = x - f(x)/Df(x);
       		if(Math.abs(x-x_old)<Math.max(ap,rp*Math.abs(x))) return x;
     	}
-    	System.out.println("Cannot solve Newton.Function does not converge. Returning zero.");
+    	System.out.println("Arithmetic Error! **solve_newton** does not converge. Returning zero.");
     	return 0;
 	}  
 	
-    /*
-     * 		def solve_secant(f, x, ap=1e-6, rp=1e-4, ns=20):
-     *			x = float(x) # make sure it is not int
-     *			(fx, Dfx) = (f(x), D(f)(x))
-     *			for k in xrange(ns):
-     *   			if norm(Dfx) < ap:
-     *       			raise ArithmeticError, 'unstable solution'
-     *   				(x_old, fx_old,x) = (x, fx, x-fx/Dfx)
-     *   				if k>2 and norm(x-x_old)<max(ap,norm(x)*rp): return x
-     *   				fx = f(x)
-     *   				Dfx = (fx-fx_old)/(x-x_old)
-     *			raise ArithmeticError, 'no convergence'
-     */
+	public double solve_secant(double x) {
+		/*
+		 * 		def solve_secant(f, x, ap=1e-6, rp=1e-4, ns=20):
+	     *			x = float(x) # make sure it is not int
+	     *			(fx, Dfx) = (f(x), D(f)(x))
+	     *			for k in xrange(ns):
+	     *   			if norm(Dfx) < ap:
+	     *       			raise ArithmeticError, 'unstable solution'
+	     *   			(x_old, fx_old,x) = (x, fx, x-fx/Dfx)
+	     *   			if k>2 and norm(x-x_old)<max(ap,norm(x)*rp): return x
+	     *   			fx = f(x)
+	     *   			Dfx = (fx-fx_old)/(x-x_old)
+	     *			raise ArithmeticError, 'no convergence'
+	     */
+		
+		// Variable declaration
+		int k;			// Loop counting variable
+		double fx;		// The result of the function
+		double Dfx;		// The result of the derivative of the function
+		double x_old;	// Previous value of x
+		double fx_old;	// Previous value of f(x)
+		
+		fx = f(x);
+		Dfx = Df(x);
+		for(k=0;k<ns; k++) {
+			if(A.norm(Dfx) < ap) {
+				System.out.println("Arithmetic Error! Unstable solution for **solve_secant**.  Returning zero.");
+				return 0;
+			}
+			x_old = x;
+			fx_old = fx;
+			x = x-fx/Dfx;
+			if(k>2 && A.norm(x-x_old)<Math.max(ap, A.norm(x)*rp)) return x;
+			fx = f(x);
+			Dfx = (fx-fx_old)/(x-x_old);
+		}
+		System.out.println("Arithmetic Error! **solve_secant** does not converge. Returning zero.");
+		return 0;
+	}
 	
-    /*
-     * 		def solve_newton_stabilized(f, a, b, ap=1e-6, rp=1e-4, ns=20):
-     *			fa, fb = f(a), f(b)
-     *			if fa == 0: return a
-     *			if fb == 0: return b
-     *			if fa*fb > 0:
-     *   			raise ArithmeticError, 'f(a) and f(b) must have opposite sign'
-     *			x = (a+b)/2
-     *			(fx, Dfx) = (f(x), D(f)(x))
-     *			for k in xrange(ns):
-     *   			x_old, fx_old = x, fx
-     *   			if norm(Dfx)>ap: x = x - fx/Dfx
-     *   			if x==x_old or x<a or x>b: x = (a+b)/2
-     *   			fx = f(x)
-     *   			if fx==0 or norm(x-x_old)<max(ap,norm(x)*rp): return x
-     *   			Dfx = (fx-fx_old)/(x-x_old)
-     *   			if fx * fa < 0: (b,fb) = (x, fx)
-     *   			else: (a,fa) = (x, fx)
-     *			raise ArithmeticError, 'no convergence'
-     */
+	public double solve_newton_stabilized(double a, double b) {
+		/*
+		 * 		def solve_newton_stabilized(f, a, b, ap=1e-6, rp=1e-4, ns=20):
+	     *			fa, fb = f(a), f(b)
+	     *			if fa == 0: return a
+	     *			if fb == 0: return b
+	     *			if fa*fb > 0:
+	     *   			raise ArithmeticError, 'f(a) and f(b) must have opposite sign'
+	     *			x = (a+b)/2
+	     *			(fx, Dfx) = (f(x), D(f)(x))
+	     *			for k in xrange(ns):
+	     *   			x_old, fx_old = x, fx
+	     *   			if norm(Dfx)>ap: x = x - fx/Dfx
+	     *   			if x==x_old or x<a or x>b: x = (a+b)/2
+	     *   			fx = f(x)
+	     *   			if fx==0 or norm(x-x_old)<max(ap,norm(x)*rp): return x
+	     *   			Dfx = (fx-fx_old)/(x-x_old)
+	     *   			if fx * fa < 0: (b,fb) = (x, fx)
+	     *   			else: (a,fa) = (x, fx)
+	     *			raise ArithmeticError, 'no convergence'
+		 */
+        
+		// Variable declaration
+		int k;			// Loop counting variable
+		double x;		// Average of a and b
+		double fa;		// The result of f(a)
+		double fb;		// The result of f(b)
+		double fx;		// The result of the function
+		double Dfx;		// The result of the derivative of the function
+		double x_old;	// Previous value of x
+		double fx_old;	// Previous value of f(x)
+        
+		fa = f(a);
+		fb = f(b);
+		if(fa ==0) return a;
+		if(fb==0) return b;
+		if (fa*fb > 0) {
+			System.out.println("Arithmetic Error! f(a) and f(b) must have opposite sign for **solve_newton_stabilized**. Returning zero.");
+			return 0;
+		}
+		x=(a+b)/2;
+		fx = f(x);
+		Dfx = Df(x);
+		for(k=0; k<ns; k++) {
+			x_old = x;
+			fx_old = fx;
+			if (A.norm(Dfx)>ap) {
+				x = x-fx/Dfx;
+			}
+			if(x==x_old || x<a || x>b) {
+				x=(a+b)/2;
+			}
+			fx = f(x);
+			if(fx==0 || A.norm(x-x_old)<Math.max(ap, A.norm(x)*rp)) return x;
+			Dfx = (fx-fx_old)/(x-x_old);
+			if(fx*fa<0) {
+				b = x;
+				fb = fx;
+			}
+			else {
+				a = x;
+				fa = fx;
+			}
+		}
+		System.out.println("Arithmetic Error! **solve_newton_stabilized** does not converge. Returning zero.");
+		return 0;
+	}
 	
-    /*
-     * 		def optimize_bisection(f, a, b, ap=1e-6, rp=1e-4, ns=100):
-     *			Dfa, Dfb = D(f)(a), D(f)(b)
-     *			if Dfa == 0: return a
-     *			if Dfb == 0: return b
-     *			if Dfa*Dfb > 0:
-     *   			raise ArithmeticError, 'D(f)(a) and D(f)(b) must have opposite sign'
-     *			for k in xrange(ns):
-     *   			x = (a+b)/2
-     *   			Dfx = D(f)(x)
-     *   			if Dfx==0 or norm(b-a)<max(ap,norm(x)*rp): return x
-     *   			elif Dfx * Dfa < 0: (b,Dfb) = (x, Dfx)
-     *   			else: (a,Dfa) = (x, Dfx)
-     *			raise ArithmeticError, 'no convergence'
-     */
-    
+	double optimize_bisection(double a, double b) {
+		/*
+		 * 		def optimize_bisection(f, a, b, ap=1e-6, rp=1e-4, ns=100):
+	     *			Dfa, Dfb = D(f)(a), D(f)(b)
+	     *			if Dfa == 0: return a
+	     *			if Dfb == 0: return b
+	     *			if Dfa*Dfb > 0:
+	     *   			raise ArithmeticError, 'D(f)(a) and D(f)(b) must have opposite sign'
+	     *			for k in xrange(ns):
+	     *   			x = (a+b)/2
+	     *   			Dfx = D(f)(x)
+	     *   			if Dfx==0 or norm(b-a)<max(ap,norm(x)*rp): return x
+	     *   			elif Dfx * Dfa < 0: (b,Dfb) = (x, Dfx)
+	     *   			else: (a,Dfa) = (x, Dfx)
+	     *			raise ArithmeticError, 'no convergence'
+		 */
+        
+		// Variable declaration
+		int k;			// Loop counting variable
+		double x;		// Average of a and b
+		double Dfa;		// The result of Df(a)
+		double Dfb;		// The result of Df(b)
+		double Dfx;		// The result of the derivative of the function
+        
+		Dfa = Df(a);
+		Dfb = Df(b);
+		if(Dfa==0) return a;
+		if(Dfb==0) return b;
+		if(Dfa*Dfb > 0) {
+			System.out.println("Arithmetic Error! Df(a) and Df(b) must have opposite sign for **optimize_bisection**. Return zero.");
+			return 0;
+		}
+		for(k=0; k<ns; k++) {
+			x = (a+b)/2;
+			Dfx = Df(x);
+			if(Dfx==0 || A.norm(b-a)<Math.max(ap,A.norm(x)*rp)) return x;
+			else if(Dfx*Dfa<0) {
+				b = x;
+				Dfb = Dfx;
+			}
+			else {
+				a = x;
+				Dfa = Dfx;
+			}
+		}
+		System.out.println("Arithmetic Error! **optimize_bisection** does not converge. Returning zero.");
+		return 0;
+	}
+	
 	double optimize_newton(double x_guess) {
 		/*
 		 * 		def optimize_newton(f, x, ap=1e-6, rp=1e-4, ns=20):
@@ -285,66 +391,180 @@ public abstract class TestFunctionAbstract {
 			x = x - Df(x)/DDf(x);
 			if(Math.abs(x-x_old)<Math.max(ap,rp*Math.abs(x))) return x;
 		}
-		System.out.println("Cannot solve Newton.Function does not converge. Returning zero.");
+		System.out.println("Arithmetic Error! **optimize_newton** does not converge. Returning zero.");
 		return 0;
 	}  
 	
-	/*
-	 * 		def optimize_secant(f, x, ap=1e-6, rp=1e-4, ns=100):
-     *			x = float(x) # make sure it is not int
-     *			(fx, Dfx, DDfx) = (f(x), D(f)(x), DD(f)(x))
-     *			for k in xrange(ns):
-     *		    if Dfx==0: return x
-     *			if norm(DDfx) < ap:
-     *				raise ArithmeticError, 'unstable solution'
-     *   			(x_old, Dfx_old, x) = (x, Dfx, x-Dfx/DDfx)
-     *   			if norm(x-x_old)<max(ap,norm(x)*rp): return x
-     *   			fx = f(x)
-     *   			Dfx = D(f)(x)
-     *   			DDfx = (Dfx - Dfx_old)/(x-x_old)
-     *			raise ArithmeticError, 'no convergence'
-	 */
+	double optimize_secant(double x) {
+		/*
+		 * 		def optimize_secant(f, x, ap=1e-6, rp=1e-4, ns=100):
+	     *			x = float(x) # make sure it is not int
+	     *			(fx, Dfx, DDfx) = (f(x), D(f)(x), DD(f)(x))
+	     *			for k in xrange(ns):
+	     *		    	if Dfx==0: return x
+	     *				if norm(DDfx) < ap:
+	     *					raise ArithmeticError, 'unstable solution'
+	     *   			(x_old, Dfx_old, x) = (x, Dfx, x-Dfx/DDfx)
+	     *   			if norm(x-x_old)<max(ap,norm(x)*rp): return x
+	     *   			fx = f(x)
+	     *   			Dfx = D(f)(x)
+	     *   			DDfx = (Dfx - Dfx_old)/(x-x_old)
+	     *			raise ArithmeticError, 'no convergence'
+		 */
+		
+		// Variable declaration
+		int k;			// Loop counting variable
+		double Dfx;		// The result of the derivative of the function
+		double DDfx;	// The result of the second derivative of the function
+		double x_old;	// Previous value of x
+		double Dfx_old;	// Previous value of Df(x)
+        
+		Dfx = Df(x);
+		DDfx = DDf(x);
+		for(k=0; k<ns; k++) {
+			if(Dfx==0) return x;
+			if(A.norm(DDfx) <ap) {
+				System.out.println("Arithmetic Error. Unstable solution for **optimize_secant**. Returning zero.");
+				return 0;
+			}
+			x_old = x;
+			Dfx_old = Dfx;
+			x = x-Dfx/DDfx;
+			if((x-x_old)<Math.max(ap, A.norm(x)*rp)) return x;
+			Dfx = Df(x);
+			DDfx = (Dfx - Dfx_old)/(x-x_old);
+		}
+		System.out.println("Arithmetic Error! **optimize_secant** does not converge. Returning zero.");
+		return 0;
+	}
 	
-	/*
-	 * 		def optimize_newton_stabilized(f, a, b, ap=1e-6, rp=1e-4, ns=20):
-     *			Dfa, Dfb = D(f)(a), D(f)(b)
-     *			if Dfa == 0: return a
-     *			if Dfb == 0: return b
-     *			if Dfa*Dfb > 0:
-     *   			raise ArithmeticError, 'D(f)(a) and D(f)(b) must have opposite sign'
-     *			x = (a+b)/2
-     *			(fx, Dfx, DDfx) = (f(x), D(f)(x), DD(f)(x))
-     *			for k in xrange(ns):
-     *   			if Dfx==0: return x
-     *   			x_old, fx_old, Dfx_old = x, fx, Dfx
-     *   			if norm(DDfx)>ap: x = x - Dfx/DDfx
-     *   			if x==x_old or x<a or x>b: x = (a+b)/2
-     *   			if norm(x-x_old)<max(ap,norm(x)*rp): return x
-     *   			fx = f(x)
-     *   			Dfx = (fx-fx_old)/(x-x_old)
-     *   			DDfx = (Dfx-Dfx_old)/(x-x_old)
-     *   			if Dfx * Dfa < 0: (b,Dfb) = (x, Dfx)
-     *   			else: (a,Dfa) = (x, Dfx)
-     *			raise ArithmeticError, 'no convergence'
-	 */
+	double optimize_newton_stabilized(double a, double b) {
+		/*
+		 * 		def optimize_newton_stabilized(f, a, b, ap=1e-6, rp=1e-4, ns=20):
+	     *			Dfa, Dfb = D(f)(a), D(f)(b)
+	     *			if Dfa == 0: return a
+	     *			if Dfb == 0: return b
+	     *			if Dfa*Dfb > 0:
+	     *   			raise ArithmeticError, 'D(f)(a) and D(f)(b) must have opposite sign'
+	     *			x = (a+b)/2
+	     *			(fx, Dfx, DDfx) = (f(x), D(f)(x), DD(f)(x))
+	     *			for k in xrange(ns):
+	     *   			if Dfx==0: return x
+	     *   			x_old, fx_old, Dfx_old = x, fx, Dfx
+	     *   			if norm(DDfx)>ap: x = x - Dfx/DDfx
+	     *   			if x==x_old or x<a or x>b: x = (a+b)/2
+	     *   			if norm(x-x_old)<max(ap,norm(x)*rp): return x
+	     *   			fx = f(x)
+	     *   			Dfx = (fx-fx_old)/(x-x_old)
+	     *   			DDfx = (Dfx-Dfx_old)/(x-x_old)
+	     *   			if Dfx * Dfa < 0: (b,Dfb) = (x, Dfx)
+	     *   			else: (a,Dfa) = (x, Dfx)
+	     *			raise ArithmeticError, 'no convergence'
+		 */
+        
+		// Variable declaration
+		int k;				// Loop counting variable
+		double x;			// Average of a and b
+		double Dfa;			// The result of Df(a)
+		double Dfb;			// The result of Df(b)
+		double fx;			// The result of the function
+		double Dfx;			// The result of the derivative of the function
+		double DDfx;		// The result of the second derivative of the function
+		double x_old;		// Previous value of x
+		double fx_old;		// Previous value of f(x)
+		double Dfx_old;		// Previous value of Df(x)
+        
+		Dfa = Df(a);
+		Dfb = Df(b);
+		if (Dfa == 0) return a;
+		if(Dfb == 0) return b;
+		if (Dfa*Dfb>0) {
+			System.out.println("Arithmetic Error! Df(a) and Df(b) must have opposite sign for **optimize_newton_stabilized**. Returning zero.");
+			return 0;
+		}
+		x=(a+b)/2;
+		fx = f(x);
+		Dfx = Df(x);
+		DDfx = DDf(x);
+		for(k=0; k<ns; k++) {
+			if(Dfx ==0) return x;
+			x_old = x;
+			fx_old = fx;
+			Dfx_old = Dfx;
+			if (A.norm(DDfx)>ap) {
+				x = x-Dfx/DDfx;
+			}
+			if(x==x_old || x<a || x>b) {
+				x=(a+b)/2;
+			}
+			if(A.norm(x-x_old)<Math.max(ap, A.norm(x)*rp)) return x;
+			fx = f(x);
+			Dfx = (fx-fx_old)/(x-x_old);
+			DDfx = (Dfx - Dfx_old)/(x-x_old);
+			if(Dfx*Dfa<0) {
+				b = x;
+				Dfb = Dfx;
+			}
+			else {
+				a = x;
+				Dfa = Dfx;
+			}
+		}
+		System.out.println("Arithmetic Error! **optimize_newton_stabilized** does not converge. Returning zero.");
+		return 0;
+ 	}
 	
-	/*
-	 * 		def optimize_golden_search(f, a, b, ap=1e-6, rp=1e-4, ns=100):
-     *			a,b=float(a),float(b)
-     *			tau = (sqrt(5.0)-1.0)/2.0
-     *			x1, x2 = a+(1.0-tau)*(b-a), a+tau*(b-a)
-     *			fa, f1, f2, fb = f(a), f(x1), f(x2), f(b)
-     *			for k in xrange(ns):
-     *   			if f1 > f2:
-     *       			a, fa, x1, f1 = x1, f1, x2, f2
-     *       			x2 = a+tau*(b-a)
-     *       			f2 = f(x2)
-     *   			else:
-     *       			b, fb, x2, f2 = x2, f2, x1, f1
-     *       			x1 = a+(1.0-tau)*(b-a)
-     *       			f1 = f(x1)
-     *   			if k>2 and norm(b-a)<max(ap,norm(b)*rp): return b
-     *			raise ArithmeticError, 'no convergence'
-	 */
-    
+	double optimize_golden_search(double a, double b) {
+		/*
+		 * 		def optimize_golden_search(f, a, b, ap=1e-6, rp=1e-4, ns=100):
+	     *			a,b=float(a),float(b)
+	     *			tau = (sqrt(5.0)-1.0)/2.0
+	     *			x1, x2 = a+(1.0-tau)*(b-a), a+tau*(b-a)
+	     *			fa, f1, f2, fb = f(a), f(x1), f(x2), f(b)
+	     *			for k in xrange(ns):
+	     *   			if f1 > f2:
+	     *       			a, fa, x1, f1 = x1, f1, x2, f2
+	     *       			x2 = a+tau*(b-a)
+	     *       			f2 = f(x2)
+	     *   			else:
+	     *       			b, fb, x2, f2 = x2, f2, x1, f1
+	     *       			x1 = a+(1.0-tau)*(b-a)
+	     *       			f1 = f(x1)
+	     *   			if k>2 and norm(b-a)<max(ap,norm(b)*rp): return b
+	     *			raise ArithmeticError, 'no convergence'
+		 */
+        
+		// Variable declaration
+		int k;			// Loop counting variable
+		double tau;		// tau
+		double x1;		// Guess 1
+		double x2;		// Guess 2
+		double f1;		// f(x1)
+		double f2;		// f(x2)
+        
+		tau = (Math.sqrt(5.0)-1)/2;
+		x1 = a+(1-tau)*(b-a);
+		x2 = a+tau*(b-a);
+		f1 = f(x1);
+		f2 = f(x2);
+		for(k=0; k<ns; k++) {
+			if(f1>f2) {
+				a = x1;
+				x1 = x2;
+				f1 = f2;
+				x2 = a+tau*(b-a);
+				f2 = f(x2);
+			}
+			else {
+				b = x2;
+				x2 = x1;
+				f2 = f1;
+				x1 = a+(1.0-tau)*(b-a);
+				f1 = f(x1);
+			}
+			if(k>2 && A.norm(b-a)<Math.max(ap, A.norm(b)*rp)) return b;
+		}
+		System.out.println("Arithmetic Error! **optimize_golden_search** does not converge. Returning zero.");
+		return 0;
+	}
 }

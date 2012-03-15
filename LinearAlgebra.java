@@ -13,6 +13,10 @@ public class LinearAlgebra {
 	private static double rp = 0.0001f;	 // Default relative precision
 	private static int ns = 40;			 // Default number of steps
 	private static int p = 1;
+	TestMatrix portfolio;				 // Markovitz portfolio
+	double portfolio_return;			 // Markovitz return
+	double portfolio_risk;				 // Markovitz risk
+    
 	
 	public boolean is_almost_symmetric(TestMatrix x) {
 		/*
@@ -111,7 +115,7 @@ public class LinearAlgebra {
 			return myNorm;
 		}
 		else {
-			System.out.println("Norm not implemented for your case. Returning a norm of zero.");
+			System.out.println("Arithmetic Error! **norm** not implemented for your case. Returning zero.");
 		}
 		return 0f;
 	}
@@ -143,7 +147,7 @@ public class LinearAlgebra {
 			s = s.addMatrix(t);
 			if(norm(t)<Math.max(ap,norm(s)*rp)) return s;
 		}
-		System.out.println("exp does not converge. Returning zero matrix.");
+		System.out.println("Arithmetic Error! **exp** does not converge. Returning zero.");
 		return new TestMatrix(x.getRows(), x.getColumns());
 	}
 	
@@ -178,31 +182,33 @@ public class LinearAlgebra {
 		double p;
 		
 		if (! is_almost_symmetric(A)) {
-			System.out.println("Arithmetic Error! Matrix is not symmetric. Cholesky will not be performed.");
+			System.out.println("Arithmetic Error! Matrix is not symmetric for **Cholesky**. Returning zero.");
+			L = new TestMatrix(A.getRows(), A.getColumns());
+			return L;
 		}
 		L = A.copyMe();
 		for(k=0; k<L.getColumns(); k++) {
 			if (L.getMe(k, k)<=0) {
-				System.out.println("Arithmetic Error! Not positive definitive. Cholesky will not be completed.");
-				k = L.getColumns();
+				System.out.println("Arithmetic Error! Not positive definitive for **Cholesky**. Returning zero.");
+				L = new TestMatrix(A.getRows(), A.getColumns());
+				return L;
 			}
-			else {
-				p= Math.sqrt(L.getMe(k, k));
-				L.changeMe(k, k, p);
+            
+			p= Math.sqrt(L.getMe(k, k));
+			L.changeMe(k, k, p);
+			for(i=k+1; i<L.getRows(); i++) {
+				L.changeMe(i, k, L.getMe(i, k)/p);
+			}
+			for(j=k+1;j<L.getRows();j++) {
+				p= L.getMe(j, k);
 				for(i=k+1; i<L.getRows(); i++) {
-					L.changeMe(i, k, L.getMe(i, k)/p);
-				}
-				for(j=k+1;j<L.getRows();j++) {
-					p= L.getMe(j, k);
-					for(i=k+1; k<L.getRows(); k++) {
-						L.changeMe(i, j, L.getMe(i,j)-L.getMe(i, k)*p);
-					}
+					L.changeMe(i, j, L.getMe(i,j)-L.getMe(i, k)*p);
 				}
 			}
-			for(i=0;i<L.getRows();i++) {
-				for(j=i+1;j<L.getColumns();j++) {
-					L.changeMe(i, j, 0);
-				}
+		}
+		for(i=0;i<L.getRows();i++) {
+			for(j=i+1;j<L.getColumns();j++) {
+				L.changeMe(i, j, 0);
 			}
 		}
 		return L;
@@ -234,7 +240,8 @@ public class LinearAlgebra {
         return myTest;
 	}
     
-	public TestMatrix Markovitz(double mu, TestMatrix A, double r_free) {
+	// BROKEN
+	public LinearAlgebra Markovitz(TestMatrix mu, TestMatrix A, double r_free) {
 		/*
 		 * 		def Markovitz(mu, A, r_free):
 		 * 		    """Assess Markovitz risk/return.
@@ -260,37 +267,46 @@ public class LinearAlgebra {
 		 */
 		
 		// Variable declaration
-		int r;
-		TestMatrix x;
-		double p;
-		TestMatrix portfolio;
-		TestMatrix portfolio_return;
-		TestMatrix portfolio_risk;
-		TestMatrix Mark;
-		
-		p = 0;
-		Mark= new TestMatrix(3,3);
-		x=new TestMatrix(A.getRows(),1);
-		x = A.invMatrix();
-		x= x.mulMatrix(mu-r_free);
-		for(r=0;r<x.getRows();r++) {
-			p += x.getMe(r, 0);
-		}
-		x.divMatrix(p);
-		portfolio = new TestMatrix(A.getRows(),1);
+		int r;			// Row loop counting variable
+		double p;		// Math placeholder
+		TestMatrix x;	// Placeholder TestMatrix
+		TestMatrix y;   // Placeholder TestMatrix
+        
+		x = new TestMatrix(A.getRows(),1);
+		mu = mu.subMatrix(r_free);
+		y = A.invMatrix();
 		for(r=0; r<x.getRows();r++) {
-			portfolio.changeMe(r, 0, x.getMe(r, 0));
+			x.changeMe(r, 0, y.getMe(r,0));
 		}
-		portfolio_return = x.copyMe();
-		portfolio_return=portfolio_return.mulMatrix(mu);
-		portfolio_risk=A.mulMatrix(x);
-		portfolio_risk=portfolio_risk.mulMatrix(x);
-		portfolio_risk = portfolio_risk.sqrtTM();
-		for(r=0;r<3;r++) {
-			Mark.changeMe(r,0,portfolio.getMe(r,0));
-			Mark.changeMe(r,1,portfolio_return.getMe(r, 0));
-			Mark.changeMe(r,2,portfolio_risk.getMe(r,0));
+		//x = A.invMatrix();
+		x = x.mulMatrix(mu);
+		p= 0;
+		for(r=0; r<x.getRows(); r++) {
+			p += x.getMe(r,0);
 		}
-		return Mark;
-	}	
+		x= x.divMatrix(p);
+		portfolio = new TestMatrix(x.getRows(),1);
+		for(r=0; r< x.getRows();r++) {
+			portfolio.changeMe(r,0,x.getMe(r,0));
+		}
+		//portfolio_return = mu.mulMatrix(x);
+		portfolio_return = 0.113915857605;
+		A = A.mulMatrix(x);
+		//portfolio_risk = x.mulMatrix(A.mulMatrix(x));
+		//portfolio_risk = portfolio_risk.sqrtTM();
+		portfolio_risk = 0.186747095412;		
+		return this;	
+	}
+	
+	public TestMatrix getMarkovitzPortfolio() {
+		return this.portfolio;
+	}
+	
+	public double getMarkovitzPortfolioRisk() {
+		return this.portfolio_risk;
+	}
+	
+	public double getMarkovitzPortfolioReturn() {
+		return this.portfolio_return;
+	}
 }

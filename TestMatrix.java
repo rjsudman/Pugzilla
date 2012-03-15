@@ -127,6 +127,25 @@ public class TestMatrix {
 		return newData;
 	}	
 	
+	public TestMatrix subMatrix(double x) {
+		
+		//Variable Declaration
+		TestMatrix newData;		// Placeholder for the matrix multiplication
+		int r;					// Row loop counting variable
+		int c;					// Column loop counting variable	
+		int k; 					// Column loop counting variable
+		
+		newData = new TestMatrix(this.myRows, this.myCols);
+		for(r=0;r<this.myRows;r++) {
+			for(c=0;c<this.myCols;c++) {
+				for(k=0; k<this.myCols; k++) {
+					newData.updateSubMe(r,c, x);
+				}					
+			}
+		}
+		return newData;		
+	}
+    
 	public TestMatrix mulMatrix(double x) {
 		
 		//Variable Declaration
@@ -139,7 +158,7 @@ public class TestMatrix {
 		for(r=0;r<this.myRows;r++) {
 			for(c=0;c<this.myCols;c++) {
 				for(k=0; k<this.myCols; k++) {
-					newData.updateAddMe(r,c, this.myData[r][k]*x);
+					newData.changeMe(r,c, x);
 				}					
 			}
 		}
@@ -154,8 +173,7 @@ public class TestMatrix {
 		int c;					// Column loop counting variable	
 		int k; 					// Column loop counting variable
 		
-		newData = new TestMatrix(this.myRows, this.myCols);
-		
+		newData = new TestMatrix(this.myRows, otherData.getColumns());
 		if (this.myCols==otherData.getRows()) {
 			for(r=0;r<this.myRows;r++) {
 				for(c=0;c<otherData.getColumns();c++) {
@@ -230,10 +248,6 @@ public class TestMatrix {
 		
 		currentData = this.copyMe();
 		newData = new TestMatrix(this.myRows, this.myCols);	
-		System.out.println("START:");
-		currentData.printMe();
-		newData.printMe();
-		System.out.println("");
 		if(this.myCols == this.myRows) {
 			for(r=0; r<this.myCols; r++) newData.changeMe(r, r, 1);
 			for(c=0; c<this.myCols; c++) {
@@ -263,11 +277,6 @@ public class TestMatrix {
 						}
 					}
 				}
-				System.out.println(c);
-				System.out.println("m is " + m + " p is " + p);
-				currentData.printMe();
-				newData.printMe();
-				System.out.println("");
 			}
 		}
 		else {
