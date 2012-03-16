@@ -240,7 +240,6 @@ public class LinearAlgebra {
         return myTest;
 	}
     
-	// BROKEN
 	public LinearAlgebra Markovitz(TestMatrix mu, TestMatrix A, double r_free) {
 		/*
 		 * 		def Markovitz(mu, A, r_free):
@@ -270,31 +269,24 @@ public class LinearAlgebra {
 		int r;			// Row loop counting variable
 		double p;		// Math placeholder
 		TestMatrix x;	// Placeholder TestMatrix
-		TestMatrix y;   // Placeholder TestMatrix
+		TestMatrix a;	// Placeholder TestMatrix
         
 		x = new TestMatrix(A.getRows(),1);
 		mu = mu.subMatrix(r_free);
-		y = A.invMatrix();
-		for(r=0; r<x.getRows();r++) {
-			x.changeMe(r, 0, y.getMe(r,0));
-		}
-		//x = A.invMatrix();
-		x = x.mulMatrix(mu);
+		a = A.invMatrix();
+		x = a.mulMatrix(mu);
 		p= 0;
 		for(r=0; r<x.getRows(); r++) {
 			p += x.getMe(r,0);
 		}
 		x= x.divMatrix(p);
-		portfolio = new TestMatrix(x.getRows(),1);
+		portfolio = new TestMatrix(1,x.getRows());
 		for(r=0; r< x.getRows();r++) {
-			portfolio.changeMe(r,0,x.getMe(r,0));
+			portfolio.changeMe(0,r,x.getMe(r,0));
 		}
-		//portfolio_return = mu.mulMatrix(x);
-		portfolio_return = 0.113915857605;
+		portfolio_return = mu.mulMatrixScalar(x);
 		A = A.mulMatrix(x);
-		//portfolio_risk = x.mulMatrix(A.mulMatrix(x));
-		//portfolio_risk = portfolio_risk.sqrtTM();
-		portfolio_risk = 0.186747095412;		
+		portfolio_risk = A.mulMatrixScalar(x);
 		return this;	
 	}
 	

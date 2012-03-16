@@ -70,11 +70,12 @@ public class TestMatrix {
 		
 		System.out.print("[");
 		for (r=0; r<this.myRows; r++) {
-			System.out.print(" {");
+			System.out.print(" [");
 			for (c=0; c<this.myCols; c++) {
+				if(this.myRows == 1 && c>0) System.out.print(" [");
 				System.out.print(this.myData[r][c]);
 				if(c<this.myRows-1) System.out.print(", ");
-				else System.out.print("}");
+				else System.out.print("]");
 			}
 		}
 		System.out.print(" ]\n");
@@ -163,6 +164,23 @@ public class TestMatrix {
 			}
 		}
 		return newData;		
+	}
+	
+	public double mulMatrixScalar(TestMatrix B) {
+		
+		// Variable Declaration
+		int r;			// Row loop counting variable
+		double mySum;	// Scalar product of two matrices with 1 column and equal rows
+		
+		mySum=0;
+		if(this.myCols == 1 && B.getColumns() == 1 && this.myRows == B.getRows()) {
+			for (r=0; r<this.myRows; r++) {
+				mySum+= this.myData[r][0]*B.getMe(r, 0);				
+			}
+			return mySum;
+		}
+		System.out.println("Arithmetic Error! **mulMatrix** expecting scalars with equal rows with a single column. Returning 0.");
+		return 0;
 	}
 	
 	public TestMatrix mulMatrix(TestMatrix otherData) {

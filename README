@@ -4,4 +4,9 @@
 \\ CSC 431-510	
 \\ March 17, 2012	
 \\ BSD License	
+\\ Original Python code created by Massimo Di Pierro - BSD license
 \\***************************************************************************\\
+
+To compile place all files in the same directory.
+RunMe goes through all the functions with examples.
+
