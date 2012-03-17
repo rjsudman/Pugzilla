@@ -73,6 +73,7 @@ public class LinearAlgebra {
 	public double norm(double A) {
 		return Math.abs(A);
 	}
+	
 	public double norm(TestMatrix A) {
 		/*
 		 *	def norm(A,p=1):

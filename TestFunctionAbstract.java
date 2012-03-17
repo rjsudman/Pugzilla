@@ -33,7 +33,7 @@ public abstract class TestFunctionAbstract {
 		return (f(x+h)-f(x-h))/(2.0*h)+x;
 	}
     
-	public double condition_number(TestFunction f, double x) {
+	public double condition_number(double x) {
 		/* 
 		 * 	def condition_number(f,x=None,h=1e-6):
 		 * 		if callable(f) and not x is None:
@@ -51,14 +51,14 @@ public abstract class TestFunctionAbstract {
 		// Variable declaration
 		TestMatrix conditionMe;		// The condition matrix
 		double conditionMe2;		// The condition number
-        
+
 		conditionMe = f.invMatrix();
 		conditionMe2 = A.norm(f)*A.norm(conditionMe);
 		return conditionMe2;
 	}
 	
 	// BROKEN	
-	public TestMatrix fit_least_squares(double x, double y, double dy) {
+	public TestMatrix fit_least_squares() {
 		/*
 		 *		def fit_least_squares(points, f):
 		 * 			"""

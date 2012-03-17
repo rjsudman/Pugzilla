@@ -6,12 +6,12 @@
  */		
 
 /* 
- * The TestFunction class implemented as (x-2)*(x+8).
+ * The TestFunction class implemented as x*x-5.0*x.
  */
 public class TestFunction extends TestFunctionAbstract {
 	
 	public double f(double x) { 
-		return (x-2)*(x+8);
+		return x*x-5.0*x;
 	}
     
 }

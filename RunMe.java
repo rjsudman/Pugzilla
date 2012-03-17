@@ -15,10 +15,13 @@ import java.text.DecimalFormat;
 public class RunMe {
 	
 	// Variable declaration
-	private static TestFunction Y = new TestFunction();		// Test function (x-2)*(x+8)
-	private static TestFunction2 Z = new TestFunction2();	// Test function (x-1)*(x+3)
+	private static TestFunction Y = new TestFunction();		// Test function x*x-5.0*x
+	private static TestFunction2 Z = new TestFunction2();	// Test function x*x-5.0*x
 	private static TestFunction3 P = new TestFunction3();	// Test function (x-2)*(x-5)/10
 	private static TestFunction4 Q = new TestFunction4();	// Test function (x-2)*(x-5)
+	/*private static TestFunction5 F1 = new TestFunction5();	// Function x
+	private static TestFunction6 F2 = new TestFunction6(); // Function 5+0.8*x+0.3*x*x+Math.sin(x)
+	private static TestFunction7 F3 = new TestFunction7();	// Function 2 */
 	private static LinearAlgebra LA = new LinearAlgebra();	// A LinearAlgebra object
 	private static DecimalFormat twoD = new DecimalFormat("#.0");
 	private static DecimalFormat twelveD = new DecimalFormat("0.000000000000");
@@ -155,7 +158,37 @@ public class RunMe {
 		System.out.println("");
 	}
 	
-	// BROKEN
+	public static void Test35() {
+		/* Test 3.5: condition_number
+		 * This test mirrors test094 from numeric.py
+		 * >>> def f(x): return x*x-5.0*x
+		 * >>> print condition_number(f,1)
+		 * 0.74999...
+		 * >>> A = Matrix.from_list([[1,2],[3,4]])
+		 * >>> print condition_number(A)
+		 * 21.0
+		 */
+		
+		// Variable declaration
+		TestMatrix myMatrix = new TestMatrix(2,2);
+		double myCondition;
+		
+		// Variable initialization
+		myMatrix.changeMe(0, 0, 1.0);
+		myMatrix.changeMe(0, 1, 2.0);
+		myMatrix.changeMe(1, 0, 3.0);
+		myMatrix.changeMe(1, 1, 4.0);
+		
+		System.out.println("***condition_number****");
+		System.out.println("Condition number for x*x-5.0*x with x=1: " + twelveD.format(Y.condition_number(1)));
+		System.out.println("                        Expected Result: 0.749999999883");
+		//System.out.println("Condition number for TestMatrix [[1,2],[3,4]]: " + 
+		myCondition = myMatrix.condition_number();
+		myCondition = myCondition + 0.0;
+		System.out.println("");
+		//System.out.println("                              Expected Result: 21.0\n");
+	}
+	
 	public static void Test4() {
 		/* Test 4: fit_least_squares 
 		 * This test mirrors test097 from numeric.py
@@ -175,22 +208,22 @@ public class RunMe {
 		 * 98 2964.03 2964.58
 		 * 99 3023.5 3024.48
 		 */
-		TestMatrix W = new TestMatrix(3,1);
-		int k;
-		
-		for(k=90; k<=00; k++) {
-			W = Y.fit_least_squares((double) k,5+0.8*k+0.3*k*k+Math.sin(k),2.0);
-		}
-		System.out.println("BROKEN****fit_least_squares****");
-		System.out.println("(x-2)*(x+8) fit_least_squares x=1.0 y=3.0 z=0.5: ");
-		W = Y.fit_least_squares(1.0,3.0,0.5);
-		W.printMe();
-		System.out.println("     Expected Result: BROKEN");
-		System.out.println("(x-1)*(x+3) fit_least_squares x=1.0 y=3.0 z=0.5: ");
-		W =Z.fit_least_squares(1.0,3.0,0.5);
-		W.printMe();
-		System.out.println("     Expected Result: BROKEN");
-		System.out.println("");
+		// Variable Declaration
+		/*TestFunctionAbstract  [] myFunctions = new TestFunctionAbstract[3]; // An array of functions
+		int range;
+		int k;									// Loop counting variable
+
+		// Initialize Variables
+		myFunctions[0] = F1;
+		myFunctions[1] = F2;
+		myFunctions[3] = F3;
+		range = 100;
+		*/
+		System.out.println("****fit_least_squares****");
+		/*System.out.println("(k,5+0.8*k+0.3*k*k+math.sin(k),2) fit_least_squares x=1.0 y=3.0 z=0.5: ");
+		W = Y.fit_least_squares(myFunction, range);
+		W.printMe();*/
+		System.out.println("**fit_least_squares** not implemented.\n");
 	}
 	
 	public static void Test5() {
@@ -323,12 +356,176 @@ public class RunMe {
 		System.out.println("");
 	}
 	
+	public static void Test15() {
+		/* Test 15: Testing derivatives (f(x), Df(x), DDf(x)
+		 * This test mirrors test081 in numeric.py
+		 * >> def f(x): return x*x-5.0*x
+		 * >>> print f(0)
+		 * 0.0
+		 * >>> f1 = D(f) # first derivative
+		 * >>> print f1(0)
+		 * -5.0
+		 * >>> f2 = DD(f) # second derivative
+		 * >>> print f2(0)
+		 * 2.00000...
+		 */
+		
+		System.out.println("****Dervatives Test****");
+		System.out.println("f(0) x*x-5.0*x: " + Z.f(0.0));
+		System.out.println("Expected Result: 0.0");
+		System.out.println("Df(0) x*x-5.0*x: " + Z.Df(0.0));
+		System.out.println("Expected Result: -5.0");
+		System.out.println("DDf(0) x*x-5.0*x: " + twelveD.format(Z.DDf(0.0)));
+		System.out.println(" Expected Result: 2.00000000048\n");
+	}
+	
+	public static void Test16() {
+		/* Test 16: Matrix Math
+		 * This test mirrors test087, test089
+		 * NOTE unlike the python tests, these tests are NOT additive as below 
+		 *     >>> A = Matrix.from_list([[1.0,2.0],[3.0,4.0]])
+    	 *>>> print A + A      # calls A.__add__(A)
+    	 * [[2.0, 4.0], [6.0, 8.0]]
+    	 * >>> print A + 2      # calls A.__add__(2)
+    	 * [[3.0, 2.0], [3.0, 6.0]]
+    	 * >>> print A - 1      # calls A.__add__(1)
+    	 * [[0.0, 2.0], [3.0, 3.0]]
+    	 * >>> print -A         # calls A.__neg__()
+    	 * [[-1.0, -2.0], [-3.0, -4.0]]
+    	 * >>> print 5 - A      # calls A.__rsub__(5)
+  	 	 * [[4.0, -2.0], [-3.0, 1.0]]
+    	 * >>> b = Matrix.from_list([[1.0],[2.0],[3.0]])
+ 	  	 * >>> print b + 2      # calls b.__add__(2)
+    	 * [[3.0], [4.0], [5.0]]
+         * >>> A = Matrix.from_list([[1.0,2.0],[3.0,4.0]])
+    	 * >>> print 2*A       # scalar * matrix
+    	 * [[2.0, 4.0], [6.0, 8.0]]
+    	 * >>> print A*A       # matrix * matrix
+    	 * [[7.0, 10.0], [15.0, 22.0]]
+    	 * >>> b = Matrix.from_list([[1],[2],[3]])
+    	 * >>> print b*b       # scalar product
+    	 * 14
+         * >>> A = Matrix.from_list([[1,2],[4,9]])
+    	 * >>> print 1/A
+    	 * [[9.0, -2.0], [-4.0, 1.0]]
+    	 * >>> print A/A
+    	 * [[1.0, 0.0], [0.0, 1.0]]
+    	 * >>> print A/2
+    	 * [[0.5, 1.0], [2.0, 4.5]]
+		 */
+		
+		// Variable declaration
+		TestMatrix myTest = new TestMatrix(2,2);	// TestMatrix A
+		TestMatrix myTest2 = new TestMatrix(1,3);	// TestMatrix B
+		TestMatrix myTest3 = new TestMatrix(3,3);	// TestMatrix C
+		TestMatrix myTest4 = new TestMatrix(1,3);	// TestMatrix D
+		TestMatrix myTest5 = new TestMatrix(2,2);	// TestMatrix E
+		TestMatrix x;								// TestMatrix placeholder
+		double y;									// Double result placeholder
+		
+		// Variable initialization
+		myTest.changeMe(0, 0, 1.0);
+		myTest.changeMe(0, 1, 2.0);
+		myTest.changeMe(1, 0, 3.0);
+		myTest.changeMe(1, 1, 4.0);
+		myTest2.changeMe(0, 0, 1.0);
+		myTest2.changeMe(0, 1, 2.0);
+		myTest2.changeMe(0, 2, 3.0);
+		myTest3.changeMe(0, 0, 1.0);
+		myTest3.changeMe(0, 1, 2.0);
+		myTest3.changeMe(0, 2, 2.0);
+		myTest3.changeMe(1, 0, 4.0);
+		myTest3.changeMe(1, 1, 4.0);
+		myTest3.changeMe(1, 2, 2.0);
+		myTest3.changeMe(2, 0, 4.0);
+		myTest3.changeMe(2, 1, 6.0);
+		myTest3.changeMe(2, 2, 4.0);
+		myTest4.changeMe(0, 0, 3.0);
+		myTest4.changeMe(0, 1, 6.0);
+		myTest4.changeMe(0, 2, 10.0);
+		myTest5.changeMe(0, 0, 1.0);
+		myTest5.changeMe(0, 1, 2.0);
+		myTest5.changeMe(1, 0, 4.0);
+		myTest5.changeMe(1, 1, 9.0);
+
+		System.out.println("****Matrix Math****");
+		System.out.print("Matrix A: ");
+		myTest.printMe();
+		System.out.println("Expected Result: [ [1.0,2.0] [3.0,4.0] ]");
+		System.out.print("Matrix B: ");
+		myTest2.printMe();
+		System.out.println("Expected Result: [ [1.0] [2.0] [3.0] ]");
+		System.out.print("Matrix C: ");
+		myTest3.printMe();
+		System.out.println("Expected Result: [ [1,2,2] [4,4,2] [4,6,4] ]");
+		System.out.print("Matrix D: ");
+		myTest4.printMe();
+		System.out.println("Expected Result: [ [3] [6] [10] ]");
+		System.out.print("Matrix E: ");
+		myTest5.printMe();
+		System.out.println("Expected Result: [ [1,2] [4,9] ]");
+		System.out.print("Matrix F: ");
+		
+		System.out.print("A + A: ");
+		x= myTest.addMatrix(myTest);
+		x.printMe();
+		System.out.println("Expected Result: [[2.0, 4.0], [6.0, 8.0]]");
+		System.out.print("A + 2: ");
+		x = myTest.addMatrix(2);
+		x.printMe();
+		System.out.println("Expected Result: [[3.0, 4.0], [5.0, 6.0]]");
+		System.out.print("A - 1: ");
+		x=myTest.subMatrix(1);
+		x.printMe();
+		System.out.println("Expected Result: [[0.0, 1.0], [2.0, 3.0]]");
+		System.out.print("-A: ");
+		x=myTest.mulMatrix(-1.0);
+		x.printMe();
+		System.out.println("Expected Result: [[-1.0, -2.0], [-3.0, -4.0]]");
+		System.out.print("5 - A: ");
+		x=myTest.mulMatrix(-1);
+		x=x.addMatrix(5);
+		x.printMe();
+		System.out.println("Expected Result: [[4.0, 3.0], [2.0, 1.0]]");
+		System.out.print("B + 2: ");
+		x=myTest2.addMatrix(2);
+		x.printMe();
+		System.out.println("Expected Result: [[3.0], [4.0], [5.0]]");
+		System.out.print("2 * E: ");
+		x=myTest.mulMatrix(2);
+		x.printMe();
+		System.out.println("Expected Result: [[2.0, 4.0], [6.0, 8.0]]");
+		System.out.print("E * E: ");
+		x=myTest.mulMatrix(myTest);
+		x.printMe();
+		System.out.println("Expected Result: [[7.0, 10.0], [15.0, 22.0]]");
+		y=myTest2.mulMatrixScalar(myTest2);
+		System.out.println("B * B: " + y);
+		System.out.println("Expected Result: 14");
+		System.out.print("1 / E: ");
+		x=myTest5.invMatrix();
+		x.printMe();
+		System.out.println("Expected Result: [[9.0, -2.0], [-4.0, 1.0]]");
+		System.out.print("E / E: ");
+		x=myTest5.invMatrix();
+		x=myTest5.mulMatrix(x);
+		x.printMe();
+		System.out.println("Expected Result: [[1.0, 0.0], [0.0, 1.0]]");
+		System.out.print("E / 2: ");
+		x=myTest5.divMatrix(2);
+		x.printMe();
+		System.out.println("Expected Result: [[0.5, 1.0], [2.0, 4.5]]\n");
+	}
+	
 	public static void main (String[] args) {
 		
 		Test1();	// TestMatrix, exp
+		Test16();	// Testing matrix math
+		Test15();	// Testing derivatives (f(x), Df(x), DDf(x)
 		Test2();	// Cholesky, is_almost_symmetric (part of Cholesky), is_almost_zero
 		Test3();	// Markovitz
-		Test4();	// fit_least_squares BROKEN
+		Test35();	// condition_number
+		Test4();	// fit_least_squares (not implemented)
 		Test5();	// solve_fixed_point
 		Test6();	// solve_bisection
 		Test7();	// solve_newton

@@ -105,6 +105,22 @@ public class TestMatrix {
 		return newData;
 	}
 	
+	public TestMatrix addMatrix(double x) {
+		
+		//Variable Declaration
+		TestMatrix newData;		// Placeholder for the matrix multiplication
+		int r;					// Row loop counting variable
+		int c;					// Column loop counting variable	
+		
+		newData = this.copyMe();
+		for(r=0;r<this.myRows;r++) {
+			for(c=0;c<this.myCols;c++) {
+				newData.updateAddMe(r,c, x);
+			}
+		}
+		return newData;
+	}
+	
 	public TestMatrix subMatrix(TestMatrix otherData) {
 		
 		//Variable Declaration
@@ -112,12 +128,13 @@ public class TestMatrix {
 		int r;					// Row loop counting variable
 		int c;					// Column loop counting variable
 		
-		newData = new TestMatrix(this.myRows, this.myCols);
+		// Variable initialization;
+		newData = this.copyMe();
 		
 		if (this.myRows==otherData.getRows() && this.myCols==otherData.getColumns()) {
 			for(r=0;r<this.myRows;r++) {
 				for(c=0;c<this.myCols;c++) {
-					newData.changeMe(r, c, this.myData[r][c] - otherData.getMe(r, c));
+					newData.updateSubMe(r, c, otherData.getMe(r, c));
 				}
 			}
 		}
@@ -125,6 +142,7 @@ public class TestMatrix {
 		else {
 			System.out.println("Matrix addition error!  Matrices are not of the same size! Returning an all-zero TestMatrix.");
 		}
+		newData.printMe();
 		return newData;
 	}	
 	
@@ -134,14 +152,11 @@ public class TestMatrix {
 		TestMatrix newData;		// Placeholder for the matrix multiplication
 		int r;					// Row loop counting variable
 		int c;					// Column loop counting variable	
-		int k; 					// Column loop counting variable
 		
 		newData = this.copyMe();
 		for(r=0;r<this.myRows;r++) {
 			for(c=0;c<this.myCols;c++) {
-				for(k=0; k<this.myCols; k++) {
-					newData.updateSubMe(r,c, x);
-				}					
+					newData.updateSubMe(r,c, x);				
 			}
 		}
 		return newData;		
@@ -153,14 +168,11 @@ public class TestMatrix {
 		TestMatrix newData;		// Placeholder for the matrix multiplication
 		int r;					// Row loop counting variable
 		int c;					// Column loop counting variable	
-		int k; 					// Column loop counting variable
 		
 		newData = this.copyMe();
 		for(r=0;r<this.myRows;r++) {
 			for(c=0;c<this.myCols;c++) {
-				for(k=0; k<this.myCols; k++) {
-					newData.changeMe(r,c, x);
-				}					
+				newData.changeMe(r,c, x*newData.getMe(r,c));				
 			}
 		}
 		return newData;		
@@ -176,6 +188,12 @@ public class TestMatrix {
 		if(this.myCols == 1 && B.getColumns() == 1 && this.myRows == B.getRows()) {
 			for (r=0; r<this.myRows; r++) {
 				mySum+= this.myData[r][0]*B.getMe(r, 0);	
+			}
+			return mySum;
+		}
+		else if(this.myRows == 1 && B.getRows() == 1 && this.myCols == B.getColumns()) {
+			for (r=0; r<this.myCols; r++) {
+				mySum+= this.myData[0][r]*B.getMe(0, r);	
 			}
 			return mySum;
 		}
@@ -215,14 +233,11 @@ public class TestMatrix {
 		TestMatrix newData;		// Placeholder for the matrix division
 		int r;					// Row loop counting variable
 		int c; 					// Column loop counting variable
-		int k;					// Column loop counting variable
 		
 		newData = this.copyMe();;
 		for (r=0; r<this.myRows;r++) {
 			for (c=0; c<this.myCols;c++) {
-				for(k=0; k<this.myCols; k++) {
-					newData.changeMe(r,c, this.myData[r][k]/x);
-				}
+				newData.changeMe(r,c, this.myData[r][c]/x);
 			}	
 		}
 		return newData;
@@ -336,6 +351,34 @@ public class TestMatrix {
 		}
 		return square;
 	}
+	
+	public double norm() {
+		/* We will assume p to be 1 */
+		// Variable declaration
+		//int r;			// Row counting variable
+		//int c;			// Column counting variable
+		//double myNorm;	// The norm of the TestMatrix
+		
+		System.out.println("**norm** not implemented for type TestMatrix. Returning zero.");
+		return 0;
+	}
+		
+	
+	public double condition_number() {
+		/* 
+		 * 	def condition_number(f,x=None,h=1e-6):
+		 * 		if callable(f) and not x is None:
+		 *      	return D(f,h)(x)*x/f(x)
+		 *  	elif isinstance(f,Matrix): # if is the Matrix Jƒzz
+		 *      	return norm(f)*norm(1/f)
+		 *  	else:
+		 *      	raise NotImplementedError
+		 */
+		
+		System.out.println("**condition_number** not implemented for type TestMatrix. Returning zero.");
+		return 0;
+	}
+
 }
 
 
