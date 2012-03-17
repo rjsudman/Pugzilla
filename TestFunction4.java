@@ -6,7 +6,7 @@
  */		
 
 /* 
- * The TestFunction class implements the concept of a function.
+ * The TestFunction class implementeed as (x-2)*(x-5).
  */
 public class TestFunction4 extends TestFunctionAbstract {
 	

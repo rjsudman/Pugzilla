@@ -136,7 +136,7 @@ public class TestMatrix {
 		int c;					// Column loop counting variable	
 		int k; 					// Column loop counting variable
 		
-		newData = new TestMatrix(this.myRows, this.myCols);
+		newData = this.copyMe();
 		for(r=0;r<this.myRows;r++) {
 			for(c=0;c<this.myCols;c++) {
 				for(k=0; k<this.myCols; k++) {
@@ -155,7 +155,7 @@ public class TestMatrix {
 		int c;					// Column loop counting variable	
 		int k; 					// Column loop counting variable
 		
-		newData = new TestMatrix(this.myRows, this.myCols);
+		newData = this.copyMe();
 		for(r=0;r<this.myRows;r++) {
 			for(c=0;c<this.myCols;c++) {
 				for(k=0; k<this.myCols; k++) {
@@ -175,7 +175,7 @@ public class TestMatrix {
 		mySum=0;
 		if(this.myCols == 1 && B.getColumns() == 1 && this.myRows == B.getRows()) {
 			for (r=0; r<this.myRows; r++) {
-				mySum+= this.myData[r][0]*B.getMe(r, 0);				
+				mySum+= this.myData[r][0]*B.getMe(r, 0);	
 			}
 			return mySum;
 		}
@@ -217,11 +217,11 @@ public class TestMatrix {
 		int c; 					// Column loop counting variable
 		int k;					// Column loop counting variable
 		
-		newData = new TestMatrix(this.myRows, this.myCols);
+		newData = this.copyMe();;
 		for (r=0; r<this.myRows;r++) {
 			for (c=0; c<this.myCols;c++) {
 				for(k=0; k<this.myCols; k++) {
-					newData.updateAddMe(r,c, this.myData[r][k]/x);
+					newData.changeMe(r,c, this.myData[r][k]/x);
 				}
 			}	
 		}

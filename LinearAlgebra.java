@@ -269,12 +269,13 @@ public class LinearAlgebra {
 		int r;			// Row loop counting variable
 		double p;		// Math placeholder
 		TestMatrix x;	// Placeholder TestMatrix
-		TestMatrix a;	// Placeholder TestMatrix
+		TestMatrix m;	// PlaceholderT TestMatrix for mu
+		TestMatrix a;	// Placeholder TestMatrix for A
         
 		x = new TestMatrix(A.getRows(),1);
-		mu = mu.subMatrix(r_free);
+		m = mu.subMatrix(r_free);
 		a = A.invMatrix();
-		x = a.mulMatrix(mu);
+		x = a.mulMatrix(m);
 		p= 0;
 		for(r=0; r<x.getRows(); r++) {
 			p += x.getMe(r,0);
@@ -287,6 +288,7 @@ public class LinearAlgebra {
 		portfolio_return = mu.mulMatrixScalar(x);
 		A = A.mulMatrix(x);
 		portfolio_risk = A.mulMatrixScalar(x);
+		portfolio_risk = Math.sqrt(portfolio_risk);
 		return this;	
 	}
 	

@@ -1,5 +1,5 @@
 # Created by Massimo Di Pierro - BSD License
-
+import math
 class Matrix(object):
     def __init__(self,rows=1,cols=1,fill=0.0,optimize=False):
         """
@@ -284,9 +284,7 @@ def Markovitz(mu, A, r_free):
     x = Matrix(A.rows, 1)
     x = (1/A)*(mu - r_free)
     x = x/sum(x[r,0] for r in range(x.rows))
-    print x;
     portfolio = [x[r,0] for r in range(x.rows)]
-    print portfolio
     portfolio_return = mu*x
     portfolio_risk = sqrt(x*(A*x))
     return portfolio, portfolio_return, portfolio_risk

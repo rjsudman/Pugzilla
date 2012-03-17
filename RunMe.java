@@ -21,6 +21,7 @@ public class RunMe {
 	private static TestFunction4 Q = new TestFunction4();	// Test function (x-2)*(x-5)
 	private static LinearAlgebra LA = new LinearAlgebra();	// A LinearAlgebra object
 	private static DecimalFormat twoD = new DecimalFormat("#.0");
+	private static DecimalFormat twelveD = new DecimalFormat("0.000000000000");
 	
 	public static void Test1() {
 		/* Test 1:  Inverse Matrix 
@@ -147,16 +148,33 @@ public class RunMe {
 		System.out.print("Markovitz portfolio for matrix A with r_free=0.05: ");
 		portfolio.printMe();
 		System.out.println("                                  Expected Result: [ [0.5566343042071198] [0.27508090614886727] [0.16828478964401297] ]");
-		System.out.println("Markovitz return for matrix A: " + portfolio_return);
+		System.out.println("Markovitz return for matrix A: " + twelveD.format(portfolio_return));
 		System.out.println("              Expected Result: 0.113915857605");
-		System.out.println("Markovitz risk for matrix A: " + portfolio_risk);
+		System.out.println("Markovitz risk for matrix A: " + twelveD.format(portfolio_risk));
 		System.out.println("            Expected Result: 0.186747095412");
 		System.out.println("");
 	}
 	
 	// BROKEN
 	public static void Test4() {
-		/* Test 4: fit_least_squares */
+		/* Test 4: fit_least_squares 
+		 * This test mirrors test097 from numeric.py
+		 * >>> points = [(k,5+0.8*k+0.3*k*k+math.sin(k),2) for k in range(100)]
+		 * >>> a,chi2,fitting_f = fit_least_squares(points,QUADRATIC)
+		 * >>> for p in points[-10:]:
+		 * ...     print p[0], round(p[1],2), round(fitting_f(p[0]),2)
+		 * The expected output is:
+		 * 90 2507.89 2506.98
+		 * 91 2562.21 2562.08
+		 * 92 2617.02 2617.78
+		 * 93 2673.15 2674.08
+		 * 94 2730.75 2730.98
+		 * 95 2789.18 2788.48
+		 * 96 2847.58 2846.58
+		 * 97 2905.68 2905.28
+		 * 98 2964.03 2964.58
+		 * 99 3023.5 3024.48
+		 */
 		TestMatrix W = new TestMatrix(3,1);
 		int k;
 		
@@ -309,7 +327,7 @@ public class RunMe {
 		
 		Test1();	// TestMatrix, exp
 		Test2();	// Cholesky, is_almost_symmetric (part of Cholesky), is_almost_zero
-		Test3();	// Markovitz BROKEN
+		Test3();	// Markovitz
 		Test4();	// fit_least_squares BROKEN
 		Test5();	// solve_fixed_point
 		Test6();	// solve_bisection

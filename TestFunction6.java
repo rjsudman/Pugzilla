@@ -1,16 +1,16 @@
 /*
- * TestFunction2.java
+ * TestFunction6.java
  * BSD License
  * Original Python code created by Massimo Di Pierro - BSD license	
  * Java implementation by Ruthann Sudman - BSD license
  */		
 
 /* 
- * The TestFunction class implemented as (x-1)*(x+3).
+ * The TestFunction class implemented as 5+0.8*x+0.3*x*x+Math.sin(x).
  */
-public class TestFunction2 extends TestFunctionAbstract {
+public class TestFunction6 extends TestFunctionAbstract {
 	
 	public double f(double x) { 
-		return (x-1)*(x+3);
+		return 5+0.8*x+0.3*x*x+Math.sin(x);
 	}
 }
