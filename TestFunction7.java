@@ -20,7 +20,7 @@ public class TestFunction7 extends TestFunctionAbstract {
 	 * Implementation of the abstract method f with the function 2.
 	 * 
 	 * @param x	Value used to evaluate the function with.
-	 * @since No known exceptions.
+	 * exceptions No known exceptions.
 	 */
 	public double f(double x) { 
 		return 2;

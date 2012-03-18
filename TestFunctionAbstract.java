@@ -28,7 +28,7 @@ public abstract class TestFunctionAbstract {
 	 * An abstract function method to be extended by daughter classes.
 	 * 
 	 * @param x	The value used to evaluate the function.
-	 * @since No known exceptions.
+	 * exceptions No known exceptions.
 	 * @return The result of evaluating the function for x.
 	 */
 	public abstract double f(double x);
@@ -37,7 +37,7 @@ public abstract class TestFunctionAbstract {
 	 * The first derivative for the abstract function f.
 	 * 
 	 * @param x	The value used to evaluate the first derivative.
-	 * @since No known exceptions.
+	 * exceptions No known exceptions.
 	 * @return	The result of evaluating the first derivative for x.
 	 */
 	public double Df(double x) {
@@ -48,7 +48,7 @@ public abstract class TestFunctionAbstract {
 	 * The second derivative for the abstract function f.
 	 * 
 	 * @param x	The value used to evaluate the second derivative.
-	 * @since No known exceptions.
+	 * exceptions No known exceptions.
 	 * @return The result of evaluating the second derivative for x.
 	 */
 	public double DDf(double x) {
@@ -59,7 +59,7 @@ public abstract class TestFunctionAbstract {
 	 * The abstract function f plus x
 	 * 
 	 * @param x	The value used to evaluate the second derivative.
-	 * @since No known exceptions.
+	 * exceptions No known exceptions.
 	 * @return	The result of evaluating the new function for x.
 	 */
 	public double g(double x) {
@@ -70,7 +70,7 @@ public abstract class TestFunctionAbstract {
 	 * The first derivative of the function g.
 	 * 
 	 * @param x The value used to evaluate the first derivative of g.
-	 * @since No known exceptions.
+	 * exceptions No known exceptions.
 	 * @return The result of evaluating the first derivative of g
 	 */
 	public double Dg(double x) {
@@ -81,7 +81,7 @@ public abstract class TestFunctionAbstract {
 	 * Evaluates the condition number of the abstract function f.
 	 * 
 	 * @param x	The value used to evaluate the condition number.
-	 * @since Does not work when the f(x) evaluates to zero.
+	 * exceptions Does not work when the f(x) evaluates to zero.
 	 * @return The condition number for the abstract function f.
 	 */
 	public double condition_number(double x) {
@@ -101,7 +101,7 @@ public abstract class TestFunctionAbstract {
 	 * Evaluates the condition number of the TestMatrix f.
 	 * 
 	 * @param f	The TestMatrix to be evaluated for condition number.
-	 * @since This function has not been properly implemented.
+	 * exceptions This function has not been properly implemented.
 	 * @return The condition number for the TestMatrix f.
 	 * @see TestMatrix
 	 */
@@ -120,7 +120,7 @@ public abstract class TestFunctionAbstract {
 	 * Evaluates the abstract function f for fit least squares.
 	 * 	
 	 * @return A TestMatrix of the least squares fit
-	 * @since This function has not been properly implemented, returns 0.
+	 * exceptions This function has not been properly implemented, returns 0.
 	 * @see TestMatrix
 	 */
 	public TestMatrix fit_least_squares() {
@@ -167,7 +167,7 @@ public abstract class TestFunctionAbstract {
 	 * Solves fixed point for the abstract function f.
 	 * 
 	 * @param x The value used to solve fixed point.
-	 * @since Does not work when the first derivative is greater than or equal to 1. Does not work if fixed point does not converge for x.
+	 * exceptions Does not work when the first derivative is greater than or equal to 1. Does not work if fixed point does not converge for x.
 	 * @return	Fixed point of the abstract function f for x.
 	 */
 	public double solve_fixed_point(double x) {
@@ -211,7 +211,7 @@ public abstract class TestFunctionAbstract {
 	 * 
 	 * @param a	The low value to examine the function.
 	 * @param b	The high value to examine the function.
-	 * @since f(a) and f(b) must have opposite signs. Does not work when bisection does not converge for f in range (a,b).
+	 * exceptions f(a) and f(b) must have opposite signs. Does not work when bisection does not converge for f in range (a,b).
 	 * @return Bisection for abstract function f in (a,b).
 	 */
 	public double solve_bisection(double a, double b) {
@@ -267,7 +267,7 @@ public abstract class TestFunctionAbstract {
 	 * Solves newton for the abstract function f.
 	 * 
 	 * @param x_guess	The result guess for newton.
-	 * @since Does not work when newton does not converge for f in x.
+	 * exceptions Does not work when newton does not converge for f in x.
 	 * @return Newton for abstract function f in x.
 	 */
 	public double solve_newton(double x_guess) {
@@ -301,7 +301,7 @@ public abstract class TestFunctionAbstract {
 	 * Solves secant for the abstract function f.
 	 * 
 	 * @param x	The value used to evaluate the abstract function f for secant.
-	 * @since If the norm of the function is less than the absolute function. If the secant does not converge for abstract function f in x.
+	 * exceptions If the norm of the function is less than the absolute function. If the secant does not converge for abstract function f in x.
 	 * @return	Secant of the abstract function f in x.
 	 */
 	public double solve_secant(double x) {
@@ -349,7 +349,7 @@ public abstract class TestFunctionAbstract {
 	 * 
 	 * @param a	The low value for f.
 	 * @param b	The high value for f.
-	 * @since f(a) and f(b) must evaluate with opposite signs. Does not work if newton stabilized does not converge.
+	 * exceptions f(a) and f(b) must evaluate with opposite signs. Does not work if newton stabilized does not converge.
 	 * @return Newton stabilized for the abstract function f in (a,b).
 	 */
 	public double solve_newton_stabilized(double a, double b) {
@@ -425,7 +425,7 @@ public abstract class TestFunctionAbstract {
 	 * 
 	 * @param a	The low value.
 	 * @param b	The high value.
-	 * @since Df(a) and Df(b) must evaluate with opposite signs. Does not work when bisection does not converge for f in (a,b).
+	 * exceptions Df(a) and Df(b) must evaluate with opposite signs. Does not work when bisection does not converge for f in (a,b).
 	 * @return Optimized bisection for the abstract function f in (a,b).
 	 */
 	public double optimize_bisection(double a, double b) {
@@ -481,7 +481,7 @@ public abstract class TestFunctionAbstract {
 	 * Newton optimized for the abstract function f.
 	 * 
 	 * @param x_guess The guess for newton.
-	 * @since Does not work if newton does not converge for f in x.
+	 * exceptions Does not work if newton does not converge for f in x.
 	 * @return Newton optimized for the abstract function f in x.
 	 */
 	public double optimize_newton(double x_guess) {
@@ -515,7 +515,7 @@ public abstract class TestFunctionAbstract {
 	 * Optimized secant for the abstract function f.
 	 * 
 	 * @param x The value used to evaluate secant for f.
-	 * @since Does not work if DDf(x) is less than absolute precision. Does not work if optimize secant does not converge for f in x.
+	 * exceptions Does not work if DDf(x) is less than absolute precision. Does not work if optimize secant does not converge for f in x.
 	 * @return Optimized secant for the abstract function f.
 	 */
 	public double optimize_secant(double x) {
@@ -566,7 +566,7 @@ public abstract class TestFunctionAbstract {
 	 * 
 	 * @param a	The low value.
 	 * @param b	The high value.
-	 * @since Df(a) and Df(b) must evaluate with opposite signs. Does not work if newton does not converge for the abstract function f in (a,b).
+	 * exceptions Df(a) and Df(b) must evaluate with opposite signs. Does not work if newton does not converge for the abstract function f in (a,b).
 	 * @return Optimized newton stabilized for the abstract function f.
 	 */
 	public double optimize_newton_stabilized(double a, double b) {
@@ -650,7 +650,7 @@ public abstract class TestFunctionAbstract {
 	 * 
 	 * @param a The low value.
 	 * @param b	The high value.
-	 * @since Does not work if golden search cannot be optimized for the abstract function f in (a,b).
+	 * exceptions Does not work if golden search cannot be optimized for the abstract function f in (a,b).
 	 * @return The optimized golden search for abstract function f.
 	 */
 	public double optimize_golden_search(double a, double b) {

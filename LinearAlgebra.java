@@ -28,7 +28,7 @@ public class LinearAlgebra {
 	 * 
 	 * @param x		The TestMatrix object to be examined.
 	 * @return		The boolean result of the test.
-	 * @since	No known exceptions.
+	 * exceptions	No known exceptions.
 	 * @see			TestMatrix	
 	 */
 	public boolean is_almost_symmetric(TestMatrix x) {
@@ -62,7 +62,7 @@ public class LinearAlgebra {
 	 * Returns a boolean value indicating if a matrix is almost zero.
 	 * 
 	 * @param A		The TestMatrix object to be examined.
-	 * @since	No known exceptions.
+	 * exceptions	No known exceptions.
 	 * @return		Boolean result of the test.
 	 * @see			TestMatrix
 	 */
@@ -94,7 +94,7 @@ public class LinearAlgebra {
 	/**
 	 * Returns the norm of a double value.
 	 * @param 		A	The value to be examined.
-	 * @since	No known sinces
+	 * exceptions	No known sinces
 	 * @return		The norm of A.
 	 */
 	public double norm(double A) {
@@ -104,7 +104,7 @@ public class LinearAlgebra {
 	/**
 	 * Returns the norm of a TestMatrix. Needs work. Not properly implemented.
 	 * @param A		The TestMatrix object to be examied.
-	 * @since	Norm will always be zero. Not properly implemented.
+	 * exceptions	Norm will always be zero. Not properly implemented.
 	 * @return		The norm of the matrix.
 	 */
 	public double norm(TestMatrix A) {
@@ -157,7 +157,7 @@ public class LinearAlgebra {
 	/**
 	 * Returns the exponent of a TestMatrix object.
 	 * @param x		The TestMatrix object to apply the function to.
-	 * @since	Algorithm may fail to converge, division by zero errors.
+	 * exceptions	Algorithm may fail to converge, division by zero errors.
 	 * @return		The exponent TestMatrix.
 	 * @see 		TestMatrix
 	 */
@@ -195,7 +195,7 @@ public class LinearAlgebra {
 	/**
 	 * Returns a TestMatrix object with the Cholesky algorithm applied.
 	 * @param A		The TestMatrix object to apply Cholesky to.
-	 * @since	Can't take a square root of a negative number.
+	 * exceptions	Can't take a square root of a negative number.
 	 * @return		A TestMatrix with Cholesky applied.
 	 * @see 		TestMatrix
 	 */
@@ -265,7 +265,7 @@ public class LinearAlgebra {
 	/**
 	 * Returns a boolean value indicating if a TestMatrix is positive definite.
 	 * @param A		The TestMatrix to test for positive definite.
-	 * @since	Run time error possible.
+	 * exceptions	Run time error possible.
 	 * @return		The boolean result of the algorithm.
 	 * @see			TestMatrix
 	 */
@@ -303,7 +303,7 @@ public class LinearAlgebra {
      * @param A			The TestMatrix object.
      * @param r_free	The risk free rate.
      * @return			LinearAlgebra reference to get portfolio, risk and return
-     * @since		TestMatrix should be symmetric. Rows in mu should mirror columns in A
+     * exceptions		TestMatrix should be symmetric. Rows in mu should mirror columns in A
      * @see				LinearAlgebra#getMarkovitzPortfolio()
      * @see				LinearAlgebra#getMarkovitzPortfolioRisk()
      * @see				LinearAlgebra#getMarkovitzPortfolioReturn()
@@ -363,7 +363,7 @@ public class LinearAlgebra {
 	/**
 	 * Get method to return Markovitz portfolio value.
 	 * @return 		Portfolio TestMatrix object
-	 * @since	Markovitz must be run and the value set prior to using this algorithm.
+	 * exceptions	Markovitz must be run and the value set prior to using this algorithm.
 	 * @see			#Markovitz(TestMatrix, TestMatrix, double)
 	 * @see			TestMatrix
 	 */
@@ -373,7 +373,7 @@ public class LinearAlgebra {
 	
 	/**
 	 * Get method to return Markovitz portfolio risk.
-	 * @since	Markovitz must be run and the value set prior to using this algorithm.
+	 * exceptions	Markovitz must be run and the value set prior to using this algorithm.
 	 * @return	Markovitz portfolio risk.
 	 * @see		#Markovitz(TestMatrix, TestMatrix, double)
 	 */
@@ -383,7 +383,7 @@ public class LinearAlgebra {
 	
 	/**
 	 * Get method to return Markovitz portfolio return.
-	 * @since	Markovitz must be run and the value set prior to using this algorithm.
+	 * exceptions	Markovitz must be run and the value set prior to using this algorithm.
 	 * @return	Markovitz portfolio return.
 	 * @see		#Markovitz(TestMatrix, TestMatrix, double)
 	 */

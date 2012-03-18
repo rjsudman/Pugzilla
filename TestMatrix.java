@@ -30,7 +30,7 @@ public class TestMatrix {
 	 * 
 	 * @param rows 		Number of rows in the TestMatrix.
 	 * @param columns	Number of Columns in the TestMatrix.
-	 * @since TestMatrix need to have at least 1 row and 1 column.
+	 * exceptions TestMatrix need to have at least 1 row and 1 column.
 	 */
 	public TestMatrix(int rows, int columns) {
 		
@@ -51,7 +51,7 @@ public class TestMatrix {
 	/**
 	 * Get method that returns the number of rows in the TestMatrix.
 	 * 
-	 * @since No known exceptions.
+	 * exceptions No known exceptions.
 	 * @return Number of rows in the TestMatrix myRows.
 	 */
 	public int getRows() {
@@ -61,7 +61,7 @@ public class TestMatrix {
 	/** 
 	 * Get method that returns the number of columns in the TestMatrix.
 	 * 
-	 * @since No known exceptions.
+	 * exceptions No known exceptions.
 	 * @return The number of columns in the TestMatrix myCols.
 	 */
 	public int getColumns() {
@@ -74,7 +74,7 @@ public class TestMatrix {
 	 * @param row		The row of the value to update.
 	 * @param column	The column of the value to update.
 	 * @param myvalue	The update value.
-	 * @since row and column must be in the bounds of the matrix myData.
+	 * exceptions row and column must be in the bounds of the matrix myData.
 	 */
 	public void changeMe(int row, int column, double myvalue) {
         
@@ -87,7 +87,7 @@ public class TestMatrix {
 	 * @param row		The row of the value to add to.
 	 * @param column	The column of the value to add to.
 	 * @param myvalue	The value to add to the original number.
-	 * @since row and column must be in the bounds of the matrix myData.
+	 * exceptions row and column must be in the bounds of the matrix myData.
 	 */
 	private void updateAddMe(int row, int column, double myvalue) {
 		
@@ -100,7 +100,7 @@ public class TestMatrix {
 	 * @param row		The row of the value to subtract from.
 	 * @param column	The column of the value to subtract.
 	 * @param myvalue	The value to subtract from the original number.
-	 * @since row and column must be in the bounds of the matrix myData.
+	 * exceptions row and column must be in the bounds of the matrix myData.
 	 */
 	public void updateSubMe(int row, int column, double myvalue) {
 		
@@ -112,7 +112,7 @@ public class TestMatrix {
 	 * 
 	 * @param row		The row of the desired value.
 	 * @param column	The column of the desired value.
-	 * @since row and column must be in the bounds of the matrix myData.
+	 * exceptions row and column must be in the bounds of the matrix myData.
 	 * @return	The desired value to return from myData.
 	 */
 	public double getMe(int row, int column) {
@@ -122,7 +122,7 @@ public class TestMatrix {
 	/**
 	 * Print out the myData in a single line.
 	 * 
-	 * @since Printing does not work well for TestMatrices with column = 1.
+	 * exceptions Printing does not work well for TestMatrices with column = 1.
 	 */
 	public void printMe() {
 		
@@ -147,7 +147,7 @@ public class TestMatrix {
 	 * Add two TestMatrices together.
 	 * 
 	 * @param otherData	The TestMatrix to add to myData.
-	 * @since The rows and columns of both matrices must be equal.
+	 * exceptions The rows and columns of both matrices must be equal.
 	 * @return The added TestMatrx.
 	 */
 	public TestMatrix addMatrix(TestMatrix otherData) {
@@ -178,7 +178,7 @@ public class TestMatrix {
 	 * Add a value to all elements in the TestMatrix.
 	 * 
 	 * @param x	The value to add to all elements of the TestMatrix.
-	 * @since No known exceptions
+	 * exceptions No known exceptions
 	 * @return The TestMatrix with the addition of x performed.
 	 */
 	public TestMatrix addMatrix(double x) {
@@ -201,7 +201,7 @@ public class TestMatrix {
 	 * Subtract one TestMatrix from another.
 	 * 
 	 * @param otherData	The matrix to subtract from myData.
-	 * @since The rows and columns of both matrices must be equal.
+	 * exceptions The rows and columns of both matrices must be equal.
 	 * @return The subtracted TestMatrix.
 	 */
 	public TestMatrix subMatrix(TestMatrix otherData) {
@@ -233,7 +233,7 @@ public class TestMatrix {
 	 * Subtract a specific value from all elements in the TestMatrix.
 	 * 
 	 * @param x The value to subtract from all elements in myData.
-	 * @since No known exceptions.
+	 * exceptions No known exceptions.
 	 * @return myData with x subtracted.
 	 */
 	public TestMatrix subMatrix(double x) {
@@ -256,7 +256,7 @@ public class TestMatrix {
 	 * Multiply all elements in a TestMatrix by a value.
 	 * 
 	 * @param x	The value to multiply all elements in myData by.
-	 * @since No known exceptions.
+	 * exceptions No known exceptions.
 	 * @return myData multiplied by x.
 	 */
 	public TestMatrix mulMatrix(double x) {
@@ -279,7 +279,7 @@ public class TestMatrix {
 	 * Do a scalar multiplication of two matrices.
 	 * 
 	 * @param B The TestMatrix to be multiplied with myData.
-	 * @since The number of rows for both TestMatrices must be one and the number of columns must be equal OR the number of columns for both TestMatrices must be one and the number of rows must be equal.
+	 * exceptions The number of rows for both TestMatrices must be one and the number of columns must be equal OR the number of columns for both TestMatrices must be one and the number of rows must be equal.
 	 * @return The scalar multiplication of myData and TestMatrix B.
 	 */
 	public double mulMatrixScalar(TestMatrix B) {
@@ -309,7 +309,7 @@ public class TestMatrix {
 	 * Multiply two TestMatrices together.
 	 * 
 	 * @param otherData	The TestMatrix to multiply with myData.
-	 * @since The number of columns in myData must be equal to the number of rows in otherData.
+	 * exceptions The number of columns in myData must be equal to the number of rows in otherData.
 	 * @return The multiplication of myData and TestMatrix otherData.
 	 */
 	public TestMatrix mulMatrix(TestMatrix otherData) {
@@ -342,7 +342,7 @@ public class TestMatrix {
 	 * Divide all elements in a TestMatrix by x.
 	 * 
 	 * @param x	The value to divide all myData elements by.
-	 * @since No known exceptions.
+	 * exceptions No known exceptions.
 	 * @return The muliplication of myData and x.
 	 */
 	public TestMatrix divMatrix(double x) {
@@ -368,7 +368,7 @@ public class TestMatrix {
 	 * @param c1	The column of the first value to swap.
 	 * @param r2	The row of the second value to swap.
 	 * @param c2	The column of the second value to swap.
-	 * @since r1, c1, r2 and c2 must be indexes in range for myData.
+	 * exceptions r1, c1, r2 and c2 must be indexes in range for myData.
 	 */
 	private void swapMe(int r1, int c1, int r2, int c2) {
 		
@@ -459,7 +459,7 @@ public class TestMatrix {
 	/**
 	 * Construct a diagonal matrix identical in size to myData.
 	 * 
-	 * @since The size of the identity matrix will be identical to myData. Size is not customizable.
+	 * exceptions The size of the identity matrix will be identical to myData. Size is not customizable.
 	 * @return The identity matrix for myData
 	 */
 	public TestMatrix identity() {
@@ -476,7 +476,7 @@ public class TestMatrix {
 	/**
 	 * Return the norm of myData
 	 * 
-	 * @since This function is not properly implemented.
+	 * exceptions This function is not properly implemented.
 	 * @return Norm of matrix myData
 	 */
 	public double norm() {
@@ -493,7 +493,7 @@ public class TestMatrix {
 	/**
 	 * Return the condition number of myData.
 	 * 
-	 * @since This function is not properly implemented.
+	 * exceptions This function is not properly implemented.
 	 * @return The condition number of myData.
 	 */
 	public double condition_number() {
