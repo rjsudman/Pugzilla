@@ -20,10 +20,16 @@ public class TestFunction extends TestFunctionAbstract {
 	 * Implementation of the abstract method f with the function x*x-5.0*x.
 	 * 
 	 * @param x	Value used to evaluate the function with.
-	 * exceptions No known exceptions.
+	 * exceptions ArithmeticException No known exceptions.
 	 */
 	public double f(double x) { 
-		return x*x-5.0*x;
+		try {
+			return x*x-5.0*x;			
+		}
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in TestFunction f!" + e.getMessage());
+			return 0;
+		}
 	}
     
 }

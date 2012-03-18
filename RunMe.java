@@ -45,7 +45,7 @@ public class RunMe {
 	/**
 	 * Tests inverse matrix as implemented in class using c++.
 	 * 
-	 * exceptions Fails when method is incorrect.
+	 * @exception ArithmeticException Fails when method is incorrect.
 	 * @see TestMatrix
 	 * @see TestMatrix#invMatrix()
 	 * @see TestMatrix#mulMatrix(TestMatrix)
@@ -97,7 +97,7 @@ public class RunMe {
 	 * Tests Cholesky as implemented in test096 from Massimo Ei Pierro's
 	 * numeric.py. 
 	 * 
-	 * exceptions Fails when method is incorrect.
+	 * @exception ArithmeticException Fails when method is incorrect.
 	 * @see TestMatrix
 	 * @see LinearAlgebra
 	 * @see LinearAlgebra#Cholesky(TestMatrix)
@@ -142,7 +142,7 @@ public class RunMe {
 	 * Tests Markovitz as implemented in the orignal Markovitz by Massimo
 	 * Di Pierro in numeric.py
 	 * 
-	 * exceptions Fails when method is incorrect.
+	 * @exception ArithmeticException Fails when method is incorrect.
 	 * @see TestMatrix
 	 * @see LinearAlgebra
 	 * @see LinearAlgebra#Markovitz(TestMatrix, TestMatrix, double)
@@ -204,9 +204,9 @@ public class RunMe {
 	}
 	
 	/**
-	 * Tests the condition number for doubles. 
+	 * Tests the condition number and square root for doubles. 
 	 * 
-	 * exceptions Fails when method is incorrect. The condition number for test matrix is not implemented.
+	 * @exception ArithmeticException Fails when method is incorrect. The condition number for test matrix is not implemented.
 	 * @see	TestMatrix
 	 * @see TestMatrix#condition_number()
 	 */
@@ -237,14 +237,15 @@ public class RunMe {
 		//System.out.println("Condition number for TestMatrix [[1,2],[3,4]]: " + 
 		myCondition = myMatrix.condition_number();
 		myCondition = myCondition + 0.0;
-		System.out.println("");
 		//System.out.println("                              Expected Result: 21.0\n");
+		System.out.println("Square root of 4: " + twelveD.format(LA.MySqrt(4)));
+		System.out.println(" Expected Result: 2.000000000000\n");
 	}
 	
 	/**
 	 * Tests fit least squares for TestFunctionAbstract array of functions.
 	 * 
-	 * exceptions Not yet implemented.
+	 * @exception ArithmeticException Not yet implemented.
 	 * @see TestFunctionAbstract
 	 * @see TestFunctionAbstract#fit_least_squares()
 	 */
@@ -288,7 +289,7 @@ public class RunMe {
 	/**
 	 * Tests solve fixed point for a function extended from TestFunctionAbstract.
 	 * 
-	 * exceptions Fails when method is incorrect.
+	 * @exception ArithmeticException Fails when method is incorrect.
 	 * @see TestFunctionAbstract
 	 * @see TestFunctionAbstract#solve_fixed_point(double)
 	 * @see TestFunction3
@@ -309,7 +310,7 @@ public class RunMe {
 	/**
 	 * Tests solve bisection for a function extended from TestFunctionAbstract.
 	 * 
-	 * exceptions Fails when method is incorrect.
+	 * @exception ArithmeticException Fails when method is incorrect.
 	 * @see TestFunctionAbstract
 	 * @see TestFunctionAbstract#solve_bisection(double, double)
 	 * @see TestFunction4
@@ -330,7 +331,7 @@ public class RunMe {
 	/**
 	 * Tests solve solve newton for a function extended from TestFunctionAbstract.
 	 * 
-	 * exceptions Fails when method is incorrect.
+	 * @exception ArithmeticException Fails when method is incorrect.
 	 * @see TestFunctionAbstract
 	 * @see TestFunctionAbstract#solve_newton(double)
 	 * @see TestFunction4
@@ -351,7 +352,7 @@ public class RunMe {
 	/**
 	 * Tests solve secant for a function extended from TestFunctionAbstract.
 	 * 
-	 * exceptions Fails when method is incorrect.
+	 * @exception ArithmeticException Fails when method is incorrect.
 	 * @see TestFunctionAbstract
 	 * @see TestFunctionAbstract#solve_secant(double)
 	 * @see TestFunction4
@@ -372,7 +373,7 @@ public class RunMe {
 	/**
 	 * Tests solve newton stabilized for a function extended from TestFunctionAbstract.
 	 * 
-	 * exceptions Fails when method is incorrect.
+	 * @exception ArithmeticException Fails when method is incorrect.
 	 * @see TestFunctionAbstract
 	 * @see TestFunctionAbstract#solve_newton_stabilized(double, double)
 	 * @see TestFunction4
@@ -393,7 +394,7 @@ public class RunMe {
 	/**
 	 * Tests optimize bisection for a function extended from TestFunctionAbstract.
 	 * 
-	 * exceptions Fails when method is incorrect.
+	 * @exception ArithmeticException Fails when method is incorrect.
 	 * @see TestFunctionAbstract
 	 * @see TestFunctionAbstract#optimize_bisection(double, double)
 	 * @see TestFunction4
@@ -414,7 +415,7 @@ public class RunMe {
 	/**
 	 * Tests optimize newton for a function extended from TestFunctionAbstract.
 	 * 
-	 * exceptions Fails when method is incorrect.
+	 * @exception ArithmeticException Fails when method is incorrect.
 	 * @see TestFunctionAbstract
 	 * @see TestFunctionAbstract#optimize_newton(double)
 	 * @see TestFunction4
@@ -435,7 +436,7 @@ public class RunMe {
 	/**
 	 * Tests optimize secant for a function extended from TestFunctionAbstract.
 	 * 
-	 * exceptions Fails when method is incorrect.
+	 * @exception ArithmeticException Fails when method is incorrect.
 	 * @see TestFunctionAbstract
 	 * @see TestFunctionAbstract#optimize_secant(double)
 	 * @see TestFunction4
@@ -456,7 +457,7 @@ public class RunMe {
 	/**
 	 * Tests optimize newton stabilized for a function extended from TestFunctionAbstract.
 	 * 
-	 * exceptions Fails when method is incorrect.
+	 * @exception ArithmeticException Fails when method is incorrect.
 	 * @see TestFunctionAbstract
 	 * @see TestFunctionAbstract#optimize_newton_stabilized(double, double)
 	 * @see TestFunction4
@@ -477,7 +478,7 @@ public class RunMe {
 	/**
 	 * Tests optimize golden search for a function extended from TestFunctionAbstract.
 	 * 
-	 * exceptions Fails when method is incorrect.
+	 * @exception ArithmeticException Fails when method is incorrect.
 	 * @see TestFunctionAbstract
 	 * @see TestFunctionAbstract#optimize_golden_search(double, double)
 	 * @see TestFunction4
@@ -498,7 +499,7 @@ public class RunMe {
 	/**
 	 * Tests first and second derivatives for a function extended from TestFunctionAbstract.
 	 * 
-	 * exceptions Fails when method is incorrect.
+	 * @exception ArithmeticException Fails when method is incorrect.
 	 * @see TestFunctionAbstract
 	 * @see TestFunctionAbstract#f(double)
 	 * @see TestFunctionAbstract#Df(double)
@@ -531,7 +532,7 @@ public class RunMe {
 	/** 
 	 * Tests for basic TestMatrix math functionality.
 	 * 
-	 * exceptions Fails when method is incorrect.
+	 * @exception ArithmeticException Fails when method is incorrect.
 	 * @see TestMatrix
 	 * @see TestMatrix#addMatrix(double)
 	 * @see TestMatrix#addMatrix(TestMatrix)
@@ -689,7 +690,7 @@ public class RunMe {
 	 * Runs all test methods.
 	 * 
 	 * @param args	Default for Java.
-	 * exceptions Fails for incorrect methods.
+	 * @exception ArithmeticException Fails for incorrect methods.
 	 */
 	public static void main (String[] args) {
 		
@@ -698,7 +699,7 @@ public class RunMe {
 		Test15();	// Testing derivatives (f(x), Df(x), DDf(x)
 		Test2();	// Cholesky, is_almost_symmetric (part of Cholesky), is_almost_zero
 		Test3();	// Markovitz
-		Test35();	// condition_number
+		Test35();	// condition_number, MySqrt
 		Test4();	// fit_least_squares (not implemented)
 		Test5();	// solve_fixed_point
 		Test6();	// solve_bisection

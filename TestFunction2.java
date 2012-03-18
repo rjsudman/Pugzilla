@@ -23,6 +23,12 @@ public class TestFunction2 extends TestFunctionAbstract {
 	 * exceptions No known exceptions.
 	 */
 	public double f(double x) { 
-		return x*x-5.0*x;
+		try {
+			return x*x-5.0*x;
+		}
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in TestFunction2 f!" + e.getMessage());
+			return 0;
+		}
 	}
 }

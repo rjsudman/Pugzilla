@@ -88,6 +88,8 @@ Markovitz risk for matrix A: 0.186747095412
 Condition number for x*x-5.0*x with x=1: 0.749999999994
                         Expected Result: 0.749999999883
 **condition_number** not implemented for type TestMatrix. Returning zero.
+Square root of 4: 2.000000000000
+ Expected Result: 2.000000000000
 
 ****fit_least_squares****
 **fit_least_squares** not implemented.

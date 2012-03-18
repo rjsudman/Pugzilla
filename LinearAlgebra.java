@@ -21,14 +21,23 @@ public class LinearAlgebra {
 	private TestMatrix portfolio;				 // Markovitz portfolio
 	private double portfolio_return;			 // Markovitz return
 	private double portfolio_risk;				 // Markovitz risk
+	private boolean MarkovitzStatus;			 // Has Markovitz been run?
     
+	/** 
+	 * Constructor
+	 */
+	public LinearAlgebra () {
+		
+		// Initializing status of Markovitz to 0.
+		MarkovitzStatus = false;
+	}
 	/**
 	 * Returns a boolean value indicating whether the matrix is almost
 	 * symmetric.
 	 * 
 	 * @param x		The TestMatrix object to be examined.
 	 * @return		The boolean result of the test.
-	 * exceptions	No known exceptions.
+	 * @exception	ArithmeticException No known exceptions.
 	 * @see			TestMatrix	
 	 */
 	public boolean is_almost_symmetric(TestMatrix x) {
@@ -48,21 +57,27 @@ public class LinearAlgebra {
 		int r;			// Row loop counting variable
 		int c;			// Column loop counting variable
 		
-		if( x.getColumns() != x.getRows()) return false;
-		for(r=0; r<x.getRows()-1; r++) {
-			for(c=0; c<x.getColumns()-1; c++) {
-				delta = Math.abs(x.getMe(r, c)-x.getMe(c,r));
-				if (delta > ap && delta>Math.max(Math.abs(x.getMe(r,c)), Math.abs(x.getMe(c,r)))*rp) return false;
+		try {
+			if( x.getColumns() != x.getRows()) return false;
+			for(r=0; r<x.getRows()-1; r++) {
+				for(c=0; c<x.getColumns()-1; c++) {
+					delta = Math.abs(x.getMe(r, c)-x.getMe(c,r));
+					if (delta > ap && delta>Math.max(Math.abs(x.getMe(r,c)), Math.abs(x.getMe(c,r)))*rp) return false;
+				}
 			}
+			return true;
 		}
-		return true;
+		catch (ArithmeticException e){
+			System.err.println("Arithmetic exception in **is_almost_symmetric**! " + e.getMessage());
+			return false;
+		}
 	}
 	
 	/**
 	 * Returns a boolean value indicating if a matrix is almost zero.
 	 * 
 	 * @param A		The TestMatrix object to be examined.
-	 * exceptions	No known exceptions.
+	 * @exception	ArithmeticException No known exceptions.
 	 * @return		Boolean result of the test.
 	 * @see			TestMatrix
 	 */
@@ -82,29 +97,42 @@ public class LinearAlgebra {
 		int r;			// Row loop counting variable
 		int c;			// Column loop counting variable
 		
-		for(r=0; r<A.getRows(); r++) {
-			for(c=0; c<A.getColumns(); c++) {
-				delta = Math.abs(A.getMe(r, c)-A.getMe(c, r));
-				if(delta>ap && delta>Math.max(Math.abs(A.getMe(r, c)), Math.abs(A.getMe(c,r)))*rp) return false;
+		try {
+			for(r=0; r<A.getRows(); r++) {
+				for(c=0; c<A.getColumns(); c++) {
+					delta = Math.abs(A.getMe(r, c)-A.getMe(c, r));
+					if(delta>ap && delta>Math.max(Math.abs(A.getMe(r, c)), Math.abs(A.getMe(c,r)))*rp) return false;
+				}
 			}
+			return true;			
 		}
-		return true;
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **is_almost_zero**! " + e.getMessage());
+			return false;
+		}
 	}
 	
 	/**
 	 * Returns the norm of a double value.
 	 * @param 		A	The value to be examined.
-	 * exceptions	No known sinces
+	 * @exception	ArithmeticException No known exceptions.
 	 * @return		The norm of A.
 	 */
 	public double norm(double A) {
-		return Math.abs(A);
+		
+		try { 
+			return Math.abs(A);
+		}
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **norm**! " + e.getMessage());
+			return 0;
+		}
 	}
 	
 	/**
 	 * Returns the norm of a TestMatrix. Needs work. Not properly implemented.
-	 * @param A		The TestMatrix object to be examied.
-	 * exceptions	Norm will always be zero. Not properly implemented.
+	 * @param A		The TestMatrix object to be examined.
+	 * @exception	ArithmeticException Norm will always be zero. Not properly implemented.
 	 * @return		The norm of the matrix.
 	 */
 	public double norm(TestMatrix A) {
@@ -131,33 +159,37 @@ public class LinearAlgebra {
 		int c;			// Column loop counting variable
 		double myNorm;	// The norm value
 		
-		myNorm = 0f;
-		if(A.getRows()==1 || A.getColumns()==1){
-			for(r=0; r<A.getRows(); r++) {
-				for(c=0; c<Math.pow(A.getColumns(),p);c++) {
-					myNorm+=norm(A.getMe(r,c));
+		try {
+			myNorm = 0;
+			if(A.getRows()==1 || A.getColumns()==1){
+				for(r=0; r<A.getRows(); r++) {
+					for(c=0; c<Math.pow(A.getColumns(),p);c++) {
+						myNorm+=norm(A.getMe(r,c));
+					}
 				}
+				return Math.pow(myNorm,p);
 			}
-			return Math.pow(myNorm,p);
-		}
-		else if(p==1) {
-			for(r=0; r<A.getRows(); r++) {
-				for(c=0; c<A.getColumns(); c++) {
-					myNorm+=norm(A.getMe(r,c));
+			else if(p==1) {
+				for(r=0; r<A.getRows(); r++) {
+					for(c=0; c<A.getColumns(); c++) {
+						myNorm+=norm(A.getMe(r,c));
+					}
 				}
+				return myNorm;
 			}
-			return myNorm;
 		}
-		else {
-			System.out.println("Arithmetic Error! **norm** not implemented for your case. Returning zero.");
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **norm**! " + e.getMessage());
+			return 0;
 		}
-		return 0f;
+		System.err.println("Arithmetic Error! **norm** not implemented for your case. Returning zero.");
+		return 0;
 	}
     
 	/**
 	 * Returns the exponent of a TestMatrix object.
 	 * @param x		The TestMatrix object to apply the function to.
-	 * exceptions	Algorithm may fail to converge, division by zero errors.
+	 * @exception	ArithmeticException Algorithm may fail to converge, division by zero errors.
 	 * @return		The exponent TestMatrix.
 	 * @see 		TestMatrix
 	 */
@@ -182,20 +214,26 @@ public class LinearAlgebra {
 		TestMatrix s;	// Identity matrix of x
 		int k;			// Loop counting variable
 		
-		t = s = x.identity();
-		for(k=1; k<ns; k++){
-			t = t.mulMatrix(x.divMatrix(k));
-			s = s.addMatrix(t);
-			if(norm(t)<Math.max(ap,norm(s)*rp)) return s;
+		try {
+			t = s = x.identity();
+			for(k=1; k<ns; k++){
+				t = t.mulMatrix(x.divMatrix(k));
+				s = s.addMatrix(t);
+				if(norm(t)<Math.max(ap,norm(s)*rp)) return s;
+			}
 		}
-		System.out.println("Arithmetic Error! **exp** does not converge. Returning zero.");
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **exp**! " + e.getMessage());
+			return new TestMatrix(x.getRows(), x.getColumns());			
+		}
+		System.err.println("Arithmetic Error! **exp** does not converge. Returning zero.");
 		return new TestMatrix(x.getRows(), x.getColumns());
 	}
 	
 	/**
 	 * Returns a TestMatrix object with the Cholesky algorithm applied.
 	 * @param A		The TestMatrix object to apply Cholesky to.
-	 * exceptions	Can't take a square root of a negative number.
+	 * @exception	ArithmeticException Can't take a square root of a negative number.
 	 * @return		A TestMatrix with Cholesky applied.
 	 * @see 		TestMatrix
 	 */
@@ -230,42 +268,55 @@ public class LinearAlgebra {
 		double p;
 		
 		if (! is_almost_symmetric(A)) {
-			System.out.println("Arithmetic Error! Matrix is not symmetric for **Cholesky**. Returning zero.");
+			System.err.println("Arithmetic Error! Matrix is not symmetric for **Cholesky**. Returning zero.");
 			L = new TestMatrix(A.getRows(), A.getColumns());
 			return L;
 		}
 		L = A.copyMe();
 		for(k=0; k<L.getColumns(); k++) {
 			if (L.getMe(k, k)<=0) {
-				System.out.println("Arithmetic Error! Not positive definitive for **Cholesky**. Returning zero.");
+				System.err.println("Arithmetic Error! Not positive definitive for **Cholesky**. Returning zero.");
 				L = new TestMatrix(A.getRows(), A.getColumns());
 				return L;
 			}
-            
-			p= Math.sqrt(L.getMe(k, k));
-			L.changeMe(k, k, p);
-			for(i=k+1; i<L.getRows(); i++) {
-				L.changeMe(i, k, L.getMe(i, k)/p);
-			}
-			for(j=k+1;j<L.getRows();j++) {
-				p= L.getMe(j, k);
-				for(i=k+1; i<L.getRows(); i++) {
-					L.changeMe(i, j, L.getMe(i,j)-L.getMe(i, k)*p);
+            try {
+    			p= Math.sqrt(L.getMe(k, k));
+    			L.changeMe(k, k, p);
+    			for(i=k+1; i<L.getRows(); i++) {
+    				L.changeMe(i, k, L.getMe(i, k)/p);
+    			}
+    			for(j=k+1;j<L.getRows();j++) {
+    				p= L.getMe(j, k);
+    				for(i=k+1; i<L.getRows(); i++) {
+    					L.changeMe(i, j, L.getMe(i,j)-L.getMe(i, k)*p);
+    				}
+    			}
+            }
+            catch (ArithmeticException e) {
+            	System.err.println("Arithmetic exception in Cholesky! " + e.getMessage());
+            	L = new TestMatrix(A.getRows(), A.getColumns());
+				return L;
+            }
+		}
+		try {
+			for(i=0;i<L.getRows();i++) {
+				for(j=i+1;j<L.getColumns();j++) {
+					L.changeMe(i, j, 0);
 				}
 			}
+			return L;			
 		}
-		for(i=0;i<L.getRows();i++) {
-			for(j=i+1;j<L.getColumns();j++) {
-				L.changeMe(i, j, 0);
-			}
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in Cholesky! " + e.getMessage());
+        	L = new TestMatrix(A.getRows(), A.getColumns());
+			return L;			
 		}
-		return L;
 	}
 	
 	/**
 	 * Returns a boolean value indicating if a TestMatrix is positive definite.
 	 * @param A		The TestMatrix to test for positive definite.
-	 * exceptions	Run time error possible.
+	 * @exception	ArithmeticException Run time error possible.
 	 * @return		The boolean result of the algorithm.
 	 * @see			TestMatrix
 	 */
@@ -285,14 +336,20 @@ public class LinearAlgebra {
 		boolean myTest;		// Test for positive definitive
 		int k;				// Loop counting variable
 		
-		myTest = true;
-		if(! is_almost_symmetric(A)) myTest = false;
-		for(k=0; k<A.getColumns();k++) {
-			if(A.getMe(k,k)<=0) {
-				myTest = false;
+		try {
+			myTest = true;
+			if(! is_almost_symmetric(A)) myTest = false;
+			for(k=0; k<A.getColumns();k++) {
+				if(A.getMe(k,k)<=0) {
+					myTest = false;
+				}
 			}
+	        return myTest;			
 		}
-        return myTest;
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **is_positive_definite**! " + e.getMessage());
+			return false;
+		}
 	}
     /**
      * Calculates the Markovitz portfolio, risk and return. Returns a reference 
@@ -303,7 +360,7 @@ public class LinearAlgebra {
      * @param A			The TestMatrix object.
      * @param r_free	The risk free rate.
      * @return			LinearAlgebra reference to get portfolio, risk and return
-     * exceptions		TestMatrix should be symmetric. Rows in mu should mirror columns in A
+     * @exception		ArithmeticException TestMatrix should be symmetric. Rows in mu should mirror columns in A
      * @see				LinearAlgebra#getMarkovitzPortfolio()
      * @see				LinearAlgebra#getMarkovitzPortfolioRisk()
      * @see				LinearAlgebra#getMarkovitzPortfolioReturn()
@@ -340,54 +397,94 @@ public class LinearAlgebra {
 		TestMatrix m;	// PlaceholderT TestMatrix for mu
 		TestMatrix a;	// Placeholder TestMatrix for A
         
-		x = new TestMatrix(A.getRows(),1);
-		m = mu.subMatrix(r_free);
-		a = A.invMatrix();
-		x = a.mulMatrix(m);
-		p= 0;
-		for(r=0; r<x.getRows(); r++) {
-			p += x.getMe(r,0);
+		try {
+			x = new TestMatrix(A.getRows(),1);
+			m = mu.subMatrix(r_free);
+			a = A.invMatrix();
+			x = a.mulMatrix(m);
+			p= 0;
+			for(r=0; r<x.getRows(); r++) {
+				p += x.getMe(r,0);
+			}
+			x= x.divMatrix(p);
+			portfolio = new TestMatrix(1,x.getRows());
+			for(r=0; r< x.getRows();r++) {
+				portfolio.changeMe(0,r,x.getMe(r,0));
+			}
+			portfolio_return = mu.mulMatrixScalar(x);
+			A = A.mulMatrix(x);
+			portfolio_risk = A.mulMatrixScalar(x);
+			portfolio_risk = Math.sqrt(portfolio_risk);
+			MarkovitzStatus = true;
+			return this;
 		}
-		x= x.divMatrix(p);
-		portfolio = new TestMatrix(1,x.getRows());
-		for(r=0; r< x.getRows();r++) {
-			portfolio.changeMe(0,r,x.getMe(r,0));
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **Markovitz**! " + e.getMessage());
+			MarkovitzStatus = false;
+			return this;
 		}
-		portfolio_return = mu.mulMatrixScalar(x);
-		A = A.mulMatrix(x);
-		portfolio_risk = A.mulMatrixScalar(x);
-		portfolio_risk = Math.sqrt(portfolio_risk);
-		return this;	
 	}
 	
 	/**
 	 * Get method to return Markovitz portfolio value.
 	 * @return 		Portfolio TestMatrix object
-	 * exceptions	Markovitz must be run and the value set prior to using this algorithm.
+	 * @exception	MarkovitzFirst Markovitz must be run for this value to make any sense.
 	 * @see			#Markovitz(TestMatrix, TestMatrix, double)
 	 * @see			TestMatrix
 	 */
 	public TestMatrix getMarkovitzPortfolio() {
-		return this.portfolio;
+
+		if (MarkovitzStatus) return this.portfolio;
+		else {
+			System.err.println("Markovitz must be called first. Returning 0 portfolio.);");
+			return this.portfolio;
+		}
 	}
 	
 	/**
 	 * Get method to return Markovitz portfolio risk.
-	 * exceptions	Markovitz must be run and the value set prior to using this algorithm.
+	 * @exception	MarkovitzFirst Markovitz must be run for this value to make any sense.
 	 * @return	Markovitz portfolio risk.
 	 * @see		#Markovitz(TestMatrix, TestMatrix, double)
 	 */
 	public double getMarkovitzPortfolioRisk() {
-		return this.portfolio_risk;
+		if (MarkovitzStatus) return this.portfolio_risk;
+		else {
+			System.err.println("Markovitz must be called first. Returning 0 risk.);");
+			return 0;
+		}
 	}
 	
 	/**
 	 * Get method to return Markovitz portfolio return.
-	 * exceptions	Markovitz must be run and the value set prior to using this algorithm.
+	 * @exception	MarkovtizFirst Markovitz must be run for this value to make any sense.
 	 * @return	Markovitz portfolio return.
 	 * @see		#Markovitz(TestMatrix, TestMatrix, double)
 	 */
 	public double getMarkovitzPortfolioReturn() {
-		return this.portfolio_return;
+		if (MarkovitzStatus) return this.portfolio_return;
+		else {
+			System.err.println("Markovitz must be called first. Returning 0 return.);");
+			return 0;
+		}
+	}
+	
+	/**
+	 * Returns the square root of a double.
+	 * 
+	 * @param x	The number to take the square root of.
+	 * @exception Does not work for negative numbers.
+	 * @return The square root of x.
+	 */
+	public double MySqrt(double x) {
+		
+	    try {
+	        return Math.sqrt(x);
+	    }
+	    catch (ArithmeticException e) {
+	    	System.err.println("Arithmetic Exception in MySqrt: " + e.getMessage());
+	    	return 0;
+	    }
+	    
 	}
 }

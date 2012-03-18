@@ -37,51 +37,79 @@ public abstract class TestFunctionAbstract {
 	 * The first derivative for the abstract function f.
 	 * 
 	 * @param x	The value used to evaluate the first derivative.
-	 * exceptions No known exceptions.
+	 * @exception ArithmeticException No known exceptions.
 	 * @return	The result of evaluating the first derivative for x.
 	 */
 	public double Df(double x) {
-		return (f(x+h)-f(x-h))/(2.0*h);
+		
+		try {
+			return (f(x+h)-f(x-h))/(2.0*h);
+		}
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **Df**!" + e.getMessage());
+			return 0;
+		}
 	}
     
 	/**
 	 * The second derivative for the abstract function f.
 	 * 
 	 * @param x	The value used to evaluate the second derivative.
-	 * exceptions No known exceptions.
+	 * @exception ArithmeticException No known exceptions.
 	 * @return The result of evaluating the second derivative for x.
 	 */
 	public double DDf(double x) {
-		return (f(x+h)-2.0*f(x)+f(x-h))/(h*h);
+		
+		try {
+			return (f(x+h)-2.0*f(x)+f(x-h))/(h*h);
+		}
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **DDf**!" + e.getMessage());
+			return 0;
+		}
 	}
 	
 	/**
 	 * The abstract function f plus x
 	 * 
 	 * @param x	The value used to evaluate the second derivative.
-	 * exceptions No known exceptions.
+	 * @exception ArithmeticException No known exceptions.
 	 * @return	The result of evaluating the new function for x.
 	 */
 	public double g(double x) {
-		return f(x)+x;
+		
+		try {
+			return f(x)+x;
+		}
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **g(x)**!" + e.getMessage());
+			return 0;
+		}
 	}
 	
 	/**
 	 * The first derivative of the function g.
 	 * 
 	 * @param x The value used to evaluate the first derivative of g.
-	 * exceptions No known exceptions.
+	 * @exception ArithmeticException No known exceptions.
 	 * @return The result of evaluating the first derivative of g
 	 */
 	public double Dg(double x) {
-		return (f(x+h)-f(x-h))/(2.0*h)+x;
+		
+		try {
+			return (f(x+h)-f(x-h))/(2.0*h)+x;
+		}
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **Dg**!" + e.getMessage());
+			return 0;
+		}
 	}
     
 	/**
 	 * Evaluates the condition number of the abstract function f.
 	 * 
 	 * @param x	The value used to evaluate the condition number.
-	 * exceptions Does not work when the f(x) evaluates to zero.
+	 * @exception ArithmeticException Does not work when the f(x) evaluates to zero.
 	 * @return The condition number for the abstract function f.
 	 */
 	public double condition_number(double x) {
@@ -94,14 +122,21 @@ public abstract class TestFunctionAbstract {
 		 *  	else:
 		 *      	raise NotImplementedError
 		 */
-		return Df(x)*x/f(x);
+		
+		try {
+			return Df(x)*x/f(x);
+		}
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **condition_number**!" + e.getMessage());
+			return 0;
+		}
 	}
 	
 	/**
 	 * Evaluates the condition number of the TestMatrix f.
 	 * 
 	 * @param f	The TestMatrix to be evaluated for condition number.
-	 * exceptions This function has not been properly implemented.
+	 * @exception ArithmeticException This function has not been properly implemented.
 	 * @return The condition number for the TestMatrix f.
 	 * @see TestMatrix
 	 */
@@ -111,16 +146,22 @@ public abstract class TestFunctionAbstract {
 		TestMatrix conditionMe;		// The condition matrix
 		double conditionMe2;		// The condition number
 
-		conditionMe = f.invMatrix();
-		conditionMe2 = A.norm(f)*A.norm(conditionMe);
-		return conditionMe2;
+		try {
+			conditionMe = f.invMatrix();
+			conditionMe2 = A.norm(f)*A.norm(conditionMe);
+			return conditionMe2;
+		}
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **condition_number**!" + e.getMessage());
+			return 0;
+		}
 	}
 	
 	/**
 	 * Evaluates the abstract function f for fit least squares.
 	 * 	
 	 * @return A TestMatrix of the least squares fit
-	 * exceptions This function has not been properly implemented, returns 0.
+	 * @exception ArithmeticException This function has not been properly implemented, returns 0.
 	 * @see TestMatrix
 	 */
 	public TestMatrix fit_least_squares() {
@@ -159,7 +200,7 @@ public abstract class TestFunctionAbstract {
 		// Variable Declaration
 		TestMatrix points = new TestMatrix(3,1);
 		
-		System.out.println("fit_least_squares has not been implemented.  Returning zeros.");
+		System.err.println("Arithmetic Exception in **fit_least_squares**! Method not implemented. Returning zero.");
 		return points;
 	}
 	
@@ -167,7 +208,7 @@ public abstract class TestFunctionAbstract {
 	 * Solves fixed point for the abstract function f.
 	 * 
 	 * @param x The value used to solve fixed point.
-	 * exceptions Does not work when the first derivative is greater than or equal to 1. Does not work if fixed point does not converge for x.
+	 * @exception ArithmeticException Does not work when the first derivative is greater than or equal to 1. Does not work if fixed point does not converge for x.
 	 * @return	Fixed point of the abstract function f for x.
 	 */
 	public double solve_fixed_point(double x) {
@@ -188,21 +229,27 @@ public abstract class TestFunctionAbstract {
 		int k;				// Loop counting variable
 		double dg;			// First derivative of G
 		double x_old;		// Placeholder for previous value of x
-		
-		x_old = 0;
-		dg = Dg(x);
-		for(k=0; k<ns; k++) {
-			if(Math.abs(dg)>=1) {
-				System.out.println("Arithmatic Error! Dg(x)>=1 for **solve_fixed_point**. Returning zero.");
-				return 0;
+	
+		try {
+			x_old = 0;
+			dg = Dg(x);
+			for(k=0; k<ns; k++) {
+				if(Math.abs(dg)>=1) {
+					System.err.println("Arithmatic Error! Dg(x)>=1 for **solve_fixed_point**. Returning zero.");
+					return 0;
+				}
+				x_old = x;
+				x = g(x);
 			}
-			x_old = x;
-			x = g(x);
+			if (k>2 && A.norm(x_old-x)<Math.max(ap,A.norm(x)*rp)) {
+				return x;
+			}
 		}
-		if (k>2 && A.norm(x_old-x)<Math.max(ap,A.norm(x)*rp)) {
-			return x;
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **solve_fixed_point**!" + e.getMessage());
+			return 0;
 		}
-		System.out.println("Arithmetic Error! **solve_fixed_point** does not converge. Returning zero.");
+		System.err.println("Arithmetic Error! **solve_fixed_point** does not converge. Returning zero.");
 		return 0;
 	}
 	
@@ -211,7 +258,7 @@ public abstract class TestFunctionAbstract {
 	 * 
 	 * @param a	The low value to examine the function.
 	 * @param b	The high value to examine the function.
-	 * exceptions f(a) and f(b) must have opposite signs. Does not work when bisection does not converge for f in range (a,b).
+	 * @exception ArithmeticException f(a) and f(b) must have opposite signs. Does not work when bisection does not converge for f in range (a,b).
 	 * @return Bisection for abstract function f in (a,b).
 	 */
 	public double solve_bisection(double a, double b) {
@@ -238,28 +285,34 @@ public abstract class TestFunctionAbstract {
 		int k;			// Loop counting variable
 		double x;		// Variable to pass to the function
 		
-		fa=f(a);
-		fb=f(b);
-		if(fa==0) return a;
-		if(fb==0) return b;
-		if(fa*fb>0) {
-			System.out.println("Arithmetic error! f(a) and f(b) must have opposite signs for **solve_bisection**. Returning zero.");
+		try {
+			fa=f(a);
+			fb=f(b);
+			if(fa==0) return a;
+			if(fb==0) return b;
+			if(fa*fb>0) {
+				System.err.println("Arithmetic error! f(a) and f(b) must have opposite signs for **solve_bisection**. Returning zero.");
+				return 0;
+			}
+			for(k=0; k<ns; k++) {
+				x = (a+b)/2;
+				fx = f(x);
+				if(fx==0 || A.norm(b=a)<Math.max(ap,A.norm(x)*rp)) return x;
+				else if(fx*fa<0) {
+					b=x;
+					fb=fx;
+				}
+				else {
+					a = x;
+					fa = fx;
+				}
+			}
+		}
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **solve_bisection**!" + e.getMessage());
 			return 0;
 		}
-		for(k=0; k<ns; k++) {
-			x = (a+b)/2;
-			fx = f(x);
-			if(fx==0 || A.norm(b=a)<Math.max(ap,A.norm(x)*rp)) return x;
-			else if(fx*fa<0) {
-				b=x;
-				fb=fx;
-			}
-			else {
-				a = x;
-				fa = fx;
-			}
-		}
-		System.out.println("Arithmetic Error! **solve_bisection** does not converge. Returning zero.");
+		System.err.println("Arithmetic Error! **solve_bisection** does not converge. Returning zero.");
 		return 0;
 	}
 	
@@ -267,7 +320,7 @@ public abstract class TestFunctionAbstract {
 	 * Solves newton for the abstract function f.
 	 * 
 	 * @param x_guess	The result guess for newton.
-	 * exceptions Does not work when newton does not converge for f in x.
+	 * @exception ArithmeticException Does not work when newton does not converge for f in x.
 	 * @return Newton for abstract function f in x.
 	 */
 	public double solve_newton(double x_guess) {
@@ -287,21 +340,28 @@ public abstract class TestFunctionAbstract {
 		double x_old;	// Previous value of x
 		double x;		// Current value of x
 		
-		x = x_guess;
-    	for(int k=0; k<ns; k++) {
-    		x_old = x;
-      		x = x - f(x)/Df(x);
-      		if(Math.abs(x-x_old)<Math.max(ap,rp*Math.abs(x))) return x;
-    	}
-    	System.out.println("Arithmetic Error! **solve_newton** does not converge. Returning zero.");
+		try {
+			x = x_guess;
+	    	for(int k=0; k<ns; k++) {
+	    		x_old = x;
+	      		x = x - f(x)/Df(x);
+	      		if(Math.abs(x-x_old)<Math.max(ap,rp*Math.abs(x))) return x;
+	    	}
+		}
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **solve_newton**!" + e.getMessage());
+			return 0;
+		}
+    	System.err.println("Arithmetic Error! **solve_newton** does not converge. Returning zero.");
     	return 0;
+
 	}  
 	
 	/**
 	 * Solves secant for the abstract function f.
 	 * 
 	 * @param x	The value used to evaluate the abstract function f for secant.
-	 * exceptions If the norm of the function is less than the absolute function. If the secant does not converge for abstract function f in x.
+	 * @exception ArithmeticException If the norm of the function is less than the absolute function. If the secant does not converge for abstract function f in x.
 	 * @return	Secant of the abstract function f in x.
 	 */
 	public double solve_secant(double x) {
@@ -326,21 +386,27 @@ public abstract class TestFunctionAbstract {
 		double x_old;	// Previous value of x
 		double fx_old;	// Previous value of f(x)
 		
-		fx = f(x);
-		Dfx = Df(x);
-		for(k=0;k<ns; k++) {
-			if(A.norm(Dfx) < ap) {
-				System.out.println("Arithmetic Error! Unstable solution for **solve_secant**.  Returning zero.");
-				return 0;
-			}
-			x_old = x;
-			fx_old = fx;
-			x = x-fx/Dfx;
-			if(k>2 && A.norm(x-x_old)<Math.max(ap, A.norm(x)*rp)) return x;
+		try {
 			fx = f(x);
-			Dfx = (fx-fx_old)/(x-x_old);
+			Dfx = Df(x);
+			for(k=0;k<ns; k++) {
+				if(A.norm(Dfx) < ap) {
+					System.err.println("Arithmetic Error! Unstable solution for **solve_secant**.  Returning zero.");
+					return 0;
+				}
+				x_old = x;
+				fx_old = fx;
+				x = x-fx/Dfx;
+				if(k>2 && A.norm(x-x_old)<Math.max(ap, A.norm(x)*rp)) return x;
+				fx = f(x);
+				Dfx = (fx-fx_old)/(x-x_old);
+			}
+		}	
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **solve_secant**!" + e.getMessage());
+			return 0;
 		}
-		System.out.println("Arithmetic Error! **solve_secant** does not converge. Returning zero.");
+		System.err.println("Arithmetic Error! **solve_secant** does not converge. Returning zero.");
 		return 0;
 	}
 	
@@ -349,7 +415,7 @@ public abstract class TestFunctionAbstract {
 	 * 
 	 * @param a	The low value for f.
 	 * @param b	The high value for f.
-	 * exceptions f(a) and f(b) must evaluate with opposite signs. Does not work if newton stabilized does not converge.
+	 * @exception ArithmeticException f(a) and f(b) must evaluate with opposite signs. Does not work if newton stabilized does not converge.
 	 * @return Newton stabilized for the abstract function f in (a,b).
 	 */
 	public double solve_newton_stabilized(double a, double b) {
@@ -384,39 +450,45 @@ public abstract class TestFunctionAbstract {
 		double x_old;	// Previous value of x
 		double fx_old;	// Previous value of f(x)
         
-		fa = f(a);
-		fb = f(b);
-		if(fa ==0) return a;
-		if(fb==0) return b;
-		if (fa*fb > 0) {
-			System.out.println("Arithmetic Error! f(a) and f(b) must have opposite sign for **solve_newton_stabilized**. Returning zero.");
+		try {
+			fa = f(a);
+			fb = f(b);
+			if(fa ==0) return a;
+			if(fb==0) return b;
+			if (fa*fb > 0) {
+				System.err.println("Arithmetic Error! f(a) and f(b) must have opposite sign for **solve_newton_stabilized**. Returning zero.");
+				return 0;
+			}
+			x=(a+b)/2;
+			fx = f(x);
+			Dfx = Df(x);
+			for(k=0; k<ns; k++) {
+				x_old = x;
+				fx_old = fx;
+				if (A.norm(Dfx)>ap) {
+					x = x-fx/Dfx;
+				}
+				if(x==x_old || x<a || x>b) {
+					x=(a+b)/2;
+				}
+				fx = f(x);
+				if(fx==0 || A.norm(x-x_old)<Math.max(ap, A.norm(x)*rp)) return x;
+				Dfx = (fx-fx_old)/(x-x_old);
+				if(fx*fa<0) {
+					b = x;
+					fb = fx;
+				}
+				else {
+					a = x;
+					fa = fx;
+				}
+			}
+		}
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **solve_newton_stabilized**!" + e.getMessage());
 			return 0;
 		}
-		x=(a+b)/2;
-		fx = f(x);
-		Dfx = Df(x);
-		for(k=0; k<ns; k++) {
-			x_old = x;
-			fx_old = fx;
-			if (A.norm(Dfx)>ap) {
-				x = x-fx/Dfx;
-			}
-			if(x==x_old || x<a || x>b) {
-				x=(a+b)/2;
-			}
-			fx = f(x);
-			if(fx==0 || A.norm(x-x_old)<Math.max(ap, A.norm(x)*rp)) return x;
-			Dfx = (fx-fx_old)/(x-x_old);
-			if(fx*fa<0) {
-				b = x;
-				fb = fx;
-			}
-			else {
-				a = x;
-				fa = fx;
-			}
-		}
-		System.out.println("Arithmetic Error! **solve_newton_stabilized** does not converge. Returning zero.");
+		System.err.println("Arithmetic Error! **solve_newton_stabilized** does not converge. Returning zero.");
 		return 0;
 	}
 	
@@ -425,7 +497,7 @@ public abstract class TestFunctionAbstract {
 	 * 
 	 * @param a	The low value.
 	 * @param b	The high value.
-	 * exceptions Df(a) and Df(b) must evaluate with opposite signs. Does not work when bisection does not converge for f in (a,b).
+	 * @exception ArithmeticException Df(a) and Df(b) must evaluate with opposite signs. Does not work when bisection does not converge for f in (a,b).
 	 * @return Optimized bisection for the abstract function f in (a,b).
 	 */
 	public double optimize_bisection(double a, double b) {
@@ -452,28 +524,34 @@ public abstract class TestFunctionAbstract {
 		double Dfb;		// The result of Df(b)
 		double Dfx;		// The result of the derivative of the function
         
-		Dfa = Df(a);
-		Dfb = Df(b);
-		if(Dfa==0) return a;
-		if(Dfb==0) return b;
-		if(Dfa*Dfb > 0) {
-			System.out.println("Arithmetic Error! Df(a) and Df(b) must have opposite sign for **optimize_bisection**. Return zero.");
+		try {
+			Dfa = Df(a);
+			Dfb = Df(b);
+			if(Dfa==0) return a;
+			if(Dfb==0) return b;
+			if(Dfa*Dfb > 0) {
+				System.err.println("Arithmetic Error! Df(a) and Df(b) must have opposite sign for **optimize_bisection**. Return zero.");
+				return 0;
+			}
+			for(k=0; k<ns; k++) {
+				x = (a+b)/2;
+				Dfx = Df(x);
+				if(Dfx==0 || A.norm(b-a)<Math.max(ap,A.norm(x)*rp)) return x;
+				else if(Dfx*Dfa<0) {
+					b = x;
+					Dfb = Dfx;
+				}
+				else {
+					a = x;
+					Dfa = Dfx;
+				}
+			}
+		}
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **optimize_bisection**!" + e.getMessage());
 			return 0;
 		}
-		for(k=0; k<ns; k++) {
-			x = (a+b)/2;
-			Dfx = Df(x);
-			if(Dfx==0 || A.norm(b-a)<Math.max(ap,A.norm(x)*rp)) return x;
-			else if(Dfx*Dfa<0) {
-				b = x;
-				Dfb = Dfx;
-			}
-			else {
-				a = x;
-				Dfa = Dfx;
-			}
-		}
-		System.out.println("Arithmetic Error! **optimize_bisection** does not converge. Returning zero.");
+		System.err.println("Arithmetic Error! **optimize_bisection** does not converge. Returning zero.");
 		return 0;
 	}
 	
@@ -481,7 +559,7 @@ public abstract class TestFunctionAbstract {
 	 * Newton optimized for the abstract function f.
 	 * 
 	 * @param x_guess The guess for newton.
-	 * exceptions Does not work if newton does not converge for f in x.
+	 * @exception ArithmeticException Does not work if newton does not converge for f in x.
 	 * @return Newton optimized for the abstract function f in x.
 	 */
 	public double optimize_newton(double x_guess) {
@@ -501,21 +579,28 @@ public abstract class TestFunctionAbstract {
 		double x_old;	// Previous value of x
 		double x;		// Current value of x
 		
-		x = x_guess;
-		for(int k=0; k<ns; k++) {
-			x_old = x;
-			x = x - Df(x)/DDf(x);
-			if(Math.abs(x-x_old)<Math.max(ap,rp*Math.abs(x))) return x;
+		try {
+			x = x_guess;
+			for(int k=0; k<ns; k++) {
+				x_old = x;
+				x = x - Df(x)/DDf(x);
+				if(Math.abs(x-x_old)<Math.max(ap,rp*Math.abs(x))) return x;
+			}
 		}
-		System.out.println("Arithmetic Error! **optimize_newton** does not converge. Returning zero.");
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **optimize_newton**!" + e.getMessage());
+			return 0;
+		}
+		System.err.println("Arithmetic Error! **optimize_newton** does not converge. Returning zero.");
 		return 0;
+
 	}  
 	
 	/**
 	 * Optimized secant for the abstract function f.
 	 * 
 	 * @param x The value used to evaluate secant for f.
-	 * exceptions Does not work if DDf(x) is less than absolute precision. Does not work if optimize secant does not converge for f in x.
+	 * @exception ArithmeticException Does not work if DDf(x) is less than absolute precision. Does not work if optimize secant does not converge for f in x.
 	 * @return Optimized secant for the abstract function f.
 	 */
 	public double optimize_secant(double x) {
@@ -542,22 +627,28 @@ public abstract class TestFunctionAbstract {
 		double x_old;	// Previous value of x
 		double Dfx_old;	// Previous value of Df(x)
         
-		Dfx = Df(x);
-		DDfx = DDf(x);
-		for(k=0; k<ns; k++) {
-			if(Dfx==0) return x;
-			if(A.norm(DDfx) <ap) {
-				System.out.println("Arithmetic Error. Unstable solution for **optimize_secant**. Returning zero.");
-				return 0;
-			}
-			x_old = x;
-			Dfx_old = Dfx;
-			x = x-Dfx/DDfx;
-			if((x-x_old)<Math.max(ap, A.norm(x)*rp)) return x;
+		try {
 			Dfx = Df(x);
-			DDfx = (Dfx - Dfx_old)/(x-x_old);
+			DDfx = DDf(x);
+			for(k=0; k<ns; k++) {
+				if(Dfx==0) return x;
+				if(A.norm(DDfx) <ap) {
+					System.out.println("Arithmetic Error. Unstable solution for **optimize_secant**. Returning zero.");
+					return 0;
+				}
+				x_old = x;
+				Dfx_old = Dfx;
+				x = x-Dfx/DDfx;
+				if((x-x_old)<Math.max(ap, A.norm(x)*rp)) return x;
+				Dfx = Df(x);
+				DDfx = (Dfx - Dfx_old)/(x-x_old);
+			}
 		}
-		System.out.println("Arithmetic Error! **optimize_secant** does not converge. Returning zero.");
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **optimize_secant**!" + e.getMessage());
+			return 0;
+		}
+		System.err.println("Arithmetic Error! **optimize_secant** does not converge. Returning zero.");
 		return 0;
 	}
 	
@@ -566,7 +657,7 @@ public abstract class TestFunctionAbstract {
 	 * 
 	 * @param a	The low value.
 	 * @param b	The high value.
-	 * exceptions Df(a) and Df(b) must evaluate with opposite signs. Does not work if newton does not converge for the abstract function f in (a,b).
+	 * @exception ArithmeticException Df(a) and Df(b) must evaluate with opposite signs. Does not work if newton does not converge for the abstract function f in (a,b).
 	 * @return Optimized newton stabilized for the abstract function f.
 	 */
 	public double optimize_newton_stabilized(double a, double b) {
@@ -605,43 +696,49 @@ public abstract class TestFunctionAbstract {
 		double fx_old;		// Previous value of f(x)
 		double Dfx_old;		// Previous value of Df(x)
         
-		Dfa = Df(a);
-		Dfb = Df(b);
-		if (Dfa == 0) return a;
-		if(Dfb == 0) return b;
-		if (Dfa*Dfb>0) {
-			System.out.println("Arithmetic Error! Df(a) and Df(b) must have opposite sign for **optimize_newton_stabilized**. Returning zero.");
+		try {
+			Dfa = Df(a);
+			Dfb = Df(b);
+			if (Dfa == 0) return a;
+			if(Dfb == 0) return b;
+			if (Dfa*Dfb>0) {
+				System.err.println("Arithmetic Error! Df(a) and Df(b) must have opposite sign for **optimize_newton_stabilized**. Returning zero.");
+				return 0;
+			}
+			x=(a+b)/2;
+			fx = f(x);
+			Dfx = Df(x);
+			DDfx = DDf(x);
+			for(k=0; k<ns; k++) {
+				if(Dfx ==0) return x;
+				x_old = x;
+				fx_old = fx;
+				Dfx_old = Dfx;
+				if (A.norm(DDfx)>ap) {
+					x = x-Dfx/DDfx;
+				}
+				if(x==x_old || x<a || x>b) {
+					x=(a+b)/2;
+				}
+				if(A.norm(x-x_old)<Math.max(ap, A.norm(x)*rp)) return x;
+				fx = f(x);
+				Dfx = (fx-fx_old)/(x-x_old);
+				DDfx = (Dfx - Dfx_old)/(x-x_old);
+				if(Dfx*Dfa<0) {
+					b = x;
+					Dfb = Dfx;
+				}
+				else {
+					a = x;
+					Dfa = Dfx;
+				}
+			}
+		}
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in **optimize_newton_stabilized**!" + e.getMessage());
 			return 0;
 		}
-		x=(a+b)/2;
-		fx = f(x);
-		Dfx = Df(x);
-		DDfx = DDf(x);
-		for(k=0; k<ns; k++) {
-			if(Dfx ==0) return x;
-			x_old = x;
-			fx_old = fx;
-			Dfx_old = Dfx;
-			if (A.norm(DDfx)>ap) {
-				x = x-Dfx/DDfx;
-			}
-			if(x==x_old || x<a || x>b) {
-				x=(a+b)/2;
-			}
-			if(A.norm(x-x_old)<Math.max(ap, A.norm(x)*rp)) return x;
-			fx = f(x);
-			Dfx = (fx-fx_old)/(x-x_old);
-			DDfx = (Dfx - Dfx_old)/(x-x_old);
-			if(Dfx*Dfa<0) {
-				b = x;
-				Dfb = Dfx;
-			}
-			else {
-				a = x;
-				Dfa = Dfx;
-			}
-		}
-		System.out.println("Arithmetic Error! **optimize_newton_stabilized** does not converge. Returning zero.");
+		System.err.println("Arithmetic Error! **optimize_newton_stabilized** does not converge. Returning zero.");
 		return 0;
  	}
 	
@@ -650,7 +747,7 @@ public abstract class TestFunctionAbstract {
 	 * 
 	 * @param a The low value.
 	 * @param b	The high value.
-	 * exceptions Does not work if golden search cannot be optimized for the abstract function f in (a,b).
+	 * @exception ArithmeticException Does not work if golden search cannot be optimized for the abstract function f in (a,b).
 	 * @return The optimized golden search for abstract function f.
 	 */
 	public double optimize_golden_search(double a, double b) {
@@ -681,29 +778,35 @@ public abstract class TestFunctionAbstract {
 		double f1;		// f(x1)
 		double f2;		// f(x2)
         
-		tau = (Math.sqrt(5.0)-1)/2;
-		x1 = a+(1-tau)*(b-a);
-		x2 = a+tau*(b-a);
-		f1 = f(x1);
-		f2 = f(x2);
-		for(k=0; k<ns; k++) {
-			if(f1>f2) {
-				a = x1;
-				x1 = x2;
-				f1 = f2;
-				x2 = a+tau*(b-a);
-				f2 = f(x2);
+		try {
+			tau = (Math.sqrt(5.0)-1)/2;
+			x1 = a+(1-tau)*(b-a);
+			x2 = a+tau*(b-a);
+			f1 = f(x1);
+			f2 = f(x2);
+			for(k=0; k<ns; k++) {
+				if(f1>f2) {
+					a = x1;
+					x1 = x2;
+					f1 = f2;
+					x2 = a+tau*(b-a);
+					f2 = f(x2);
+				}
+				else {
+					b = x2;
+					x2 = x1;
+					f2 = f1;
+					x1 = a+(1.0-tau)*(b-a);
+					f1 = f(x1);
+				}
+				if(k>2 && A.norm(b-a)<Math.max(ap, A.norm(b)*rp)) return b;
 			}
-			else {
-				b = x2;
-				x2 = x1;
-				f2 = f1;
-				x1 = a+(1.0-tau)*(b-a);
-				f1 = f(x1);
-			}
-			if(k>2 && A.norm(b-a)<Math.max(ap, A.norm(b)*rp)) return b;
 		}
-		System.out.println("Arithmetic Error! **optimize_golden_search** does not converge. Returning zero.");
+		catch (ArithmeticException e) {
+			System.err.println("Arithmetic exception in !" + e.getMessage());
+			return 0;
+		}
+		System.err.println("Arithmetic Error! **optimize_golden_search** does not converge. Returning zero.");
 		return 0;
 	}
 }
