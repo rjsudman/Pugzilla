@@ -3,36 +3,87 @@
  * BSD License
  * Original Python code created by Massimo Di Pierro - BSD license	
  * Java implementation by Ruthann Sudman - BSD license
+ * Repository at: https://github.com/rjsudman/Pugzilla
  */		
 
-/* 
- * The TestFunction class implements the concept of a function.
+/** 
+ * An abstract method requiring extension of the method f (a function) which
+ * can then be used with this library of algorithms originally created in Python
+ * by Massimo Di Pierro and ported to Java.   All code released under BSD 
+ * licensing.
+ * 
+ * @author					Ruthann Sudman
+ * @version					0.1
+ * @see <a href="https://github.com/rjsudman/Pugzilla">Code Repository</a>
  */
 public abstract class TestFunctionAbstract {
     
-	public static double h=0.00001;
-	public static double ap=0.00001;
-	public static double rp=0.0001;
-	public static int ns=100;
+	public static double h=0.00001;		// Default h
+	public static double ap=0.00001;	// Default absolute precision
+	public static double rp=0.0001;		// Default relative precision
+	public static int ns=100;			// Default number of steps
 	private static LinearAlgebra A = new LinearAlgebra();
 	
+	/**
+	 * An abstract function method to be extended by daughter classes.
+	 * 
+	 * @param x	The value used to evaluate the function.
+	 * @since No known exceptions.
+	 * @return The result of evaluating the function for x.
+	 */
 	public abstract double f(double x);
 	
+	/**
+	 * The first derivative for the abstract function f.
+	 * 
+	 * @param x	The value used to evaluate the first derivative.
+	 * @since No known exceptions.
+	 * @return	The result of evaluating the first derivative for x.
+	 */
 	public double Df(double x) {
 		return (f(x+h)-f(x-h))/(2.0*h);
 	}
     
+	/**
+	 * The second derivative for the abstract function f.
+	 * 
+	 * @param x	The value used to evaluate the second derivative.
+	 * @since No known exceptions.
+	 * @return The result of evaluating the second derivative for x.
+	 */
 	public double DDf(double x) {
 		return (f(x+h)-2.0*f(x)+f(x-h))/(h*h);
 	}
 	
+	/**
+	 * The abstract function f plus x
+	 * 
+	 * @param x	The value used to evaluate the second derivative.
+	 * @since No known exceptions.
+	 * @return	The result of evaluating the new function for x.
+	 */
 	public double g(double x) {
 		return f(x)+x;
 	}
+	
+	/**
+	 * The first derivative of the function g.
+	 * 
+	 * @param x The value used to evaluate the first derivative of g.
+	 * @since No known exceptions.
+	 * @return The result of evaluating the first derivative of g
+	 */
 	public double Dg(double x) {
 		return (f(x+h)-f(x-h))/(2.0*h)+x;
 	}
     
+	/**
+	 * Evaluates the condition number of the abstract function f.
+	 * 
+	 * @param x	The value used to evaluate the condition number.
+	 * @since Does not work when the f(x) evaluates to zero.
+	 * @return The condition number for the abstract function f.
+	 */
 	public double condition_number(double x) {
 		/* 
 		 * 	def condition_number(f,x=None,h=1e-6):
@@ -46,6 +97,14 @@ public abstract class TestFunctionAbstract {
 		return Df(x)*x/f(x);
 	}
 	
+	/**
+	 * Evaluates the condition number of the TestMatrix f.
+	 * 
+	 * @param f	The TestMatrix to be evaluated for condition number.
+	 * @since This function has not been properly implemented.
+	 * @return The condition number for the TestMatrix f.
+	 * @see TestMatrix
+	 */
 	public double condition_number(TestMatrix f) {
 		
 		// Variable declaration
@@ -57,7 +116,13 @@ public abstract class TestFunctionAbstract {
 		return conditionMe2;
 	}
 	
-	// BROKEN	
+	/**
+	 * Evaluates the abstract function f for fit least squares.
+	 * 	
+	 * @return A TestMatrix of the least squares fit
+	 * @since This function has not been properly implemented, returns 0.
+	 * @see TestMatrix
+	 */
 	public TestMatrix fit_least_squares() {
 		/*
 		 *		def fit_least_squares(points, f):
@@ -98,6 +163,13 @@ public abstract class TestFunctionAbstract {
 		return points;
 	}
 	
+	/**
+	 * Solves fixed point for the abstract function f.
+	 * 
+	 * @param x The value used to solve fixed point.
+	 * @since Does not work when the first derivative is greater than or equal to 1. Does not work if fixed point does not converge for x.
+	 * @return	Fixed point of the abstract function f for x.
+	 */
 	public double solve_fixed_point(double x) {
 		
         /*
@@ -134,6 +206,14 @@ public abstract class TestFunctionAbstract {
 		return 0;
 	}
 	
+	/**
+	 * Solves bisection for the abstract function f.
+	 * 
+	 * @param a	The low value to examine the function.
+	 * @param b	The high value to examine the function.
+	 * @since f(a) and f(b) must have opposite signs. Does not work when bisection does not converge for f in range (a,b).
+	 * @return Bisection for abstract function f in (a,b).
+	 */
 	public double solve_bisection(double a, double b) {
 		/*
 		 * 		def solve_bisection(f, a, b, ap=1e-6, rp=1e-4, ns=100):
@@ -182,8 +262,14 @@ public abstract class TestFunctionAbstract {
 		System.out.println("Arithmetic Error! **solve_bisection** does not converge. Returning zero.");
 		return 0;
 	}
-    
 	
+	/**
+	 * Solves newton for the abstract function f.
+	 * 
+	 * @param x_guess	The result guess for newton.
+	 * @since Does not work when newton does not converge for f in x.
+	 * @return Newton for abstract function f in x.
+	 */
 	public double solve_newton(double x_guess) {
 		/*
 		 * 		def solve_newton(f, x, ap=1e-6, rp=1e-4, ns=20):
@@ -211,6 +297,13 @@ public abstract class TestFunctionAbstract {
     	return 0;
 	}  
 	
+	/**
+	 * Solves secant for the abstract function f.
+	 * 
+	 * @param x	The value used to evaluate the abstract function f for secant.
+	 * @since If the norm of the function is less than the absolute function. If the secant does not converge for abstract function f in x.
+	 * @return	Secant of the abstract function f in x.
+	 */
 	public double solve_secant(double x) {
 		/*
 		 * 		def solve_secant(f, x, ap=1e-6, rp=1e-4, ns=20):
@@ -251,6 +344,14 @@ public abstract class TestFunctionAbstract {
 		return 0;
 	}
 	
+	/**
+	 * Solves newton stabilized for the abstract function f in (a,b).
+	 * 
+	 * @param a	The low value for f.
+	 * @param b	The high value for f.
+	 * @since f(a) and f(b) must evaluate with opposite signs. Does not work if newton stabilized does not converge.
+	 * @return Newton stabilized for the abstract function f in (a,b).
+	 */
 	public double solve_newton_stabilized(double a, double b) {
 		/*
 		 * 		def solve_newton_stabilized(f, a, b, ap=1e-6, rp=1e-4, ns=20):
@@ -319,7 +420,15 @@ public abstract class TestFunctionAbstract {
 		return 0;
 	}
 	
-	double optimize_bisection(double a, double b) {
+	/**
+	 * Optimized bisection for the abstract function f in (a,b).
+	 * 
+	 * @param a	The low value.
+	 * @param b	The high value.
+	 * @since Df(a) and Df(b) must evaluate with opposite signs. Does not work when bisection does not converge for f in (a,b).
+	 * @return Optimized bisection for the abstract function f in (a,b).
+	 */
+	public double optimize_bisection(double a, double b) {
 		/*
 		 * 		def optimize_bisection(f, a, b, ap=1e-6, rp=1e-4, ns=100):
 	     *			Dfa, Dfb = D(f)(a), D(f)(b)
@@ -368,7 +477,14 @@ public abstract class TestFunctionAbstract {
 		return 0;
 	}
 	
-	double optimize_newton(double x_guess) {
+	/**
+	 * Newton optimized for the abstract function f.
+	 * 
+	 * @param x_guess The guess for newton.
+	 * @since Does not work if newton does not converge for f in x.
+	 * @return Newton optimized for the abstract function f in x.
+	 */
+	public double optimize_newton(double x_guess) {
 		/*
 		 * 		def optimize_newton(f, x, ap=1e-6, rp=1e-4, ns=20):
     	 *			x = float(x) # make sure it is not int
@@ -395,7 +511,14 @@ public abstract class TestFunctionAbstract {
 		return 0;
 	}  
 	
-	double optimize_secant(double x) {
+	/**
+	 * Optimized secant for the abstract function f.
+	 * 
+	 * @param x The value used to evaluate secant for f.
+	 * @since Does not work if DDf(x) is less than absolute precision. Does not work if optimize secant does not converge for f in x.
+	 * @return Optimized secant for the abstract function f.
+	 */
+	public double optimize_secant(double x) {
 		/*
 		 * 		def optimize_secant(f, x, ap=1e-6, rp=1e-4, ns=100):
 	     *			x = float(x) # make sure it is not int
@@ -438,7 +561,15 @@ public abstract class TestFunctionAbstract {
 		return 0;
 	}
 	
-	double optimize_newton_stabilized(double a, double b) {
+	/**
+	 * Optimization of newton stabilized for the abstract function f.
+	 * 
+	 * @param a	The low value.
+	 * @param b	The high value.
+	 * @since Df(a) and Df(b) must evaluate with opposite signs. Does not work if newton does not converge for the abstract function f in (a,b).
+	 * @return Optimized newton stabilized for the abstract function f.
+	 */
+	public double optimize_newton_stabilized(double a, double b) {
 		/*
 		 * 		def optimize_newton_stabilized(f, a, b, ap=1e-6, rp=1e-4, ns=20):
 	     *			Dfa, Dfb = D(f)(a), D(f)(b)
@@ -514,7 +645,15 @@ public abstract class TestFunctionAbstract {
 		return 0;
  	}
 	
-	double optimize_golden_search(double a, double b) {
+	/**
+	 * Optimizes golden search for the abstract function f in (a,b).
+	 * 
+	 * @param a The low value.
+	 * @param b	The high value.
+	 * @since Does not work if golden search cannot be optimized for the abstract function f in (a,b).
+	 * @return The optimized golden search for abstract function f.
+	 */
+	public double optimize_golden_search(double a, double b) {
 		/*
 		 * 		def optimize_golden_search(f, a, b, ap=1e-6, rp=1e-4, ns=100):
 	     *			a,b=float(a),float(b)

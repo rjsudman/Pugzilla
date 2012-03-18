@@ -5,9 +5,129 @@
 \\ March 17, 2012	
 \\ BSD License	
 \\ Original Python code created by Massimo Di Pierro - BSD license
+\\ All code released under BSD licensing.
 \\ Built using Java SE 6 (Mac OS X default)
+\\ Repository at: https://github.com/rjsudman/Pugzilla
 \\***************************************************************************\\
 
 To compile place all files in the same directory.
 RunMe goes through all the functions with examples.
 
+Example output from RunMe:
+****TestMatrix****
+The original matrix A: [ [1.0, 2.0, 3.0] [1.0, 0.0, 3.0] [2.0, 2.0, 4.0] ]
+      Expected Result: [ [1.0, 2.0, 3.0] [1.0, 0.0, 3.0] [2.0, 2.0, 4.0] ]
+The inverse matrix B: [ [-1.5, -0.5, 1.5] [0.5, -0.5, 0.0] [0.5, 0.5, -0.5] ]
+     Expected Result: [ [-1.5, -0.5, 1.5] [0.5, -0.5, 0.0] [0.5, 0.5, -0.5] ]
+The identity matrix A*B: [ [1.0, 0.0, 0.0] [0.0, 1.0, 0.0] [0.0, 0.0, 1.0] ]
+         Expected Result:[ [1.0, 0.0, 0.0] [0.0, 1.0, 0.0] [0.0, 0.0, 1.0] ]
+
+****Matrix Math****
+Matrix A: [ [1.0, 2.0] [3.0, 4.0] ]
+Expected Result: [ [1.0,2.0] [3.0,4.0] ]
+Matrix B: [ [1.0] [2.0] [3.0] ]
+Expected Result: [ [1.0] [2.0] [3.0] ]
+Matrix C: [ [1.0, 2.0, 2.0] [4.0, 4.0, 2.0] [4.0, 6.0, 4.0] ]
+Expected Result: [ [1,2,2] [4,4,2] [4,6,4] ]
+Matrix D: [ [3.0] [6.0] [10.0] ]
+Expected Result: [ [3] [6] [10] ]
+Matrix E: [ [1.0, 2.0] [4.0, 9.0] ]
+Expected Result: [ [1,2] [4,9] ]
+Matrix F: A + A: [ [2.0, 4.0] [6.0, 8.0] ]
+Expected Result: [[2.0, 4.0], [6.0, 8.0]]
+A + 2: [ [3.0, 4.0] [5.0, 6.0] ]
+Expected Result: [[3.0, 4.0], [5.0, 6.0]]
+A - 1: [ [0.0, 1.0] [2.0, 3.0] ]
+Expected Result: [[0.0, 1.0], [2.0, 3.0]]
+-A: [ [-1.0, -2.0] [-3.0, -4.0] ]
+Expected Result: [[-1.0, -2.0], [-3.0, -4.0]]
+5 - A: [ [4.0, 3.0] [2.0, 1.0] ]
+Expected Result: [[4.0, 3.0], [2.0, 1.0]]
+B + 2: [ [3.0] [4.0] [5.0] ]
+Expected Result: [[3.0], [4.0], [5.0]]
+2 * E: [ [2.0, 4.0] [6.0, 8.0] ]
+Expected Result: [[2.0, 4.0], [6.0, 8.0]]
+E * E: [ [7.0, 10.0] [15.0, 22.0] ]
+Expected Result: [[7.0, 10.0], [15.0, 22.0]]
+B * B: 14.0
+Expected Result: 14
+1 / E: [ [9.0, -2.0] [-4.0, 1.0] ]
+Expected Result: [[9.0, -2.0], [-4.0, 1.0]]
+E / E: [ [1.0, 0.0] [0.0, 1.0] ]
+Expected Result: [[1.0, 0.0], [0.0, 1.0]]
+E / 2: [ [0.5, 1.0] [2.0, 4.5] ]
+Expected Result: [[0.5, 1.0], [2.0, 4.5]]
+
+****Dervatives Test****
+f(0) x*x-5.0*x: 0.0
+Expected Result: 0.0
+Df(0) x*x-5.0*x: -5.0
+Expected Result: -5.0
+DDf(0) x*x-5.0*x: 2.000000000004
+ Expected Result: 2.00000000048
+
+****Cholesky****
+The original matrix A: [ [4.0, 2.0, 1.0] [2.0, 9.0, 3.0] [1.0, 3.0, 16.0] ]
+      Expected Result: [ [4.0, 2.0, 1.0] [2.0, 9.0, 3.0] [1.0, 3.0, 16.0] ]
+Cholesky for matrix A: [ [2.0, 0.0, 0.0] [1.0, 2.8284271247461903, 0.0] [0.5, 0.8838834764831843, 3.86894688513554] ]
+      Expected Result: [ [2.0, 0.0, 0.0] [1.0, 2.8284271247461903, 0.0] [0.5, 0.8838834764831843, 3.86894688513554] ]
+if TestMatrix A is_almost_zero: true
+               Expected Result: true
+
+****Markovitz****
+The original matrix A: [ [0.04, 0.0060, 0.02] [0.0060, 0.09, 0.06] [0.02, 0.06, 0.16] ]
+      Expected Result: [ [0.04, 0.006, 0.02] [0.006, 0.09, 0.06] [0.02, 0.06, 0.16] ]
+Markovitz portfolio for matrix A with r_free=0.05: [ [0.5566343042071198] [0.27508090614886727] [0.16828478964401297] ]
+                                  Expected Result: [ [0.5566343042071198] [0.27508090614886727] [0.16828478964401297] ]
+Markovitz return for matrix A: 0.113915857605
+              Expected Result: 0.113915857605
+Markovitz risk for matrix A: 0.186747095412
+            Expected Result: 0.186747095412
+
+***condition_number****
+Condition number for x*x-5.0*x with x=1: 0.749999999994
+                        Expected Result: 0.749999999883
+**condition_number** not implemented for type TestMatrix. Returning zero.
+
+****fit_least_squares****
+**fit_least_squares** not implemented.
+
+****solve_fixed_point****
+(x-2)*(x-5)/10 solve_fixed_point x=0.5: 2.0
+                       Expected Result: 2.0
+
+****solve_bisection****
+(x-2)*(x-5) solve_bisection a=1.0, b=3.0: 2.0
+                         Expected Result: 2.0
+
+****solve_newton****
+(x-2)*(x-5) solve_newton x=1.0: 2.0
+               Expected Result: 2.0
+
+****solve_secant****
+(x-2)*(x-5) solve_secant x=0.5: 2.0
+               Expected Result: 2.0
+
+****solve_newton_stabilized****
+(x-2)*(x-5) solve_newton_stabilized a=1.0 b=3.0: 2.0
+                                Expected Result: 2.0
+
+****optimize_bisection****
+(x-2)*(x-5) optimize_bisection a=0.5 b=-1.0: 3.5
+                            Expected Result: 3.5
+
+****optimize_newton****
+(x-2)*(x-5) optimize_newton x=3.0: 3.5
+                  Expected Result: 3.5
+
+****optimize_secant****
+(x-2)*(x-5) optimize_secant x=3.0: 3.5
+                  Expected Result: 3.5
+
+****optimize_newton_stabilized****
+(x-2)*(x-5) optimize_newton_stabilized a=2.0 b=5.0: 3.5
+                                   Expected Result: 3.5
+
+****optimize_golden_search****
+(x-2)*(x-5) optimize_golden_search a=2.0 b=5.0: 3.5
+                               Expected Result: 3.5

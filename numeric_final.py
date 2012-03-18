@@ -285,6 +285,8 @@ def Markovitz(mu, A, r_free):
     x = (1/A)*(mu - r_free)
     x = x/sum(x[r,0] for r in range(x.rows))
     portfolio = [x[r,0] for r in range(x.rows)]
+    print mu
+    print x
     portfolio_return = mu*x
     portfolio_risk = sqrt(x*(A*x))
     return portfolio, portfolio_return, portfolio_risk

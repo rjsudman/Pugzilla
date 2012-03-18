@@ -3,17 +3,33 @@
  * BSD License
  * Original Python code created by Massimo Di Pierro - BSD license	
  * Java implementation by Ruthann Sudman - BSD license
+ * Repository at: https://github.com/rjsudman/Pugzilla
  */
 
 import java.text.DecimalFormat;
 
 
-/* 
- * RunMe is a used to demonstrate the functionality of
- * the mathematical library.
+/**
+ * Used to demonstrate the functionality of the mathematical library. 
+ * Algorithms originally created in Python by Massimo Di Pierro and ported to 
+ * Java.  All code released under BSD licensing.
+ * 
+ * @author					Ruthann Sudman
+ * @version					0.1
+ * @see TestMatrix
+ * @see LinearAlgebra
+ * @see TestFunctionAbstract
+ * @see TestFunction
+ * @see TestFunction2
+ * @see TestFunction3
+ * @see TestFunction4
+ * @see TestFunction5
+ * @see TestFunction6
+ * @see TestFunction7
+ * @see <a href="https://github.com/rjsudman/Pugzilla">Code Repository</a>
  */
 public class RunMe {
-	
+		
 	// Variable declaration
 	private static TestFunction Y = new TestFunction();		// Test function x*x-5.0*x
 	private static TestFunction2 Z = new TestFunction2();	// Test function x*x-5.0*x
@@ -26,6 +42,14 @@ public class RunMe {
 	private static DecimalFormat twoD = new DecimalFormat("#.0");
 	private static DecimalFormat twelveD = new DecimalFormat("0.000000000000");
 	
+	/**
+	 * Tests inverse matrix as implemented in class using c++.
+	 * 
+	 * @since Fails when method is incorrect.
+	 * @see TestMatrix
+	 * @see TestMatrix#invMatrix()
+	 * @see TestMatrix#mulMatrix(TestMatrix)
+	 */
 	public static void Test1() {
 		/* Test 1:  Inverse Matrix 
 		 * This test mirrors the output presented in class
@@ -69,6 +93,15 @@ public class RunMe {
 		System.out.println("");
 	}
 	
+	/**
+	 * Tests Cholesky as implemented in test096 from Massimo Ei Pierro's
+	 * numeric.py. 
+	 * 
+	 * @since Fails when method is incorrect.
+	 * @see TestMatrix
+	 * @see LinearAlgebra
+	 * @see LinearAlgebra#Cholesky(TestMatrix)
+	 */
 	public static void Test2() {
 		/* Test 2: Cholesky, is_almost_symmetric, is_almost zero
 		 * This test mirrors test096 from numeric.py 
@@ -105,6 +138,18 @@ public class RunMe {
 		System.out.println("");
 	}
 	
+	/**
+	 * Tests Markovitz as implemented in the orignal Markovitz by Massimo
+	 * Di Pierro in numeric.py
+	 * 
+	 * @since Fails when method is incorrect.
+	 * @see TestMatrix
+	 * @see LinearAlgebra
+	 * @see LinearAlgebra#Markovitz(TestMatrix, TestMatrix, double)
+	 * @see LinearAlgebra#getMarkovitzPortfolio()
+	 * @see LinearAlgebra#getMarkovitzPortfolioReturn()
+	 * @see LinearAlgebra#getMarkovitzPortfolioReturn()
+	 */
 	public static void Test3() {
 		/* Test 3: Markovitz 
 		 * This test mirrors the comments for the original Python function
@@ -158,6 +203,13 @@ public class RunMe {
 		System.out.println("");
 	}
 	
+	/**
+	 * Tests the condition number for doubles. 
+	 * 
+	 * @since Fails when method is incorrect. The condition number for test matrix is not implemented.
+	 * @see	TestMatrix
+	 * @see TestMatrix#condition_number()
+	 */
 	public static void Test35() {
 		/* Test 3.5: condition_number
 		 * This test mirrors test094 from numeric.py
@@ -189,6 +241,13 @@ public class RunMe {
 		//System.out.println("                              Expected Result: 21.0\n");
 	}
 	
+	/**
+	 * Tests fit least squares for TestFunctionAbstract array of functions.
+	 * 
+	 * @since Not yet implemented.
+	 * @see TestFunctionAbstract
+	 * @see TestFunctionAbstract#fit_least_squares()
+	 */
 	public static void Test4() {
 		/* Test 4: fit_least_squares 
 		 * This test mirrors test097 from numeric.py
@@ -226,6 +285,14 @@ public class RunMe {
 		System.out.println("**fit_least_squares** not implemented.\n");
 	}
 	
+	/**
+	 * Tests solve fixed point for a function extended from TestFunctionAbstract.
+	 * 
+	 * @since Fails when method is incorrect.
+	 * @see TestFunctionAbstract
+	 * @see TestFunctionAbstract#solve_fixed_point(double)
+	 * @see TestFunction3
+	 */
 	public static void Test5() {
 		/* Test 5: solve_fixed_point 
 		 * This test mirrors test102 from numeric.py
@@ -239,6 +306,14 @@ public class RunMe {
 		System.out.println("");
 	}
 	
+	/**
+	 * Tests solve bisection for a function extended from TestFunctionAbstract.
+	 * 
+	 * @since Fails when method is incorrect.
+	 * @see TestFunctionAbstract
+	 * @see TestFunctionAbstract#solve_bisection(double, double)
+	 * @see TestFunction4
+	 */
 	public static void Test6() {
 		/* Test 6: solve_bisection 
 		 * This test mirrors test103 from numeric.py
@@ -251,7 +326,15 @@ public class RunMe {
 		System.out.println("                         Expected Result: 2.0");
 		System.out.println("");
 	}
-	
+
+	/**
+	 * Tests solve solve newton for a function extended from TestFunctionAbstract.
+	 * 
+	 * @since Fails when method is incorrect.
+	 * @see TestFunctionAbstract
+	 * @see TestFunctionAbstract#solve_newton(double)
+	 * @see TestFunction4
+	 */
 	public static void Test7() {
 		/* Test 7:	solve_newton 
 		 * This test mirrors test104 from numeric.py
@@ -265,6 +348,14 @@ public class RunMe {
 		System.out.println("");
 	}
 	
+	/**
+	 * Tests solve secant for a function extended from TestFunctionAbstract.
+	 * 
+	 * @since Fails when method is incorrect.
+	 * @see TestFunctionAbstract
+	 * @see TestFunctionAbstract#solve_secant(double)
+	 * @see TestFunction4
+	 */
 	public static void Test8() {
 		/* Test 8: solve_secant 
 		 * This test mirrors test105 from numeric.py
@@ -278,6 +369,14 @@ public class RunMe {
 		System.out.println("");
 	}
 	
+	/**
+	 * Tests solve newton stabilized for a function extended from TestFunctionAbstract.
+	 * 
+	 * @since Fails when method is incorrect.
+	 * @see TestFunctionAbstract
+	 * @see TestFunctionAbstract#solve_newton_stabilized(double, double)
+	 * @see TestFunction4
+	 */
 	public static void Test9() {
 		/* Test 9: solve_newton_stabilized 
 		 * This test mirrors test106 from numeric.py
@@ -291,6 +390,14 @@ public class RunMe {
 		System.out.println("");
 	}
     
+	/**
+	 * Tests optimize bisection for a function extended from TestFunctionAbstract.
+	 * 
+	 * @since Fails when method is incorrect.
+	 * @see TestFunctionAbstract
+	 * @see TestFunctionAbstract#optimize_bisection(double, double)
+	 * @see TestFunction4
+	 */
 	public static void Test10() {
 		/* Test 10: optimize_bisection 
 		 * This test mirrors test107 from numeric.py
@@ -304,6 +411,14 @@ public class RunMe {
 		System.out.println("");
 	}
 	
+	/**
+	 * Tests optimize newton for a function extended from TestFunctionAbstract.
+	 * 
+	 * @since Fails when method is incorrect.
+	 * @see TestFunctionAbstract
+	 * @see TestFunctionAbstract#optimize_newton(double)
+	 * @see TestFunction4
+	 */
 	public static void Test11() {
 		/* Test 11: optimize_newton 
 		 * This test mirrors test 108 from numeric.py 
@@ -317,6 +432,14 @@ public class RunMe {
 		System.out.println("");
 	}
 	
+	/**
+	 * Tests optimize secant for a function extended from TestFunctionAbstract.
+	 * 
+	 * @since Fails when method is incorrect.
+	 * @see TestFunctionAbstract
+	 * @see TestFunctionAbstract#optimize_secant(double)
+	 * @see TestFunction4
+	 */
 	public static void Test12() {
 		/* Test 12: optimize_secant 
 		 This test mirrors test109 from numeric.py
@@ -330,6 +453,14 @@ public class RunMe {
 		System.out.println("");
 	}
 	
+	/**
+	 * Tests optimize newton stabilized for a function extended from TestFunctionAbstract.
+	 * 
+	 * @since Fails when method is incorrect.
+	 * @see TestFunctionAbstract
+	 * @see TestFunctionAbstract#optimize_newton_stabilized(double, double)
+	 * @see TestFunction4
+	 */
 	public static void Test13() {
 		/* Test 13: optimize_newton_stabilized 
 		 * This test mirrors test106 from numeric.py
@@ -343,6 +474,14 @@ public class RunMe {
 		System.out.println("");
 	}
 	
+	/**
+	 * Tests optimize golden search for a function extended from TestFunctionAbstract.
+	 * 
+	 * @since Fails when method is incorrect.
+	 * @see TestFunctionAbstract
+	 * @see TestFunctionAbstract#optimize_golden_search(double, double)
+	 * @see TestFunction4
+	 */
 	public static void Test14() {
 		/* Test 14: optimize_golden_search 
 		 * This test mirrors test106 from numeric.py
@@ -356,6 +495,16 @@ public class RunMe {
 		System.out.println("");
 	}
 	
+	/**
+	 * Tests first and second derivatives for a function extended from TestFunctionAbstract.
+	 * 
+	 * @since Fails when method is incorrect.
+	 * @see TestFunctionAbstract
+	 * @see TestFunctionAbstract#f(double)
+	 * @see TestFunctionAbstract#Df(double)
+	 * @see TestFunctionAbstract#DDf(double)
+	 * @see TestFunction2
+	 */
 	public static void Test15() {
 		/* Test 15: Testing derivatives (f(x), Df(x), DDf(x)
 		 * This test mirrors test081 in numeric.py
@@ -379,6 +528,25 @@ public class RunMe {
 		System.out.println(" Expected Result: 2.00000000048\n");
 	}
 	
+	/** 
+	 * Tests for basic TestMatrix math functionality.
+	 * 
+	 * @since Fails when method is incorrect.
+	 * @see TestMatrix
+	 * @see TestMatrix#addMatrix(double)
+	 * @see TestMatrix#addMatrix(TestMatrix)
+	 * @see TestMatrix#changeMe(int, int, double)
+	 * @see TestMatrix#condition_number()
+	 * @see TestMatrix#copyMe()
+	 * @see TestMatrix#divMatrix(double)
+	 * @see TestMatrix#invMatrix()
+	 * @see TestMatrix#mulMatrix(double)
+	 * @see TestMatrix#mulMatrix(TestMatrix)
+	 * @see TestMatrix#mulMatrixScalar(TestMatrix)
+	 * @see TestMatrix#printMe()
+	 * @see TestMatrix#subMatrix(double)
+	 * @see TestMatrix#subMatrix(TestMatrix)
+	 */
 	public static void Test16() {
 		/* Test 16: Matrix Math
 		 * This test mirrors test087, test089
@@ -517,6 +685,12 @@ public class RunMe {
 		System.out.println("Expected Result: [[0.5, 1.0], [2.0, 4.5]]\n");
 	}
 	
+	/**
+	 * Runs all test methods.
+	 * 
+	 * @param args	Default for Java.
+	 * @since Fails for incorrect methods.
+	 */
 	public static void main (String[] args) {
 		
 		Test1();	// TestMatrix, exp

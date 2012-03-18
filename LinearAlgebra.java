@@ -5,19 +5,32 @@
  * Java implementation by Ruthann Sudman - BSD license
  */
 
-/* 
- * LinearAlgebra is a library of linear algebra algorithms.
+/** 
+ * A library of linear algebra algorithms originally created in Python by 
+ * Massimo Di Pierro and ported to Java.   All code released under BSD licensing.
+ * 
+ * @author					Ruthann Sudman
+ * @version					0.1
+ * @see <a href="https://github.com/rjsudman/Pugzilla">Code Repository</a>
  */
 public class LinearAlgebra {
-	private static double ap = 0.000001f; // Default absolute precision
-	private static double rp = 0.0001f;	 // Default relative precision
+	private static double ap = 0.000001; // Default absolute precision
+	private static double rp = 0.0001;	 // Default relative precision
 	private static int ns = 40;			 // Default number of steps
 	private static int p = 1;
-	TestMatrix portfolio;				 // Markovitz portfolio
-	double portfolio_return;			 // Markovitz return
-	double portfolio_risk;				 // Markovitz risk
+	private TestMatrix portfolio;				 // Markovitz portfolio
+	private double portfolio_return;			 // Markovitz return
+	private double portfolio_risk;				 // Markovitz risk
     
-	
+	/**
+	 * Returns a boolean value indicating whether the matrix is almost
+	 * symmetric.
+	 * 
+	 * @param x		The TestMatrix object to be examined.
+	 * @return		The boolean result of the test.
+	 * @since	No known exceptions.
+	 * @see			TestMatrix	
+	 */
 	public boolean is_almost_symmetric(TestMatrix x) {
 		/*
 		 * 	def is_almost_symmetric(A, ap=1e-6, rp=1e-4):
@@ -45,6 +58,14 @@ public class LinearAlgebra {
 		return true;
 	}
 	
+	/**
+	 * Returns a boolean value indicating if a matrix is almost zero.
+	 * 
+	 * @param A		The TestMatrix object to be examined.
+	 * @since	No known exceptions.
+	 * @return		Boolean result of the test.
+	 * @see			TestMatrix
+	 */
 	public boolean is_almost_zero(TestMatrix A) {
 		/*
 		 * 	def is_almost_zero(A, ap=1e-6, rp=1e-4):
@@ -70,10 +91,22 @@ public class LinearAlgebra {
 		return true;
 	}
 	
+	/**
+	 * Returns the norm of a double value.
+	 * @param 		A	The value to be examined.
+	 * @since	No known sinces
+	 * @return		The norm of A.
+	 */
 	public double norm(double A) {
 		return Math.abs(A);
 	}
 	
+	/**
+	 * Returns the norm of a TestMatrix. Needs work. Not properly implemented.
+	 * @param A		The TestMatrix object to be examied.
+	 * @since	Norm will always be zero. Not properly implemented.
+	 * @return		The norm of the matrix.
+	 */
 	public double norm(TestMatrix A) {
 		/*
 		 *	def norm(A,p=1):
@@ -121,6 +154,13 @@ public class LinearAlgebra {
 		return 0f;
 	}
     
+	/**
+	 * Returns the exponent of a TestMatrix object.
+	 * @param x		The TestMatrix object to apply the function to.
+	 * @since	Algorithm may fail to converge, division by zero errors.
+	 * @return		The exponent TestMatrix.
+	 * @see 		TestMatrix
+	 */
 	public TestMatrix exp(TestMatrix x) {
 		/*
 		 * 	def exp(x,ap=1e-6,rp=1e-4,ns=40):
@@ -152,6 +192,13 @@ public class LinearAlgebra {
 		return new TestMatrix(x.getRows(), x.getColumns());
 	}
 	
+	/**
+	 * Returns a TestMatrix object with the Cholesky algorithm applied.
+	 * @param A		The TestMatrix object to apply Cholesky to.
+	 * @since	Can't take a square root of a negative number.
+	 * @return		A TestMatrix with Cholesky applied.
+	 * @see 		TestMatrix
+	 */
 	public TestMatrix Cholesky(TestMatrix A) {
 		/*
 		 * 	def Cholesky(A):
@@ -215,6 +262,13 @@ public class LinearAlgebra {
 		return L;
 	}
 	
+	/**
+	 * Returns a boolean value indicating if a TestMatrix is positive definite.
+	 * @param A		The TestMatrix to test for positive definite.
+	 * @since	Run time error possible.
+	 * @return		The boolean result of the algorithm.
+	 * @see			TestMatrix
+	 */
 	public boolean is_positive_definite(TestMatrix A){
 		/*
 		 * 	def is_positive_definite(A):
@@ -240,7 +294,20 @@ public class LinearAlgebra {
 		}
         return myTest;
 	}
-    
+    /**
+     * Calculates the Markovitz portfolio, risk and return. Returns a reference 
+     * to LinearAlgebra from which the Markovitz portfolio TestMatrix, risk and 
+     * return can be obtained with get methods.
+     * 
+     * @param mu		Markovitz mu.
+     * @param A			The TestMatrix object.
+     * @param r_free	The risk free rate.
+     * @return			LinearAlgebra reference to get portfolio, risk and return
+     * @since		TestMatrix should be symmetric. Rows in mu should mirror columns in A
+     * @see				LinearAlgebra#getMarkovitzPortfolio()
+     * @see				LinearAlgebra#getMarkovitzPortfolioRisk()
+     * @see				LinearAlgebra#getMarkovitzPortfolioReturn()
+     */
 	public LinearAlgebra Markovitz(TestMatrix mu, TestMatrix A, double r_free) {
 		/*
 		 * 		def Markovitz(mu, A, r_free):
@@ -293,14 +360,33 @@ public class LinearAlgebra {
 		return this;	
 	}
 	
+	/**
+	 * Get method to return Markovitz portfolio value.
+	 * @return 		Portfolio TestMatrix object
+	 * @since	Markovitz must be run and the value set prior to using this algorithm.
+	 * @see			#Markovitz(TestMatrix, TestMatrix, double)
+	 * @see			TestMatrix
+	 */
 	public TestMatrix getMarkovitzPortfolio() {
 		return this.portfolio;
 	}
 	
+	/**
+	 * Get method to return Markovitz portfolio risk.
+	 * @since	Markovitz must be run and the value set prior to using this algorithm.
+	 * @return	Markovitz portfolio risk.
+	 * @see		#Markovitz(TestMatrix, TestMatrix, double)
+	 */
 	public double getMarkovitzPortfolioRisk() {
 		return this.portfolio_risk;
 	}
 	
+	/**
+	 * Get method to return Markovitz portfolio return.
+	 * @since	Markovitz must be run and the value set prior to using this algorithm.
+	 * @return	Markovitz portfolio return.
+	 * @see		#Markovitz(TestMatrix, TestMatrix, double)
+	 */
 	public double getMarkovitzPortfolioReturn() {
 		return this.portfolio_return;
 	}
