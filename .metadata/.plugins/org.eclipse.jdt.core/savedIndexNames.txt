@@ -1,1 +1,0 @@
-INDEX VERSION 1.126+/Users/rjsudman/Documents/DePaul Computer Science Masters/Winter 2011/CS 431/Pugzilla/.metadata/.plugins/org.eclipse.jdt.core
